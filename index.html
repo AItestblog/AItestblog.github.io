@@ -83,7 +83,7 @@
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=block" rel="stylesheet">
     <style>
         body {
             font-family: Arial, 'Noto Sans TC', sans-serif;
@@ -272,17 +272,18 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background-color: #000000;
+            background-color: #ffffff;
             border-radius: 50%;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .article-share a:hover {
-            background-color: #333333;
+            background-color: #e0e0e0;
             transform: scale(1.1);
         }
-        .article-share i {
-            color: #ffffff !important;
-            font-size: 20px;
+        .article-share img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
         }
         .article-comments {
             margin-top: 20px;
@@ -506,15 +507,16 @@
                     updateFooter();
                     updateFacebookComments();
                     updateShareButtons();
+                    loadContent();
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                // 使用預設值繼續
                 updateSeo();
                 updateNavTabs();
                 updateFooter();
                 updateFacebookComments();
                 updateShareButtons();
+                loadContent();
             }
         }
 
@@ -555,6 +557,9 @@
 
         function updateFacebookComments() {
             document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.baseUrl);
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse();
+            }
         }
 
         function updateShareButtons() {
@@ -658,26 +663,31 @@
                 `;
                 articlesDiv.appendChild(card);
 
+                // 移除內容中重複的標題
+                let cleanedContent = article.content;
+                const titleRegex = new RegExp(`^<h2>${article.title}</h2>|^${article.title}\\n`, 'i');
+                cleanedContent = cleanedContent.replace(titleRegex, '').trim();
+
                 const content = document.createElement('div');
                 content.className = 'article-content';
                 content.id = `content-${i}`;
                 const fontSizeStyle = article.fontSize ? `font-size: ${article.fontSize};` : '';
                 let imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
                 content.innerHTML = `
-                    <div style="${fontSizeStyle}">${article.content}</div>
+                    <div style="${fontSizeStyle}">${cleanedContent}</div>
                     ${imagesHtml}
                     <div class="article-share">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Facebook">
-                            <i class="fab fa-facebook-f"></i>
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
                         </a>
                         <a href="https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 X">
-                            <i class="fab fa-x-twitter"></i>
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
                         </a>
                         <a href="https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Instagram">
-                            <i class="fab fa-instagram"></i>
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
                         </a>
                         <a href="https://line.me/R/msg/text/?${encodeURIComponent(article.title + '\n' + settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Line">
-                            <i class="fab fa-line"></i>
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
                         </a>
                     </div>
                     <div class="article-comments">
@@ -688,6 +698,10 @@
                 articlesDiv.appendChild(content);
             }
             renderPagination(articles);
+            // 重新解析動態生成的 Facebook 留言板
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse();
+            }
         }
 
         function renderPagination(articles) {
@@ -767,6 +781,10 @@
             window.scrollTo({ top: document.getElementById(`content-${index}`).offsetTop, behavior: 'smooth' });
             document.title = articles[index].title + " - " + settings.seo.title;
             history.replaceState(null, "", "#article-" + index);
+            // 重新解析單篇文章的 Facebook 留言板
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse(document.getElementById(`content-${index}`));
+            }
         }
 
         let currentSlide = 0;
@@ -792,7 +810,7 @@
             setInterval(nextSlide, 5000);
         }
 
-        loadSettings().then(loadContent);
+        loadSettings();
     </script>
 </body>
 </html>
