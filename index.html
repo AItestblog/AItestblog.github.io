@@ -272,16 +272,16 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background-color: #2563eb;
+            background-color: #000000;
             border-radius: 50%;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .article-share a:hover {
-            background-color: #1e40af;
+            background-color: #333333;
             transform: scale(1.1);
         }
         .article-share i {
-            color: #ffffff;
+            color: #ffffff !important;
             font-size: 20px;
         }
         .article-comments {
@@ -358,29 +358,26 @@
         .share-buttons {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             z-index: 1000;
         }
-        .share-buttons a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #2563eb;
-            border-radius: 50%;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
         }
-        .share-buttons a:hover {
-            background-color: #1e40af;
-            transform: scale(1.1);
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
         }
-        .share-buttons i {
-            color: #ffffff;
-            font-size: 20px;
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
         }
         @media screen and (max-width: 768px) {
             .carousel {
@@ -392,7 +389,7 @@
             }
             .share-buttons {
                 bottom: 10px;
-                right: 10px;
+                left: 10px;
             }
         }
     </style>
@@ -432,16 +429,16 @@
         <!-- 浮動分享按鈕 -->
         <div class="share-buttons">
             <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
-                <i class="fab fa-facebook-f"></i>
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
             </a>
             <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
-                <i class="fab fa-x-twitter"></i>
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
             </a>
             <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
-                <i class="fab fa-instagram"></i>
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
             </a>
             <a href="https://line.me/R/msg/text/?股市企業研究院%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
-                <i class="fab fa-line"></i>
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
             </a>
         </div>
     </div>
@@ -481,7 +478,7 @@
 
     <script>
         let settings = {
-            baseUrl: 'https://test.github.io',
+            baseUrl: 'https://stockcorp.github.io',
             newsTab: '財經新聞',
             technicalTab: '技術分析學習',
             personalTab: '品牌故事',
@@ -492,7 +489,7 @@
                 author: '股市企業研究院',
                 ogTitle: '股市企業研究院 - 最專業的財經與商業應用網站',
                 ogDescription: '探索最新財經資訊與深入文章，來自吉米理財學堂。',
-                ogUrl: 'https://test.github.io/',
+                ogUrl: 'https://stockcorp.github.io/',
                 publisherName: '吉米理財學堂',
                 publisherUrl: 'https://www.youtube.com/@吉米理財學堂'
             }
