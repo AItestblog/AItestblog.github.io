@@ -83,7 +83,7 @@
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=block" rel="stylesheet">
     <style>
         body {
             font-family: Arial, 'Noto Sans TC', sans-serif;
@@ -199,9 +199,45 @@
             color: #000000;
             width: 100%;
         }
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #3b82f6;
+        }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
+        }
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
         @media screen and (max-width: 768px) {
             .personal-image {
                 max-width: 150px;
+            }
+            .share-buttons {
+                bottom: 10px;
+                left: 10px;
             }
         }
     </style>
@@ -213,9 +249,9 @@
 
         <!-- 導航選單 -->
         <div class="nav-tabs">
-            <a href="index.html" class="nav-tab" id="nav-news">XX新聞</a>
-            <a href="technical.html" class="nav-tab" id="nav-technical">XX教學</a>
-            <a href="personal.html" class="nav-tab active" id="nav-personal">XX品牌介紹</a>
+            <a href="index.html" class="nav-tab" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab active" id="nav-personal"></a>
         </div>
 
         <!-- 內容區域 -->
@@ -234,6 +270,22 @@
         <footer>
             <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
         </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+            </a>
+            <a href="https://line.me/R/msg/text/?品牌介紹%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+            </a>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -271,10 +323,10 @@
 
     <script>
         let settings = {
-            baseUrl: 'https://test.github.io',
-            newsTab: 'XX新聞',
-            technicalTab: 'XX教學',
-            personalTab: 'XX品牌介紹',
+            baseUrl: 'https://stockcorp.github.io',
+            newsTab: '財經新聞',
+            technicalTab: '技術分析學習',
+            personalTab: '品牌故事',
             personalSeo: {
                 title: '品牌介紹 - 股市企業研究院',
                 description: '了解股市企業研究院的品牌故事與使命，來自吉米理財學堂。',
@@ -282,7 +334,7 @@
                 author: '股市企業研究院',
                 ogTitle: '品牌介紹 - 股市企業研究院',
                 ogDescription: '了解股市企業研究院的品牌故事與使命，來自吉米理財學堂。',
-                ogUrl: 'https://test.github.io/personal.html',
+                ogUrl: 'https://stockcorp.github.io/personal.html',
                 publisherName: '吉米理財學堂',
                 publisherUrl: 'https://www.youtube.com/@吉米理財學堂'
             },
@@ -301,10 +353,16 @@
                     updateFooter();
                     updateFacebookComments();
                     updateContent();
+                    updateShareButtons();
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                updateContent(); // 使用預設內容
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateContent();
+                updateShareButtons();
             }
         }
 
@@ -337,8 +395,10 @@
         }
 
         function updateFooter() {
-            document.querySelector('footer a').textContent = settings.personalSeo.publisherName;
-            document.querySelector('footer a').href = settings.personalSeo.publisherUrl;
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.personalSeo.publisherName;
+            footerLink.href = settings.personalSeo.publisherUrl;
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.personalSeo.publisherUrl}" target="_blank">${settings.personalSeo.publisherName}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
@@ -348,6 +408,14 @@
         function updateContent() {
             document.getElementById('personal-image').src = settings.personalImage;
             document.getElementById('personal-content').innerHTML = settings.personalContent;
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent(settings.personalSeo.title + '\n' + settings.baseUrl + '/personal.html')}`;
         }
 
         // 初始化
