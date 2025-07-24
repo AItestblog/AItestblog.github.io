@@ -1,6 +1,6 @@
 {
   "baseUrl": "https://stockcorp.github.io",
-  "newsTab": "財經新聞",
+  "newsTab": "王馬新聞",
   "technicalTab": "技術分析學習",
   "personalTab": "品牌故事",
   "seo": {
