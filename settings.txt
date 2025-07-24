@@ -1,16 +1,16 @@
 {
-    "baseUrl": "https://test.github.io",
-    "newsTab": "XX新聞",
-    "technicalTab": "XX教學",
-    "personalTab": "XX品牌介紹",
+    "baseUrl": "https://stockcorp.github.io",
+    "newsTab": "財經新聞",
+    "technicalTab": "技術分析學習",
+    "personalTab": "品牌故事",
     "seo": {
         "title": "股市企業研究院 - 最專業的財經與商業應用網站",
-        "description": "專業最專業的財經與商業應用網站，提供最新資訊與深入文章，來自股市企業研究院。",
-        "keywords": "最專業的財經與商業應用網站, 台股, 投資理財, 吉米理財學堂",
+        "description": "提供最新財經資訊與深入文章，來自股市企業研究院，助您做出明智投資決策。",
+        "keywords": "財經,投資,股票,理財,吉米理財學堂",
         "author": "股市企業研究院",
         "ogTitle": "股市企業研究院 - 最專業的財經與商業應用網站",
         "ogDescription": "探索最新財經資訊與深入文章，來自吉米理財學堂。",
-        "ogUrl": "https://test.github.io/",
+        "ogUrl": "https://stockcorp.github.io/",
         "publisherName": "吉米理財學堂",
         "publisherUrl": "https://www.youtube.com/@吉米理財學堂"
     },
@@ -21,7 +21,7 @@
         "author": "股市企業研究院",
         "ogTitle": "技術分析學習 - 股市企業研究院",
         "ogDescription": "技術分析學習 - 股市企業研究院",
-        "ogUrl": "https://test.github.io/technical.html",
+        "ogUrl": "https://stockcorp.github.io/technical.html",
         "publisherName": "吉米理財學堂",
         "publisherUrl": "https://www.youtube.com/@吉米理財學堂",
         "publisherEmail": "xbon510@gmail.com"
@@ -33,7 +33,7 @@
         "author": "股市企業研究院",
         "ogTitle": "品牌介紹 - 股市企業研究院",
         "ogDescription": "了解股市企業研究院的品牌故事與使命，來自吉米理財學堂。",
-        "ogUrl": "https://test.github.io/personal.html",
+        "ogUrl": "https://stockcorp.github.io/personal.html",
         "publisherName": "吉米理財學堂",
         "publisherUrl": "https://www.youtube.com/@吉米理財學堂"
     },
