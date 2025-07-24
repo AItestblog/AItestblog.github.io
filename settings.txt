@@ -9,7 +9,7 @@
     "keywords": "財經,投資,股票,理財,吉米理財學堂",
     "author": "股市企業研究院",
     "publisherName": "吉米理財學堂",
-    "publisherUrl": "https://www.youtube.com/@吉米理財學堂",
+    "publisherUrl": "www.google.com",
     "publisherEmail": ""
   },
   "technicalSeo": {
