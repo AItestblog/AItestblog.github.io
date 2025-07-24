@@ -120,6 +120,6 @@
   },
   "scheduleConfig": {
     "time": "01:05",
-    "count": 1
+    "count": 6
   }
 }
