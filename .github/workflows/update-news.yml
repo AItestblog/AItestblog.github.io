@@ -1,1 +1,41 @@
+name: 每日自動更新新聞與圖片
 
+on:
+  schedule:
+    - cron: '0 1 * * 1-6'  # UTC 01:00，等於台灣時間早上 9 點（周一到周六）
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 安裝依賴套件
+        run: pip install openai requests feedparser
+
+      - name: 執行每日新聞生成腳本
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python3 generate_news.py
+
+      - name: Commit 並推送更新內容
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          # 檢查並提交未提交的變更
+          git add content.txt last_image_id.txt img/content/ || true
+          git commit -m "自動提交生成的新聞與圖片 $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
+          # 執行 pull --rebase
+          git pull origin main --rebase || echo "Pull failed, continuing with local changes"
+          # 再次添加最終變更並提交
+          git add content.txt last_image_id.txt img/content/
+          git commit -m "自動每日更新新聞與圖片 $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
