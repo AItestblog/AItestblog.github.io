@@ -391,18 +391,18 @@
             personalTab: '品牌故事',
             technicalSeo: {
                 title: '技術分析學習 - 股市企業研究院',
-                description: '技術分析學習 - 股市企業研究院',
-                keywords: '技術分析學習, 股市企業研究院',
+                description: '深入學習股票與加密貨幣的技術分析，掌握市場趨勢與交易策略，來自股市企業研究院。',
+                keywords: '技術分析學習, 股市企業研究院, 投資策略',
                 author: '股市企業研究院',
                 ogTitle: '技術分析學習 - 股市企業研究院',
-                ogDescription: '技術分析學習 - 股市企業研究院',
+                ogDescription: '深入學習股票與加密貨幣的技術分析，掌握市場趨勢與交易策略，來自股市企業研究院。',
                 ogUrl: 'https://stockcorp.github.io/technical.html',
                 publisherName: '吉米理財學堂',
                 publisherUrl: 'https://www.youtube.com/@吉米理財學堂',
                 publisherEmail: 'xbon510@gmail.com'
-            },
-            accordionContent: []
+            }
         };
+        let accordionContent = [];
 
         async function loadSettings() {
             try {
@@ -410,22 +410,32 @@
                 if (response.ok) {
                     const text = await response.text();
                     settings = JSON.parse(text);
-                    updateSeo();
-                    updateNavTabs();
-                    updateFooter();
-                    updateFacebookComments();
-                    updateShareButtons();
-                    renderAccordion();
+                } else {
+                    throw new Error('無法載入 settings.txt');
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                // 使用預設值繼續
-                updateSeo();
-                updateNavTabs();
-                updateFooter();
-                updateFacebookComments();
-                updateShareButtons();
-                renderAccordion();
+            }
+            updateSeo();
+            updateNavTabs();
+            updateFooter();
+            updateFacebookComments();
+            updateShareButtons();
+        }
+
+        async function loadTechWiki() {
+            try {
+                const response = await fetch('tech-wiki.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    accordionContent = JSON.parse(text);
+                    renderAccordion();
+                } else {
+                    throw new Error('無法載入 tech-wiki.txt');
+                }
+            } catch (error) {
+                console.error('載入 tech-wiki.txt 失敗:', error);
+                renderAccordion(); // 使用空陣列作為預設值
             }
         }
 
@@ -484,7 +494,7 @@
             sidebarMenu.innerHTML = '';
             accordionContainer.innerHTML = '';
 
-            settings.accordionContent.forEach((item, index) => {
+            accordionContent.forEach((item, index) => {
                 // 側邊欄選單
                 const li = document.createElement('li');
                 li.innerHTML = `<a href="#${item.id}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id}')">${item.title}</a>`;
@@ -528,7 +538,7 @@
         }
 
         // 初始化
-        loadSettings();
+        loadSettings().then(loadTechWiki);
     </script>
 </body>
 </html>
