@@ -77,6 +77,6 @@
   {
     "id": "new-item-15",
     "title": "新百科項目",
-    "content": "<p>請輸入</p>"
+    "content": "<p>3123</p>"
   }
 ]
