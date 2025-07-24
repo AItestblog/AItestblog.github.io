@@ -384,24 +384,7 @@
     </script>
 
     <script>
-        let settings = {
-            baseUrl: 'https://stockcorp.github.io',
-            newsTab: '財經新聞',
-            technicalTab: '技術分析學習',
-            personalTab: '品牌故事',
-            technicalSeo: {
-                title: '技術分析學習 - 股市企業研究院',
-                description: '深入學習股票與加密貨幣的技術分析，掌握市場趨勢與交易策略，來自股市企業研究院。',
-                keywords: '技術分析學習, 股市企業研究院, 投資策略',
-                author: '股市企業研究院',
-                ogTitle: '技術分析學習 - 股市企業研究院',
-                ogDescription: '深入學習股票與加密貨幣的技術分析，掌握市場趨勢與交易策略，來自股市企業研究院。',
-                ogUrl: 'https://stockcorp.github.io/technical.html',
-                publisherName: '吉米理財學堂',
-                publisherUrl: 'https://www.youtube.com/@吉米理財學堂',
-                publisherEmail: 'xbon510@gmail.com'
-            }
-        };
+        let settings = {};
         let accordionContent = [];
 
         async function loadSettings() {
@@ -410,17 +393,23 @@
                 if (response.ok) {
                     const text = await response.text();
                     settings = JSON.parse(text);
+                    updateSeo();
+                    updateNavTabs();
+                    updateFooter();
+                    updateFacebookComments();
+                    updateShareButtons();
                 } else {
                     throw new Error('無法載入 settings.txt');
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
+                // 使用空值
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateShareButtons();
             }
-            updateSeo();
-            updateNavTabs();
-            updateFooter();
-            updateFacebookComments();
-            updateShareButtons();
         }
 
         async function loadTechWiki() {
@@ -440,52 +429,52 @@
         }
 
         function updateSeo() {
-            document.querySelector('meta[name="description"]').content = settings.technicalSeo.description;
-            document.querySelector('meta[name="keywords"]').content = settings.technicalSeo.keywords;
-            document.querySelector('meta[name="author"]').content = settings.technicalSeo.author;
-            document.title = settings.technicalSeo.title;
-            document.querySelector('meta[property="og:title"]').content = settings.technicalSeo.ogTitle;
-            document.querySelector('meta[property="og:description"]').content = settings.technicalSeo.ogDescription;
-            document.querySelector('meta[property="og:url"]').content = settings.technicalSeo.ogUrl;
+            document.querySelector('meta[name="description"]').content = settings.technicalSeo?.description || '';
+            document.querySelector('meta[name="keywords"]').content = settings.technicalSeo?.keywords || '';
+            document.querySelector('meta[name="author"]').content = settings.technicalSeo?.author || '';
+            document.title = settings.technicalSeo?.title || '';
+            document.querySelector('meta[property="og:title"]').content = settings.technicalSeo?.ogTitle || '';
+            document.querySelector('meta[property="og:description"]').content = settings.technicalSeo?.ogDescription || '';
+            document.querySelector('meta[property="og:url"]').content = settings.technicalSeo?.ogUrl || '';
             document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "WebApplication",
-                "name": settings.technicalSeo.title,
-                "url": settings.technicalSeo.ogUrl,
-                "description": settings.technicalSeo.description,
+                "name": settings.technicalSeo?.title || '',
+                "url": settings.technicalSeo?.ogUrl || '',
+                "description": settings.technicalSeo?.description || '',
                 "publisher": {
                     "@type": "Organization",
-                    "name": settings.technicalSeo.publisherName,
-                    "url": settings.technicalSeo.publisherUrl,
-                    "email": settings.technicalSeo.publisherEmail
+                    "name": settings.technicalSeo?.publisherName || '',
+                    "url": settings.technicalSeo?.publisherUrl || '',
+                    "email": settings.technicalSeo?.publisherEmail || ''
                 },
                 "applicationCategory": "Finance"
             }, null, 2);
         }
 
         function updateNavTabs() {
-            document.getElementById('nav-news').textContent = settings.newsTab;
-            document.getElementById('nav-technical').textContent = settings.technicalTab;
-            document.getElementById('nav-personal').textContent = settings.personalTab;
+            document.getElementById('nav-news').textContent = settings.newsTab || '';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '';
         }
 
         function updateFooter() {
             const footerLink = document.querySelector('footer a');
-            footerLink.textContent = settings.technicalSeo.publisherName;
-            footerLink.href = settings.technicalSeo.publisherUrl;
-            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo.publisherUrl}" target="_blank">${settings.technicalSeo.publisherName}</a>。保留所有權利。`;
+            footerLink.textContent = settings.technicalSeo?.publisherName || '';
+            footerLink.href = settings.technicalSeo?.publisherUrl || '';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo?.publisherUrl || ''}" target="_blank">${settings.technicalSeo?.publisherName || ''}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
-            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo.ogUrl);
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo?.ogUrl || '');
         }
 
         function updateShareButtons() {
             const shareButtons = document.querySelectorAll('.share-buttons a');
-            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
-            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
-            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
-            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent(settings.technicalSeo.title + '\n' + settings.baseUrl + '/technical.html')}`;
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.technicalSeo?.title || '') + '\n' + (settings.baseUrl + '/technical.html' || ''))}`;
         }
 
         function renderAccordion() {
@@ -497,17 +486,17 @@
             accordionContent.forEach((item, index) => {
                 // 側邊欄選單
                 const li = document.createElement('li');
-                li.innerHTML = `<a href="#${item.id}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id}')">${item.title}</a>`;
+                li.innerHTML = `<a href="#${item.id || ''}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id || ''}')">${item.title || ''}</a>`;
                 sidebarMenu.appendChild(li);
 
                 // 手風琴項目
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item';
-                accordionItem.id = item.id;
+                accordionItem.id = item.id || '';
                 accordionItem.innerHTML = `
-                    <div class="accordion-header" onclick="toggleAccordion('${item.id}')">${item.title}</div>
+                    <div class="accordion-header" onclick="toggleAccordion('${item.id || ''}')">${item.title || ''}</div>
                     <div class="accordion-content ${index === 0 ? 'active' : ''}">
-                        ${item.content}
+                        ${item.content || ''}
                     </div>
                 `;
                 accordionContainer.appendChild(accordionItem);
@@ -529,7 +518,9 @@
 
             content.classList.add('active');
             const correspondingLink = document.querySelector(`.sidebar a[href="#${id}"]`);
-            correspondingLink.classList.add('active');
+            if (correspondingLink) {
+                correspondingLink.classList.add('active');
+            }
         }
 
         function showAccordion(id) {

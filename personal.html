@@ -322,25 +322,7 @@
     </script>
 
     <script>
-        let settings = {
-            baseUrl: 'https://stockcorp.github.io',
-            newsTab: '財經新聞',
-            technicalTab: '技術分析學習',
-            personalTab: '品牌故事',
-            personalSeo: {
-                title: '品牌介紹 - 股市企業研究院',
-                description: '了解股市企業研究院的品牌故事與使命，來自吉米理財學堂。',
-                keywords: '品牌介紹, 股市企業研究院, 吉米理財學堂',
-                author: '股市企業研究院',
-                ogTitle: '品牌介紹 - 股市企業研究院',
-                ogDescription: '了解股市企業研究院的品牌故事與使命，來自吉米理財學堂。',
-                ogUrl: 'https://stockcorp.github.io/personal.html',
-                publisherName: '吉米理財學堂',
-                publisherUrl: 'https://www.youtube.com/@吉米理財學堂'
-            },
-            personalImage: '/img/brand-logo.jpg',
-            personalContent: '<h3>關於我們</h3><p>股市企業研究院致力於提供專業的財經資訊與教育資源，幫助投資者做出明智的財務決策。我們的使命是透過深入的市場分析和實用的投資策略，提升您的財經知識與技能。</p><p>我們的品牌由吉米理財學堂支持，提供最新的財經新聞、技術分析教學和實用工具，涵蓋股票、加密貨幣和個人理財等領域。加入我們，開啟您的財富成長之旅！</p>'
-        };
+        let settings = {};
 
         async function loadSettings() {
             try {
@@ -357,6 +339,7 @@
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
+                // 使用空值
                 updateSeo();
                 updateNavTabs();
                 updateFooter();
@@ -367,55 +350,55 @@
         }
 
         function updateSeo() {
-            document.querySelector('meta[name="description"]').content = settings.personalSeo.description;
-            document.querySelector('meta[name="keywords"]').content = settings.personalSeo.keywords;
-            document.querySelector('meta[name="author"]').content = settings.personalSeo.author;
-            document.title = settings.personalSeo.title;
-            document.querySelector('meta[property="og:title"]').content = settings.personalSeo.ogTitle;
-            document.querySelector('meta[property="og:description"]').content = settings.personalSeo.ogDescription;
-            document.querySelector('meta[property="og:url"]').content = settings.personalSeo.ogUrl;
+            document.querySelector('meta[name="description"]').content = settings.personalSeo?.description || '';
+            document.querySelector('meta[name="keywords"]').content = settings.personalSeo?.keywords || '';
+            document.querySelector('meta[name="author"]').content = settings.personalSeo?.author || '';
+            document.title = settings.personalSeo?.title || '';
+            document.querySelector('meta[property="og:title"]').content = settings.personalSeo?.ogTitle || '';
+            document.querySelector('meta[property="og:description"]').content = settings.personalSeo?.ogDescription || '';
+            document.querySelector('meta[property="og:url"]').content = settings.personalSeo?.ogUrl || '';
             document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "Organization",
-                "name": settings.personalSeo.title,
-                "url": settings.personalSeo.ogUrl,
-                "description": settings.personalSeo.description,
+                "name": settings.personalSeo?.title || '',
+                "url": settings.personalSeo?.ogUrl || '',
+                "description": settings.personalSeo?.description || '',
                 "publisher": {
                     "@type": "Organization",
-                    "name": settings.personalSeo.publisherName,
-                    "url": settings.personalSeo.publisherUrl
+                    "name": settings.personalSeo?.publisherName || '',
+                    "url": settings.personalSeo?.publisherUrl || ''
                 }
             }, null, 2);
         }
 
         function updateNavTabs() {
-            document.getElementById('nav-news').textContent = settings.newsTab;
-            document.getElementById('nav-technical').textContent = settings.technicalTab;
-            document.getElementById('nav-personal').textContent = settings.personalTab;
+            document.getElementById('nav-news').textContent = settings.newsTab || '';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '';
         }
 
         function updateFooter() {
             const footerLink = document.querySelector('footer a');
-            footerLink.textContent = settings.personalSeo.publisherName;
-            footerLink.href = settings.personalSeo.publisherUrl;
-            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.personalSeo.publisherUrl}" target="_blank">${settings.personalSeo.publisherName}</a>。保留所有權利。`;
+            footerLink.textContent = settings.personalSeo?.publisherName || '';
+            footerLink.href = settings.personalSeo?.publisherUrl || '';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.personalSeo?.publisherUrl || ''}" target="_blank">${settings.personalSeo?.publisherName || ''}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
-            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.personalSeo.ogUrl);
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.personalSeo?.ogUrl || '');
         }
 
         function updateContent() {
-            document.getElementById('personal-image').src = settings.personalImage;
-            document.getElementById('personal-content').innerHTML = settings.personalContent;
+            document.getElementById('personal-image').src = settings.personalImage || '';
+            document.getElementById('personal-content').innerHTML = settings.personalContent || '';
         }
 
         function updateShareButtons() {
             const shareButtons = document.querySelectorAll('.share-buttons a');
-            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
-            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
-            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/personal.html')}`;
-            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent(settings.personalSeo.title + '\n' + settings.baseUrl + '/personal.html')}`;
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.personalSeo?.title || '') + '\n' + (settings.baseUrl + '/personal.html' || ''))}`;
         }
 
         // 初始化
