@@ -53,20 +53,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Facebook SDK -->
     <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : 'YOUR_APP_ID', // 請替換為您的 Facebook App ID
-          xfbml      : true,
-          version    : 'v18.0'
-        });
-      };
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/zh_TW/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_APP_ID', // 請替換為您的 Facebook App ID
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,20 +81,9 @@
     <meta property="og:url" content="">
     <meta property="og:type" content="website">
     <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "",
-        "url": "",
-        "description": "",
-        "publisher": {
-            "@type": "Organization",
-            "name": "",
-            "url": ""
-        }
-    }
-    </script>
+    <script type="application/ld+json"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: Arial, 'Noto Sans TC', sans-serif;
@@ -114,7 +103,6 @@
             background-position: center;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
             width: 100%;
             height: 150px;
             padding: 20px;
@@ -272,21 +260,29 @@
             margin: 10px auto;
         }
         .article-share {
+            margin-top: 20px;
             margin-bottom: 20px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
         }
         .article-share a {
-            display: inline-block;
-            transition: opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2563eb;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .article-share a:hover {
-            opacity: 0.8;
+            background-color: #1e40af;
+            transform: scale(1.1);
         }
-        .article-share img {
-            width: 32px;
-            height: 32px;
+        .article-share i {
+            color: #ffffff;
+            font-size: 20px;
         }
         .article-comments {
             margin-top: 20px;
@@ -359,6 +355,33 @@
         a:hover {
             color: #3b82f6;
         }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-buttons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2563eb;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .share-buttons a:hover {
+            background-color: #1e40af;
+            transform: scale(1.1);
+        }
+        .share-buttons i {
+            color: #ffffff;
+            font-size: 20px;
+        }
         @media screen and (max-width: 768px) {
             .carousel {
                 height: 200px;
@@ -366,6 +389,10 @@
             .carousel-title {
                 font-size: 20px;
                 padding: 8px 10px;
+            }
+            .share-buttons {
+                bottom: 10px;
+                right: 10px;
             }
         }
     </style>
@@ -377,9 +404,9 @@
 
         <!-- 導航選單 -->
         <div class="nav-tabs">
-            <a href="index.html" class="nav-tab active" id="nav-news">XX新聞</a>
-            <a href="technical.html" class="nav-tab" id="nav-technical">XX教學</a>
-            <a href="personal.html" class="nav-tab" id="nav-personal">XX品牌介紹</a>
+            <a href="index.html" class="nav-tab active" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab" id="nav-personal"></a>
         </div>
 
         <!-- 輪播框 -->
@@ -401,6 +428,22 @@
         <footer>
             <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
         </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://line.me/R/msg/text/?股市企業研究院%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <i class="fab fa-line"></i>
+            </a>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -439,13 +482,13 @@
     <script>
         let settings = {
             baseUrl: 'https://test.github.io',
-            newsTab: 'XX新聞',
-            technicalTab: 'XX教學',
-            personalTab: 'XX品牌介紹',
+            newsTab: '財經新聞',
+            technicalTab: '技術分析學習',
+            personalTab: '品牌故事',
             seo: {
                 title: '股市企業研究院 - 最專業的財經與商業應用網站',
-                description: '專業最專業的財經與商業應用網站，提供最新資訊與深入文章，來自股市企業研究院。',
-                keywords: '最專業的財經與商業應用網站, 台股, 投資理財, 吉米理財學堂',
+                description: '提供最新財經資訊與深入文章，來自股市企業研究院，助您做出明智投資決策。',
+                keywords: '財經,投資,股票,理財,吉米理財學堂',
                 author: '股市企業研究院',
                 ogTitle: '股市企業研究院 - 最專業的財經與商業應用網站',
                 ogDescription: '探索最新財經資訊與深入文章，來自吉米理財學堂。',
@@ -465,9 +508,16 @@
                     updateNavTabs();
                     updateFooter();
                     updateFacebookComments();
+                    updateShareButtons();
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
+                // 使用預設值繼續
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateShareButtons();
             }
         }
 
@@ -500,12 +550,22 @@
         }
 
         function updateFooter() {
-            document.querySelector('footer a').textContent = settings.seo.publisherName;
-            document.querySelector('footer a').href = settings.seo.publisherUrl;
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.seo.publisherName;
+            footerLink.href = settings.seo.publisherUrl;
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.seo.publisherUrl}" target="_blank">${settings.seo.publisherName}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
             document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.baseUrl);
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl)}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl)}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl)}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent(settings.seo.title + '\n' + settings.baseUrl)}`;
         }
 
         async function loadContent() {
@@ -607,22 +667,22 @@
                 const fontSizeStyle = article.fontSize ? `font-size: ${article.fontSize};` : '';
                 let imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
                 content.innerHTML = `
-                    <div class="article-share">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share">
-                        </a>
-                        <a href="https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share">
-                        </a>
-                        <a href="https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share">
-                        </a>
-                        <a href="https://line.me/R/msg/text/?${encodeURIComponent(article.title + '\n' + settings.baseUrl + '#article-' + i)}" target="_blank">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share">
-                        </a>
-                    </div>
                     <div style="${fontSizeStyle}">${article.content}</div>
                     ${imagesHtml}
+                    <div class="article-share">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 X">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://line.me/R/msg/text/?${encodeURIComponent(article.title + '\n' + settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Line">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
                     <div class="article-comments">
                         <h3>文章留言</h3>
                         <div class="fb-comments" data-href="${settings.baseUrl + '#article-' + i}" data-width="100%" data-numposts="5"></div>
@@ -636,11 +696,9 @@
         function renderPagination(articles) {
             const pagination = document.getElementById('pagination');
             const totalArticles = articles.length;
-            const totalPages = Math.min(Math.ceil(totalArticles / articlesPerPage), 5);
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
             pagination.innerHTML = '';
 
-            // 顯示分頁，即使只有一頁
-            // 首頁按鈕
             const firstButton = document.createElement('button');
             firstButton.className = `page-button ${currentPage === 0 ? 'disabled' : ''}`;
             firstButton.innerText = '«';
@@ -652,7 +710,6 @@
             };
             pagination.appendChild(firstButton);
 
-            // 前一頁按鈕
             const prevButton = document.createElement('button');
             prevButton.className = `page-button ${currentPage === 0 ? 'disabled' : ''}`;
             prevButton.innerText = '<';
@@ -664,9 +721,14 @@
             };
             pagination.appendChild(prevButton);
 
-            // 頁數按鈕
-            const displayPages = Math.min(Math.ceil(totalArticles / articlesPerPage), 5);
-            for (let i = 0; i < displayPages; i++) {
+            const displayPages = Math.min(totalPages, 5);
+            let startPage = Math.max(0, currentPage - Math.floor(displayPages / 2));
+            let endPage = Math.min(startPage + displayPages, totalPages);
+            if (endPage - startPage < displayPages) {
+                startPage = Math.max(0, endPage - displayPages);
+            }
+
+            for (let i = startPage; i < endPage; i++) {
                 const pageButton = document.createElement('button');
                 pageButton.className = `page-button ${i === currentPage ? 'active' : ''}`;
                 pageButton.innerText = i + 1;
@@ -677,7 +739,6 @@
                 pagination.appendChild(pageButton);
             }
 
-            // 下一頁按鈕
             const nextButton = document.createElement('button');
             nextButton.className = `page-button ${currentPage === totalPages - 1 ? 'disabled' : ''}`;
             nextButton.innerText = '>';
@@ -689,7 +750,6 @@
             };
             pagination.appendChild(nextButton);
 
-            // 末頁按鈕
             const lastButton = document.createElement('button');
             lastButton.className = `page-button ${currentPage === totalPages - 1 ? 'disabled' : ''}`;
             lastButton.innerText = '»';
@@ -700,11 +760,6 @@
                 }
             };
             pagination.appendChild(lastButton);
-        }
-
-        function goToPage(page, articles) {
-            currentPage = Math.min(Math.max(page, 0), Math.min(Math.ceil(articles.length / articlesPerPage) - 1, 4));
-            renderArticles(articles);
         }
 
         function showArticle(index, articles) {
