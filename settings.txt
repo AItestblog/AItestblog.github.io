@@ -112,7 +112,7 @@
     "maxArticlesPerFeed": 5
   },
   "scheduleConfig": {
-    "time": "08:00",
+    "time": "01:05",
     "count": 1
   }
 }
