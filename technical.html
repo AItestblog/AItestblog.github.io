@@ -83,7 +83,7 @@
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=block" rel="stylesheet">
     <style>
         body {
             font-family: Arial, 'Noto Sans TC', sans-serif;
@@ -200,7 +200,7 @@
         }
         .accordion-item {
             margin-bottom: 10px;
-            border-bottom: 1px solid #D1D5DB;
+            border-bottom: 1px solid #d1d5db;
         }
         .accordion-header {
             background-color: #d1d5db;
@@ -252,12 +252,48 @@
             color: #000000;
             width: 100%;
         }
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #3b82f6;
+        }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
+        }
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
         @media screen and (max-width: 768px) {
             .content-section {
                 flex-direction: column;
             }
             .sidebar, .accordion {
                 width: 100%;
+            }
+            .share-buttons {
+                bottom: 10px;
+                left: 10px;
             }
         }
     </style>
@@ -269,9 +305,9 @@
 
         <!-- 導航選單 -->
         <div class="nav-tabs">
-            <a href="index.html" class="nav-tab" id="nav-news">XX新聞</a>
-            <a href="technical.html" class="nav-tab active" id="nav-technical">XX教學</a>
-            <a href="personal.html" class="nav-tab" id="nav-personal">XX品牌介紹</a>
+            <a href="index.html" class="nav-tab" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab active" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab" id="nav-personal"></a>
         </div>
 
         <!-- 內容區域 -->
@@ -296,6 +332,22 @@
         <footer>
             <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
         </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+            </a>
+            <a href="https://line.me/R/msg/text/?技術分析學習%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+            </a>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -333,10 +385,10 @@
 
     <script>
         let settings = {
-            baseUrl: 'https://test.github.io',
-            newsTab: 'XX新聞',
-            technicalTab: 'XX教學',
-            personalTab: 'XX品牌介紹',
+            baseUrl: 'https://stockcorp.github.io',
+            newsTab: '財經新聞',
+            technicalTab: '技術分析學習',
+            personalTab: '品牌故事',
             technicalSeo: {
                 title: '技術分析學習 - 股市企業研究院',
                 description: '技術分析學習 - 股市企業研究院',
@@ -344,7 +396,7 @@
                 author: '股市企業研究院',
                 ogTitle: '技術分析學習 - 股市企業研究院',
                 ogDescription: '技術分析學習 - 股市企業研究院',
-                ogUrl: 'https://test.github.io/technical.html',
+                ogUrl: 'https://stockcorp.github.io/technical.html',
                 publisherName: '吉米理財學堂',
                 publisherUrl: 'https://www.youtube.com/@吉米理財學堂',
                 publisherEmail: 'xbon510@gmail.com'
@@ -362,11 +414,18 @@
                     updateNavTabs();
                     updateFooter();
                     updateFacebookComments();
+                    updateShareButtons();
                     renderAccordion();
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                renderAccordion(); // 使用預設內容
+                // 使用預設值繼續
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateShareButtons();
+                renderAccordion();
             }
         }
 
@@ -401,12 +460,22 @@
         }
 
         function updateFooter() {
-            document.querySelector('footer a').textContent = settings.technicalSeo.publisherName;
-            document.querySelector('footer a').href = settings.technicalSeo.publisherUrl;
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.technicalSeo.publisherName;
+            footerLink.href = settings.technicalSeo.publisherUrl;
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo.publisherUrl}" target="_blank">${settings.technicalSeo.publisherName}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
             document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo.ogUrl);
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent(settings.technicalSeo.title + '\n' + settings.baseUrl + '/technical.html')}`;
         }
 
         function renderAccordion() {
