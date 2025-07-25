@@ -119,15 +119,10 @@
     },
     {
       "day": "周日",
-      "category": "商品市場",
+      "category": "美股",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://www.cmegroup.com/rss/market-news.rss",
-        "https://www.barchart.com/commodities/rss",
-        "https://www.investing.com/rss/commodities.rss",
-        "https://www.reuters.com/arc/outboundfeeds/rss/commodities/",
-        "https://www.bloomberg.com/feed/podcast/commodities.xml"
+        "https://www.marketwatch.com/rss/topstories",
+        "https://www.cnbc.com/id/100003114/device/rss/rss.html"
       ]
     }
   ],
