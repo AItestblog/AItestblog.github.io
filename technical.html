@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3440199491716602" crossorigin="anonymous"></script>
@@ -230,6 +191,14 @@
             padding: 10px;
             border-radius: 4px;
             overflow-x: auto;
+            white-space: pre-wrap; /* 確保預格式化文本換行 */
+        }
+        .accordion-content ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        .accordion-content ul li {
+            margin-bottom: 5px;
         }
         .facebook-comments {
             width: 100%;
@@ -350,7 +319,7 @@
         </div>
     </div>
 
-    <script type="text/javascript">
+    <script>
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
@@ -381,9 +350,7 @@
             }
             return gk_fileData[filename] || "";
         }
-    </script>
 
-    <script>
         let settings = {};
         let accordionContent = [];
 
@@ -403,7 +370,6 @@
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                // 使用空值
                 updateSeo();
                 updateNavTabs();
                 updateFooter();
@@ -432,19 +398,19 @@
             document.querySelector('meta[name="description"]').content = settings.technicalSeo?.description || '';
             document.querySelector('meta[name="keywords"]').content = settings.technicalSeo?.keywords || '';
             document.querySelector('meta[name="author"]').content = settings.technicalSeo?.author || '';
-            document.title = settings.technicalSeo?.title || '';
-            document.querySelector('meta[property="og:title"]').content = settings.technicalSeo?.ogTitle || '';
+            document.title = settings.technicalSeo?.title || '技術分析學習 - 股市企業研究院';
+            document.querySelector('meta[property="og:title"]').content = settings.technicalSeo?.ogTitle || '技術分析學習 - 股市企業研究院';
             document.querySelector('meta[property="og:description"]').content = settings.technicalSeo?.ogDescription || '';
-            document.querySelector('meta[property="og:url"]').content = settings.technicalSeo?.ogUrl || '';
+            document.querySelector('meta[property="og:url"]').content = settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html';
             document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "WebApplication",
-                "name": settings.technicalSeo?.title || '',
-                "url": settings.technicalSeo?.ogUrl || '',
+                "name": settings.technicalSeo?.title || '技術分析學習 - 股市企業研究院',
+                "url": settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html',
                 "description": settings.technicalSeo?.description || '',
                 "publisher": {
                     "@type": "Organization",
-                    "name": settings.technicalSeo?.publisherName || '',
+                    "name": settings.technicalSeo?.publisherName || '股市企業研究院',
                     "url": settings.technicalSeo?.publisherUrl || '',
                     "email": settings.technicalSeo?.publisherEmail || ''
                 },
@@ -453,28 +419,28 @@
         }
 
         function updateNavTabs() {
-            document.getElementById('nav-news').textContent = settings.newsTab || '';
-            document.getElementById('nav-technical').textContent = settings.technicalTab || '';
-            document.getElementById('nav-personal').textContent = settings.personalTab || '';
+            document.getElementById('nav-news').textContent = settings.newsTab || '新聞';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '技術分析';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '個人';
         }
 
         function updateFooter() {
             const footerLink = document.querySelector('footer a');
-            footerLink.textContent = settings.technicalSeo?.publisherName || '';
-            footerLink.href = settings.technicalSeo?.publisherUrl || '';
-            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo?.publisherUrl || ''}" target="_blank">${settings.technicalSeo?.publisherName || ''}</a>。保留所有權利。`;
+            footerLink.textContent = settings.technicalSeo?.publisherName || '股市企業研究院';
+            footerLink.href = settings.technicalSeo?.publisherUrl || 'https://stockcorp.github.io';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo?.publisherUrl || 'https://stockcorp.github.io'}" target="_blank">${settings.technicalSeo?.publisherName || '股市企業研究院'}</a>。保留所有權利。`;
         }
 
         function updateFacebookComments() {
-            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo?.ogUrl || '');
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html');
         }
 
         function updateShareButtons() {
             const shareButtons = document.querySelectorAll('.share-buttons a');
-            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
-            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
-            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || '')}`;
-            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.technicalSeo?.title || '') + '\n' + (settings.baseUrl + '/technical.html' || ''))}`;
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.technicalSeo?.title || '技術分析學習') + '\n' + (settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html'))}`;
         }
 
         function renderAccordion() {
@@ -486,21 +452,29 @@
             accordionContent.forEach((item, index) => {
                 // 側邊欄選單
                 const li = document.createElement('li');
-                li.innerHTML = `<a href="#${item.id || ''}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id || ''}')">${item.title || ''}</a>`;
+                li.innerHTML = `<a href="#${item.id}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id}')">${item.title}</a>`;
                 sidebarMenu.appendChild(li);
 
                 // 手風琴項目
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item';
-                accordionItem.id = item.id || '';
+                accordionItem.id = item.id;
                 accordionItem.innerHTML = `
-                    <div class="accordion-header" onclick="toggleAccordion('${item.id || ''}')">${item.title || ''}</div>
+                    <div class="accordion-header" onclick="toggleAccordion('${item.id}')">${item.title}</div>
                     <div class="accordion-content ${index === 0 ? 'active' : ''}">
-                        ${item.content || ''}
+                        ${item.content}
                     </div>
                 `;
                 accordionContainer.appendChild(accordionItem);
             });
+
+            // 處理 URL hash
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                toggleAccordion(hash);
+            } else if (accordionContent.length > 0) {
+                toggleAccordion(accordionContent[0].id);
+            }
         }
 
         function toggleAccordion(id) {
@@ -508,19 +482,12 @@
             const allContents = document.querySelectorAll('.accordion-content');
             const allHeaders = document.querySelectorAll('.sidebar a');
 
-            allContents.forEach(item => {
-                item.classList.remove('active');
-            });
-
-            allHeaders.forEach(header => {
-                header.classList.remove('active');
-            });
+            allContents.forEach(item => item.classList.remove('active'));
+            allHeaders.forEach(header => header.classList.remove('active'));
 
             content.classList.add('active');
             const correspondingLink = document.querySelector(`.sidebar a[href="#${id}"]`);
-            if (correspondingLink) {
-                correspondingLink.classList.add('active');
-            }
+            if (correspondingLink) correspondingLink.classList.add('active');
         }
 
         function showAccordion(id) {
@@ -530,6 +497,14 @@
 
         // 初始化
         loadSettings().then(loadTechWiki);
+
+        // 確保 XLSX 庫加載（如果需要）
+        if (typeof XLSX === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
+            script.onload = loadTechWiki;
+            document.head.appendChild(script);
+        }
     </script>
 </body>
 </html>
