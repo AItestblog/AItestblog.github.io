@@ -23,37 +23,25 @@ def fetch_random_article(settings):
     daily = settings.get("dailyCategories", [])
     feeds = daily[weekday].get("feeds", []) if len(daily) > weekday else []
     max_articles = settings.get("contentConfig", {}).get("maxArticlesPerFeed", 5)
-    
-    for url in feeds:
-        try:
-            feed = feedparser.parse(url)
-            for entry in feed.entries[:max_articles]:
-                title = entry.get("title", "").strip()
-                if not title:
-                    continue
-                articles.append({
-                    "title": title,
-                    "summary": entry.get("summary", "").strip(),
-                    "link": entry.get("link", "").strip()
-                })
-        except Exception as e:
-            print(f"⚠️ RSS 錯誤：{url} → {e}")
 
-    if articles:
-        print(f"✅ 成功抓到 {len(articles)} 則新聞")
-        return random.choice(articles)
-    
-    # 若沒抓到任何新聞，決定是否使用 fallback
-    if settings.get("contentConfig", {}).get("useFallbackIfEmpty", True):
-        print("⚠️ 無新聞可用，啟用預設假新聞")
-        return {
-            "title": "Global markets show mixed trends amid Fed uncertainty",
-            "summary": "Stocks in Asia gained slightly while U.S. markets await direction from upcoming earnings and Federal Reserve decisions.",
-            "link": "https://example.com/fallback"
-        }
-    else:
-        print("❌ 無新聞且 fallback 關閉，程式結束")
+    for url in feeds:
+        feed = feedparser.parse(url)
+        for entry in feed.entries[:max_articles]:
+            title = entry.get("title", "").strip()
+            if not title:
+                continue
+            articles.append({
+                "title": title,
+                "summary": entry.get("summary", "").strip(),
+                "link": entry.get("link", "").strip()
+            })
+
+    if not articles:
+        print("❌ 沒抓到任何新聞，請檢查 RSS 來源或稍後再試。")
         exit()
+
+    print(f"✅ 抓到 {len(articles)} 則有效新聞")
+    return random.choice(articles)
 
 def extract_person_name(text, settings):
     prompt = settings.get("prompts", {}).get("personExtraction", "").format(text=text)
@@ -74,12 +62,7 @@ def summarize_with_gpt(news, img_name, settings):
         word_count_min=settings.get("contentConfig", {}).get("wordCountMin", 1200),
         word_count_max=settings.get("contentConfig", {}).get("wordCountMax", 2000)
     )
-    res = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
-        max_tokens=4096
-    )
+    res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": prompt}], temperature=0.7, max_tokens=4096)
     article = res.choices[0].message.content.strip().lstrip("```html").rstrip("```")
     image_tag = f'<img src="/{settings.get("contentConfig", {}).get("imagePath", "img/content/")}{img_name}">'
     parts = article.split("</p>", 1)
@@ -88,18 +71,14 @@ def summarize_with_gpt(news, img_name, settings):
 
 def generate_image(prompt_text, person_name, settings):
     full_prompt = settings.get("imagePrompts", {}).get("withPerson", "").format(person_name=person_name) if person_name else settings.get("imagePrompts", {}).get("withoutPerson", "").format(prompt_text=prompt_text[:200])
-    try:
-        res = client.images.generate(
-            model=settings.get("imageConfig", {}).get("model", "dall-e-3"),
-            prompt=full_prompt,
-            size=settings.get("imageConfig", {}).get("size", "1024x1024"),
-            quality=settings.get("imageConfig", {}).get("quality", "standard"),
-            n=1
-        )
-        return requests.get(res.data[0].url).content
-    except Exception as e:
-        print("⚠️ 圖片生成錯誤：", e)
-        return None
+    res = client.images.generate(
+        model=settings.get("imageConfig", {}).get("model", "dall-e-3"),
+        prompt=full_prompt,
+        size=settings.get("imageConfig", {}).get("size", "1024x1024"),
+        quality=settings.get("imageConfig", {}).get("quality", "standard"),
+        n=1
+    )
+    return requests.get(res.data[0].url).content
 
 def get_next_image_id(settings):
     try:
@@ -127,11 +106,8 @@ def main():
     img_path = f"{settings.get('contentConfig', {}).get('imagePath', 'img/content/')}{img_name}"
     os.makedirs(os.path.dirname(img_path), exist_ok=True)
     image_bytes = generate_image(title, person, settings)
-    if image_bytes:
-        with open(img_path, "wb") as f:
-            f.write(image_bytes)
-    else:
-        print("⚠️ 圖片生成失敗，跳過儲存")
+    with open(img_path, "wb") as f:
+        f.write(image_bytes)
 
     today = datetime.now().strftime('%Y-%m-%d')
     block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
