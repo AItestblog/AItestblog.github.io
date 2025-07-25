@@ -23,11 +23,29 @@ def fetch_random_article(settings):
     daily = settings.get("dailyCategories", [])
     feeds = daily[weekday].get("feeds", []) if len(daily) > weekday else []
     max_articles = settings.get("contentConfig", {}).get("maxArticlesPerFeed", 5)
+    
     for url in feeds:
         feed = feedparser.parse(url)
         for entry in feed.entries[:max_articles]:
-            articles.append({"title": entry.title, "summary": entry.get("summary", ""), "link": entry.link})
-    return random.choice(articles) if articles else {"title": "找不到新聞", "summary": "請檢查來源或稍後重試。", "link": ""}
+            title = entry.get("title", "").strip()
+            if not title:
+                continue  # 跳過沒有標題的項目
+            articles.append({
+                "title": title,
+                "summary": entry.get("summary", "").strip(),
+                "link": entry.get("link", "").strip()
+            })
+    
+    if articles:
+        print(f"✅ 抓到 {len(articles)} 則有效新聞")
+        return random.choice(articles)
+    else:
+        print("⚠️ 找不到有效新聞，使用預設新聞替代")
+        return {
+            "title": "Global markets show mixed trends amid Fed uncertainty",
+            "summary": "Stocks in Asia gained slightly while U.S. markets await direction from upcoming earnings and Federal Reserve decisions.",
+            "link": "https://example.com/fallback"
+        }
 
 def extract_person_name(text, settings):
     prompt = settings.get("prompts", {}).get("personExtraction", "").format(text=text)
@@ -36,6 +54,8 @@ def extract_person_name(text, settings):
     return name if name != "無" else None
 
 def generate_chinese_title(raw_title, settings):
+    if not raw_title.strip():
+        return "（無法解析標題）"
     prompt = settings.get("prompts", {}).get("titleTranslation", "").format(raw_title=raw_title)
     res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": prompt}], temperature=0.7)
     return res.choices[0].message.content.strip()
