@@ -89,7 +89,9 @@
     {
       "day": "周日",
       "category": "",
-      "feeds": [],
+      "feeds": [
+        "幹你媽的哩"
+      ],
       "imageCount": 1,
       "aiPrompt": "",
       "wordCount": ""
