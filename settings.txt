@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://stockcorp.github.io",
   "newsTab": "財經新聞",
-  "technicalTab": "技術分析學習",
+  "technicalTab": "糙什麼ˊ",
   "personalTab": "品牌故事",
   "seo": {
     "title": "運動體育報",
