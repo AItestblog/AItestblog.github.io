@@ -107,30 +107,34 @@ def main():
     settings = load_settings()
     category = get_today_category(settings)
     print(f"▶️ 今日分類：{category}")
-    news = fetch_random_article(settings)
-    img_id = get_next_image_id(settings)
-    img_name = f"{img_id}.jpg"
-    img_alt = f"{img_id}-1.jpg"
-    title = generate_chinese_title(news["title"], settings)
-    person = extract_person_name(news["title"] + news["summary"], settings)
-    article = summarize_with_gpt(news, img_name, settings)
-
-    img_path = f"{settings.get('contentConfig', {}).get('imagePath', 'img/content/')}{img_name}"
-    os.makedirs(os.path.dirname(img_path), exist_ok=True)
-    image_bytes = generate_image(title, person, settings)
-    with open(img_path, "wb") as f:
-        f.write(image_bytes)
-
-    today = datetime.now().strftime('%Y-%m-%d')
-    block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
+    count = settings.get("scheduleConfig", {}).get("count", 1)  # 讀取 count，預設 1
     old = ""
     if os.path.exists("content.txt"):
         with open("content.txt", "r", encoding="utf-8") as f:
             old = f.read()
-    with open("content.txt", "w", encoding="utf-8") as f:
-        f.write(block + old)
+    new_blocks = ""  # 收集所有新文章的 block
+    for _ in range(count):  # 根據 count 循環生成
+        news = fetch_random_article(settings)
+        img_id = get_next_image_id(settings)
+        img_name = f"{img_id}.jpg"
+        img_alt = f"{img_id}-1.jpg"
+        title = generate_chinese_title(news["title"], settings)
+        person = extract_person_name(news["title"] + news["summary"], settings)
+        article = summarize_with_gpt(news, img_name, settings)
 
-    print(f"✅ 產出完成：{img_path} | 人物判斷：{person or '無'}")
+        img_path = f"{settings.get('contentConfig', {}).get('imagePath', 'img/content/')}{img_name}"
+        os.makedirs(os.path.dirname(img_path), exist_ok=True)
+        image_bytes = generate_image(title, person, settings)
+        with open(img_path, "wb") as f:
+            f.write(image_bytes)
+
+        today = datetime.now().strftime('%Y-%m-%d')
+        block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
+        new_blocks += block  # 累積新文章
+        print(f"✅ 產出完成（第 {_+1} 篇）：{img_path} | 人物判斷：{person or '無'}")
+    
+    with open("content.txt", "w", encoding="utf-8") as f:
+        f.write(new_blocks + old)  # 一次寫入所有新文章 + 舊內容
 
 if __name__ == "__main__":
     main()
