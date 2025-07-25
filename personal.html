@@ -1,0 +1,408 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3440199491716602" crossorigin="anonymous"></script>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q32FFR42XT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q32FFR42XT');
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_APP_ID', // 請替換為您的 Facebook App ID
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <title></title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=block" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, 'Noto Sans TC', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f9fc;
+            color: #333333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background-image: url('/img/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        @media screen and (max-width: 600px) {
+            .header {
+                height: 80px;
+                padding: 10px;
+                background-size: contain;
+            }
+        }
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            .header {
+                height: 100px;
+                padding: 15px;
+            }
+        }
+        .nav-tabs {
+            display: flex;
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            text-decoration: none;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .nav-tab:hover {
+            background-color: #1e40af;
+        }
+        .nav-tab.active {
+            background-color: #1d4ed8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .content-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .personal-image {
+            display: block;
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+        }
+        .personal-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #000000;
+        }
+        .personal-content h3 {
+            font-size: 20px;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .personal-content p, .personal-content ul {
+            margin: 10px 0;
+        }
+        .personal-content ul {
+            padding-left: 20px;
+        }
+        .facebook-comments {
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .facebook-comments h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #2563eb;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #000000;
+            width: 100%;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #3b82f6;
+        }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
+        }
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
+        @media screen and (max-width: 768px) {
+            .personal-image {
+                max-width: 150px;
+            }
+            .share-buttons {
+                bottom: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner -->
+        <div class="header"></div>
+
+        <!-- 導航選單 -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab active" id="nav-personal"></a>
+        </div>
+
+        <!-- 內容區域 -->
+        <div class="content-section">
+            <img id="personal-image" class="personal-image" src="" alt="個人照片或品牌LOGO">
+            <div id="personal-content" class="personal-content"></div>
+        </div>
+
+        <!-- Facebook 留言板 -->
+        <div class="facebook-comments">
+            <h2>留言板</h2>
+            <div class="fb-comments" data-href="" data-width="100%" data-numposts="5"></div>
+        </div>
+
+        <!-- 頁腳 -->
+        <footer>
+            <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
+        </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+            </a>
+            <a href="https://line.me/R/msg/text/?品牌介紹%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+            </a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+
+    <script>
+        let settings = {};
+
+        async function loadSettings() {
+            try {
+                const response = await fetch('settings.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    settings = JSON.parse(text);
+                    updateSeo();
+                    updateNavTabs();
+                    updateFooter();
+                    updateFacebookComments();
+                    updateContent();
+                    updateShareButtons();
+                }
+            } catch (error) {
+                console.error('載入 settings.txt 失敗:', error);
+                // 使用空值
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateContent();
+                updateShareButtons();
+            }
+        }
+
+        function updateSeo() {
+            document.querySelector('meta[name="description"]').content = settings.personalSeo?.description || '';
+            document.querySelector('meta[name="keywords"]').content = settings.personalSeo?.keywords || '';
+            document.querySelector('meta[name="author"]').content = settings.personalSeo?.author || '';
+            document.title = settings.personalSeo?.title || '';
+            document.querySelector('meta[property="og:title"]').content = settings.personalSeo?.ogTitle || '';
+            document.querySelector('meta[property="og:description"]').content = settings.personalSeo?.ogDescription || '';
+            document.querySelector('meta[property="og:url"]').content = settings.personalSeo?.ogUrl || '';
+            document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": settings.personalSeo?.title || '',
+                "url": settings.personalSeo?.ogUrl || '',
+                "description": settings.personalSeo?.description || '',
+                "publisher": {
+                    "@type": "Organization",
+                    "name": settings.personalSeo?.publisherName || '',
+                    "url": settings.personalSeo?.publisherUrl || ''
+                }
+            }, null, 2);
+        }
+
+        function updateNavTabs() {
+            document.getElementById('nav-news').textContent = settings.newsTab || '';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '';
+        }
+
+        function updateFooter() {
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.personalSeo?.publisherName || '';
+            footerLink.href = settings.personalSeo?.publisherUrl || '';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.personalSeo?.publisherUrl || ''}" target="_blank">${settings.personalSeo?.publisherName || ''}</a>。保留所有權利。`;
+        }
+
+        function updateFacebookComments() {
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.personalSeo?.ogUrl || '');
+        }
+
+        function updateContent() {
+            document.getElementById('personal-image').src = settings.personalImage || '';
+            document.getElementById('personal-content').innerHTML = settings.personalContent || '';
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.personalSeo?.title || '') + '\n' + (settings.baseUrl + '/personal.html' || ''))}`;
+        }
+
+        // 初始化
+        loadSettings();
+    </script>
+</body>
+</html>

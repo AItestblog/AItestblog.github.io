@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3440199491716602" crossorigin="anonymous"></script>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q32FFR42XT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q32FFR42XT');
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_APP_ID', // 請替換為您的 Facebook App ID
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <title></title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=block" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, 'Noto Sans TC', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f9fc;
+            color: #333333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header {
+            text-align: center;
+            background-image: url('/img/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        @media screen and (max-width: 600px) {
+            .header {
+                height: 80px;
+                padding: 10px;
+                background-size: contain;
+            }
+        }
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            .header {
+                height: 100px;
+                padding: 15px;
+            }
+        }
+        .nav-tabs {
+            display: flex;
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            text-decoration: none;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .nav-tab:hover {
+            background-color: #1e40af;
+        }
+        .nav-tab.active {
+            background-color: #1d4ed8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .content-section {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #333333;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+        .accordion {
+            width: 75%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .accordion-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d1d5db;
+        }
+        .accordion-header {
+            background-color: #d1d5db;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #b0b7c2;
+        }
+        .accordion-content {
+            display: none;
+            padding: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #000000;
+        }
+        .accordion-content.active {
+            display: block;
+        }
+        .accordion-content pre {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap; /* 確保預格式化文字換行 */
+        }
+        .accordion-content h3 {
+            margin-top: 10px;
+            color: #2563eb;
+        }
+        .accordion-content ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        .accordion-content ul li {
+            margin-bottom: 5px;
+        }
+        .facebook-comments {
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .facebook-comments h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #2563eb;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #000000;
+            width: 100%;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #3b82f6;
+        }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
+        }
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
+        @media screen and (max-width: 768px) {
+            .content-section {
+                flex-direction: column;
+            }
+            .sidebar, .accordion {
+                width: 100%;
+            }
+            .share-buttons {
+                bottom: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner -->
+        <div class="header"></div>
+
+        <!-- 導航選單 -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab active" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab" id="nav-personal"></a>
+        </div>
+
+        <!-- 內容區域 -->
+        <div class="content-section">
+            <!-- 左側目錄 -->
+            <div class="sidebar">
+                <h2>技術分析指標</h2>
+                <ul id="sidebar-menu"></ul>
+            </div>
+
+            <!-- 右側手風琴 -->
+            <div class="accordion" id="accordion-container"></div>
+        </div>
+
+        <!-- Facebook 留言板 -->
+        <div class="facebook-comments">
+            <h2>留言板</h2>
+            <div class="fb-comments" data-href="" data-width="100%" data-numposts="5"></div>
+        </div>
+
+        <!-- 頁腳 -->
+        <footer>
+            <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
+        </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+            </a>
+            <a href="https://line.me/R/msg/text/?技術分析學習%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+            </a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+
+    <script>
+        let settings = {};
+        let accordionContent = [];
+
+        async function loadSettings() {
+            try {
+                const response = await fetch('settings.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    settings = JSON.parse(text);
+                    updateSeo();
+                    updateNavTabs();
+                    updateFooter();
+                    updateFacebookComments();
+                    updateShareButtons();
+                } else {
+                    throw new Error('無法載入 settings.txt');
+                }
+            } catch (error) {
+                console.error('載入 settings.txt 失敗:', error);
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateShareButtons();
+            }
+        }
+
+        async function loadTechWiki() {
+            try {
+                const response = await fetch('tech-wiki.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    accordionContent = JSON.parse(text);
+                    renderAccordion();
+                } else {
+                    throw new Error('無法載入 tech-wiki.txt');
+                }
+            } catch (error) {
+                console.error('載入 tech-wiki.txt 失敗:', error);
+                renderAccordion(); // 使用空陣列作為預設值
+            }
+        }
+
+        function updateSeo() {
+            document.querySelector('meta[name="description"]').content = settings.technicalSeo?.description || '';
+            document.querySelector('meta[name="keywords"]').content = settings.technicalSeo?.keywords || '';
+            document.querySelector('meta[name="author"]').content = settings.technicalSeo?.author || '';
+            document.title = settings.technicalSeo?.title || '技術分析學習 - 股市企業研究院';
+            document.querySelector('meta[property="og:title"]').content = settings.technicalSeo?.ogTitle || '技術分析學習 - 股市企業研究院';
+            document.querySelector('meta[property="og:description"]').content = settings.technicalSeo?.ogDescription || '';
+            document.querySelector('meta[property="og:url"]').content = settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html';
+            document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": settings.technicalSeo?.title || '技術分析學習 - 股市企業研究院',
+                "url": settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html',
+                "description": settings.technicalSeo?.description || '',
+                "publisher": {
+                    "@type": "Organization",
+                    "name": settings.technicalSeo?.publisherName || '股市企業研究院',
+                    "url": settings.technicalSeo?.publisherUrl || '',
+                    "email": settings.technicalSeo?.publisherEmail || ''
+                },
+                "applicationCategory": "Finance"
+            }, null, 2);
+        }
+
+        function updateNavTabs() {
+            document.getElementById('nav-news').textContent = settings.newsTab || '新聞';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '技術分析';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '個人';
+        }
+
+        function updateFooter() {
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.technicalSeo?.publisherName || '股市企業研究院';
+            footerLink.href = settings.technicalSeo?.publisherUrl || 'https://stockcorp.github.io';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.technicalSeo?.publisherUrl || 'https://stockcorp.github.io'}" target="_blank">${settings.technicalSeo?.publisherName || '股市企業研究院'}</a>。保留所有權利。`;
+        }
+
+        function updateFacebookComments() {
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.technicalSeo?.ogUrl || 'https://stockcorp.github.io/technical.html');
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.technicalSeo?.title || '技術分析學習') + '\n' + (settings.baseUrl + '/technical.html' || 'https://stockcorp.github.io/technical.html'))}`;
+        }
+
+        function renderAccordion() {
+            const sidebarMenu = document.getElementById('sidebar-menu');
+            const accordionContainer = document.getElementById('accordion-container');
+            sidebarMenu.innerHTML = '';
+            accordionContainer.innerHTML = '';
+
+            accordionContent.forEach((item, index) => {
+                // 側邊欄選單
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `#${item.id || ''}`;
+                link.className = index === 0 ? 'active' : '';
+                link.textContent = item.title || '';
+                link.onclick = () => showAccordion(item.id || '');
+                li.appendChild(link);
+                sidebarMenu.appendChild(li);
+
+                // 手風琴項目
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+                accordionItem.id = item.id || '';
+                const header = document.createElement('div');
+                header.className = 'accordion-header';
+                header.textContent = item.title || '';
+                header.onclick = () => toggleAccordion(item.id || '');
+                const content = document.createElement('div');
+                content.className = 'accordion-content';
+                if (index === 0) content.classList.add('active');
+                content.innerHTML = item.content || ''; // 確保作為 HTML 渲染
+                accordionItem.appendChild(header);
+                accordionItem.appendChild(content);
+                accordionContainer.appendChild(accordionItem);
+            });
+
+            // 處理 URL hash
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                toggleAccordion(hash);
+            } else if (accordionContent.length > 0) {
+                toggleAccordion(accordionContent[0].id);
+            }
+        }
+
+        function toggleAccordion(id) {
+            const content = document.querySelector(`#${id} .accordion-content`);
+            const allContents = document.querySelectorAll('.accordion-content');
+            const allHeaders = document.querySelectorAll('.sidebar a');
+
+            allContents.forEach(item => item.classList.remove('active'));
+            allHeaders.forEach(header => header.classList.remove('active'));
+
+            if (content) content.classList.add('active');
+            const correspondingLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+            if (correspondingLink) correspondingLink.classList.add('active');
+        }
+
+        function showAccordion(id) {
+            toggleAccordion(id);
+            window.location.hash = id;
+        }
+
+        // 初始化
+        loadSettings().then(loadTechWiki);
+
+        // 確保 XLSX 庫加載（如果需要）
+        if (typeof XLSX === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
+            script.onload = loadTechWiki;
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
