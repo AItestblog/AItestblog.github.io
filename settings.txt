@@ -124,5 +124,6 @@
   "scheduleConfig": {
     "time": "08:00",
     "count": 1
-  }
+  },
+  "bannerImage": "https://aitestblog.github.io/img/banner.jpg"
 }
