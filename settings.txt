@@ -108,13 +108,8 @@
       "day": "周六",
       "category": "外匯",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
         "https://www.forexlive.com/feed/",
-        "https://www.dailyfx.com/feeds/market-news",
-        "https://www.fxstreet.com/rss",
-        "https://www.investing.com/rss/forex.rss",
-        "https://www.babypips.com/news/rss"
+        "https://www.forexlive.com/feed/"
       ]
     },
     {
