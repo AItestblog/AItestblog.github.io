@@ -1558,7 +1558,26 @@
                             reader.onload = () => resolve(reader.result.split(',')[1]);
                             reader.readAsDataURL(file);
                         });
-                        const filename = 'personal.jpg';
+                        const filename = 'burst-logo.jpg';
+                        let imageSha = null;
+                        try {
+                            console.log(`檢查現有圖片 ${filename} 以獲取 SHA...`);
+                            const imageCheckResponse = await fetch(`${apiBaseUrl}contents/img/${filename}`, {
+                                headers: {
+                                    'Authorization': `token ${pat}`,
+                                    'Accept': 'application/vnd.github.v3+json'
+                                }
+                            });
+                            if (imageCheckResponse.ok) {
+                                const imageData = await imageCheckResponse.json();
+                                imageSha = imageData.sha;
+                            }
+                        } catch (error) {
+                            if (!error.message.includes('404')) {
+                                throw error;
+                            }
+                            // 如果 404，檔案不存在，無需 SHA
+                        }
                         const imageResponse = await fetch(`${apiBaseUrl}contents/img/${filename}`, {
                             method: 'PUT',
                             headers: {
@@ -1568,13 +1587,15 @@
                             },
                             body: JSON.stringify({
                                 message: `Upload personal image: ${filename}`,
-                                content: base64Data
+                                content: base64Data,
+                                sha: imageSha // 包含 SHA 以支援更新現有檔案
                             })
                         });
                         if (imageResponse.ok) {
                             settings.personalImage = `${baseUrl}/img/${filename}`;
                         } else {
-                            throw new Error('上傳個人圖片失敗');
+                            const errorData = await imageResponse.json().catch(() => ({}));
+                            throw new Error(errorData.message || '上傳個人圖片失敗');
                         }
                     }
                     const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(settings, null, 2))));
