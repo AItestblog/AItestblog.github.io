@@ -2,7 +2,7 @@ name: 每日自動更新新聞與圖片
 
 on:
   schedule:
-    - cron: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.cron }}
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -24,12 +24,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Set timezone to Asia/Taipei
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Taipei"
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.pythonVersion }}
       - name: 安裝依賴套件
-        run: pip install openai requests feedparser
+        run: pip install openai requests feedparser pytz
       - name: 執行每日新聞生成腳本
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
