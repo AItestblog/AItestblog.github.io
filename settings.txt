@@ -114,10 +114,10 @@
     },
     {
       "day": "周日",
-      "category": "美股",
+      "category": "黃金",
       "feeds": [
-        "https://www.marketwatch.com/rss/topstories",
-        "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+        "https://www.kitco.com/news/category/mining/rss",
+        "https://www.kitco.com/rss/gold-live.xml"
       ]
     }
   ],
