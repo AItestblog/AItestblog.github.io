@@ -2,7 +2,7 @@ name: 每日自動更新新聞與圖片
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # 台灣時間每天 08:00 (UTC 00:00)
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -18,12 +18,12 @@ jobs:
       - name: Load settings
         id: load-settings
         run: |
-          SETTINGS=$(jq -c . settings.txt | base64)
+          SETTINGS=$(jq -c . settings.txt | base64 -w 0)
           echo "settings=$SETTINGS" >> $GITHUB_OUTPUT
 
   build:
     needs: load-settings
-    runs-on: ubuntu-latest  # Fallback: 因為 settings.txt 無 runner，使用 ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -31,7 +31,6 @@ jobs:
         id: decode-settings
         run: |
           echo "${{ needs.load-settings.outputs.settings }}" | base64 -d > decoded_settings.json
-          # 讀取 commitMessage (fallback: 'Update news')
           COMMIT_MESSAGE=$(jq -r '.scheduleConfig.commitMessage // "Update news"' decoded_settings.json)
           echo "commit_message=$COMMIT_MESSAGE" >> $GITHUB_OUTPUT
       - name: Set timezone to Asia/Taipei
@@ -41,7 +40,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # Fallback: 因為 settings.txt 無 pythonVersion，使用 3.9
+          python-version: '3.9'
       - name: 安裝依賴套件
         run: pip install openai requests feedparser pytz
       - name: 執行每日新聞生成腳本
