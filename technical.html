@@ -191,7 +191,11 @@
             padding: 10px;
             border-radius: 4px;
             overflow-x: auto;
-            white-space: pre-wrap;
+            white-space: pre-wrap; /* 確保預格式化文字換行 */
+        }
+        .accordion-content h3 {
+            margin-top: 10px;
+            color: #2563eb;
         }
         .accordion-content ul {
             margin-left: 20px;
@@ -199,10 +203,6 @@
         }
         .accordion-content ul li {
             margin-bottom: 5px;
-        }
-        .accordion-content h3 {
-            margin-top: 10px;
-            color: #2563eb;
         }
         .facebook-comments {
             width: 100%;
@@ -323,7 +323,7 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
@@ -354,7 +354,9 @@
             }
             return gk_fileData[filename] || "";
         }
+    </script>
 
+    <script>
         let settings = {};
         let accordionContent = [];
 
@@ -456,21 +458,28 @@
             accordionContent.forEach((item, index) => {
                 // 側邊欄選單
                 const li = document.createElement('li');
-                li.innerHTML = `<a href="#${item.id}" class="${index === 0 ? 'active' : ''}" onclick="showAccordion('${item.id}')">${item.title}</a>`;
+                const link = document.createElement('a');
+                link.href = `#${item.id || ''}`;
+                link.className = index === 0 ? 'active' : '';
+                link.textContent = item.title || '';
+                link.onclick = () => showAccordion(item.id || '');
+                li.appendChild(link);
                 sidebarMenu.appendChild(li);
 
                 // 手風琴項目
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item';
-                accordionItem.id = item.id;
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'accordion-content';
-                contentDiv.classList.add(index === 0 ? 'active' : '');
-                contentDiv.innerHTML = item.content; // 確保作為 HTML 渲染
-                accordionItem.innerHTML = `
-                    <div class="accordion-header" onclick="toggleAccordion('${item.id}')">${item.title}</div>
-                `;
-                accordionItem.appendChild(contentDiv);
+                accordionItem.id = item.id || '';
+                const header = document.createElement('div');
+                header.className = 'accordion-header';
+                header.textContent = item.title || '';
+                header.onclick = () => toggleAccordion(item.id || '');
+                const content = document.createElement('div');
+                content.className = 'accordion-content';
+                if (index === 0) content.classList.add('active');
+                content.innerHTML = item.content || ''; // 確保作為 HTML 渲染
+                accordionItem.appendChild(header);
+                accordionItem.appendChild(content);
                 accordionContainer.appendChild(accordionItem);
             });
 
@@ -491,7 +500,7 @@
             allContents.forEach(item => item.classList.remove('active'));
             allHeaders.forEach(header => header.classList.remove('active'));
 
-            content.classList.add('active');
+            if (content) content.classList.add('active');
             const correspondingLink = document.querySelector(`.sidebar a[href="#${id}"]`);
             if (correspondingLink) correspondingLink.classList.add('active');
         }
