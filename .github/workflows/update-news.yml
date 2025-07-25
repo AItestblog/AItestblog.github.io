@@ -2,7 +2,7 @@ name: 每日自動更新新聞與圖片
 
 on:
   schedule:
-    - cron: '0 0 * * 1-6'  # 每週一到週六（台灣早上 8 點）
+    - cron: '0 0 * * 1-6'  # 每週一到週六，台灣時間早上 8 點（UTC 0 點）
   workflow_dispatch:
 
 jobs:
@@ -13,12 +13,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Load settings
+
+      - name: 讀取 settings.txt 為 JSON 字串
         id: load
         run: |
-          echo "settings<<EOF" >> $GITHUB_OUTPUT
-          cat settings.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          settings=$(cat settings.txt | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()))")
+          echo "settings=$settings" >> $GITHUB_OUTPUT
 
   build:
     needs: load-settings
@@ -26,29 +26,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.pythonVersion }}
+
       - name: 安裝依賴套件
         run: pip install openai requests feedparser
+
       - name: 執行每日新聞生成腳本
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python3 generate_news.py
+
       - name: Commit 並推送更新內容
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          # 檢查並提交未提交的變更
+          # 第一次嘗試提交
           git add content.txt last_image_id.txt img/content/ || true
           git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
 
-          # 執行 pull --rebase
+          # pull 以防有衝突
           git pull origin main --rebase || echo "Pull failed, continuing with local changes"
 
-          # 再次提交最終變更
+          # 再次提交
           git add content.txt last_image_id.txt img/content/
           git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+
+          # 推送
           git push
