@@ -34,9 +34,9 @@
     "publisherEmail": "contact@financeburst.com"
   },
   "prompts": {
-    "personExtraction": "從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}\n",
+    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲，語氣自然易讀，可補充背景與分析觀點。用 HTML 結構（<h2>, <p>, <ol>, <li>, <strong>）組織，包含引言、分析、結論，最後加上：'<p><strong>注意</strong>：本文僅提供分析和資訊，不構成投資建議。投資者應根據自身風險偏好和市場條件進行決策。</p>'。\n\n新聞標題：{title}\n新聞摘要：{summary}\n\n請開始撰寫：",
     "titleTranslation": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動：{raw_title}",
-    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲，語氣自然易讀，可補充背景與分析觀點。用 HTML 結構（<h2>, <p>, <ol>, <li>, <strong>）組織，包含引言、分析、結論，最後加上：'<p><strong>注意</strong>：本文僅提供分析和資訊，不構成投資建議。投資者應根據自身風險偏好和市場條件進行決策。</p>'。\n\n新聞標題：{title}\n新聞摘要：{summary}\n\n請開始撰寫："
+    "personExtraction": "從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}"
   },
   "imageConfig": {
     "model": "dall-e-3",
@@ -68,10 +68,7 @@
       "feeds": [
         "https://news.cnyes.com/rss",
         "https://tw.stock.yahoo.com/rss/index"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周二",
@@ -80,10 +77,7 @@
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
         "https://news.bitcoin.com/feed/"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周三",
@@ -91,10 +85,7 @@
       "feeds": [
         "https://www.marketwatch.com/rss/topstories",
         "https://www.cnbc.com/id/100003114/device/rss/rss.html"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周四",
@@ -103,10 +94,7 @@
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
         "https://news.bitcoin.com/feed/"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周五",
@@ -114,10 +102,7 @@
       "feeds": [
         "https://www.etftrends.com/feed/",
         "https://seekingalpha.com/tag/etf.rss"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周六",
@@ -130,10 +115,7 @@
         "https://www.fxstreet.com/rss",
         "https://www.investing.com/rss/forex.rss",
         "https://www.babypips.com/news/rss"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     },
     {
       "day": "周日",
@@ -146,10 +128,7 @@
         "https://www.investing.com/rss/commodities.rss",
         "https://www.reuters.com/arc/outboundfeeds/rss/commodities/",
         "https://www.bloomberg.com/feed/podcast/commodities.xml"
-      ],
-      "imageCount": 1,
-      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
-      "wordCount": "2000"
+      ]
     }
   ],
   "scheduleConfig": {
