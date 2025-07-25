@@ -157,7 +157,7 @@
         }
         .personal-image {
             display: block;
-            max-width: 300px; /* 放大圖案 */
+            max-width: 200px;
             height: auto;
             margin: 0 auto 20px;
             border-radius: 8px;
@@ -231,65 +231,9 @@
             width: 32px;
             height: 32px;
         }
-        /* 新增浮動卡片 */
-        .floating-card {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1001;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            font-weight: 500;
-            color: #333333;
-            max-width: 300px; /* 限制寬度，避免過寬擋住內容 */
-            max-height: 400px; /* 限制高度，避免過長擋住內容 */
-            overflow-y: auto; /* 若內容過長，可滾動 */
-        }
-        .floating-card img {
-            width: 40px; /* 圖案大小，與目前圖案大小類似但調整為適合卡片 */
-            height: auto;
-            border-radius: 4px;
-        }
-        .floating-card .floating-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .floating-card .floating-content {
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 0;
-        }
-        .floating-card:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        }
         @media screen and (max-width: 768px) {
             .personal-image {
-                max-width: 200px; /* RWD 調整回較小大小 */
-            }
-            .floating-card {
-                top: 5px;
-                left: 5px;
-                padding: 8px;
-                font-size: 14px;
-                max-width: 250px;
-                max-height: 300px;
-            }
-            .floating-card img {
-                width: 30px;
-            }
-            .floating-card .floating-title {
-                font-size: 16px;
-            }
-            .floating-card .floating-content {
-                font-size: 12px;
+                max-width: 150px;
             }
             .share-buttons {
                 bottom: 10px;
@@ -344,15 +288,6 @@
         </div>
     </div>
 
-    <!-- 新增浮動卡片 -->
-    <div class="floating-card" id="floating-card">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <img id="floating-image" src="" alt="關於我們圖案">
-            <h3 id="floating-title" class="floating-title"></h3>
-        </div>
-        <div id="floating-content" class="floating-content"></div>
-    </div>
-
     <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
@@ -401,7 +336,6 @@
                     updateFacebookComments();
                     updateContent();
                     updateShareButtons();
-                    updateFloatingCard();
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
@@ -412,7 +346,6 @@
                 updateFacebookComments();
                 updateContent();
                 updateShareButtons();
-                updateFloatingCard();
             }
         }
 
@@ -466,12 +399,6 @@
             shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
             shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '/personal.html' || '')}`;
             shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.personalSeo?.title || '') + '\n' + (settings.baseUrl + '/personal.html' || ''))}`;
-        }
-
-        function updateFloatingCard() {
-            document.getElementById('floating-image').src = settings.personalImage || '';
-            document.getElementById('floating-title').innerText = settings.personalTab || '';
-            document.getElementById('floating-content').innerHTML = settings.personalContent || '';
         }
 
         // 初始化
