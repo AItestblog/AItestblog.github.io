@@ -43,9 +43,7 @@
       "category": "台股",
       "feeds": [
         "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://money.udn.com/rssfeed/lists/10038",
-        "https://www.businesstoday.com.tw/rss",
-        "https://www.moneydj.com/rss/news.xml"
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -53,13 +51,10 @@
     },
     {
       "day": "周二",
-      "category": "幣圈",
+      "category": "台股",
       "feeds": [
-        "https://decrypt.co/feed",
-        "https://cointelegraph.com/rss",
-        "https://news.bitcoin.com/feed/",
-        "https://www.theblock.co/rss",
-        "https://www.coindesk.com/arc/outboundfeeds/rss/"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -67,13 +62,10 @@
     },
     {
       "day": "周三",
-      "category": "美股",
+      "category": "台股",
       "feeds": [
-        "https://www.marketwatch.com/rss/topstories",
-        "https://www.cnbc.com/id/100003114/device/rss/rss.html",
-        "https://www.bloomberg.com/feed/podcast/markets.xml",
-        "https://www.nasdaq.com/feed/rssoutbound",
-        "https://www.wsj.com/xml/rss/3_7085.xml"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -81,13 +73,10 @@
     },
     {
       "day": "周四",
-      "category": "ETF",
+      "category": "台股",
       "feeds": [
-        "https://www.etftrends.com/feed/",
-        "https://seekingalpha.com/tag/etf.rss",
-        "https://www.etf.com/sections/news/rss",
-        "https://www.morningstar.com/feeds/news.rss",
-        "https://www.investopedia.com/feedbuilder/rssfeed"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -95,13 +84,10 @@
     },
     {
       "day": "周五",
-      "category": "黃金",
+      "category": "台股",
       "feeds": [
-        "https://www.kitco.com/news/category/mining/rss",
-        "https://www.kitco.com/rss/gold-live.xml",
-        "https://www.gold.org/rss",
-        "https://www.metal.com/rss/gold",
-        "https://www.bullionvault.com/rss.xml"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -109,13 +95,10 @@
     },
     {
       "day": "周六",
-      "category": "外匯",
+      "category": "台股",
       "feeds": [
-        "https://www.forexlive.com/feed/",
-        "https://www.dailyfx.com/feeds/market-news",
-        "https://www.fxstreet.com/rss",
-        "https://www.investing.com/rss/forex.rss",
-        "https://www.babypips.com/news/rss"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -123,13 +106,10 @@
     },
     {
       "day": "周日",
-      "category": "商品市場",
+      "category": "台股",
       "feeds": [
-        "https://www.cmegroup.com/rss/market-news.rss",
-        "https://www.barchart.com/commodities/rss",
-        "https://www.investing.com/rss/commodities.rss",
-        "https://www.reuters.com/arc/outboundfeeds/rss/commodities/",
-        "https://www.bloomberg.com/feed/podcast/commodities.xml"
+        "https://www.cnyes.com/rss/news/cat/tw_stock",
+        "https://tw.stock.yahoo.com/rss/sitemap.xml",
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
