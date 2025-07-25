@@ -655,16 +655,24 @@
                 `;
                 articlesDiv.appendChild(card);
 
-                // 移除內容中重複的標題
+                // 加強移除標題：全局移除所有匹配的標題（不只開頭）
                 let cleanedContent = article.content;
-                const titleRegex = new RegExp(`^<h2>${article.title}</h2>|^${article.title}\\n`, 'i');
+                const titleRegex = new RegExp(`<h2>${article.title}</h2>|${article.title}\\n`, 'gi'); // 添加 'g' 旗標，全局替換，'i' 忽略大小寫
                 cleanedContent = cleanedContent.replace(titleRegex, '').trim();
 
                 const content = document.createElement('div');
                 content.className = 'article-content';
                 content.id = `content-${i}`;
                 const fontSizeStyle = article.fontSize ? `font-size: ${article.fontSize};` : '';
-                let imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
+
+                // 檢查 cleanedContent 是否已包含 <img> 標籤，如果有，則不添加 imagesHtml 以避免重複
+                let imagesHtml = '';
+                if (!/<img\s/i.test(cleanedContent)) { // 如果內容中沒有 <img>，才添加
+                    imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
+                } else {
+                    console.log(`Article ${i} content already has images, skipping additional imagesHtml.`);
+                }
+
                 content.innerHTML = `
                     <div style="${fontSizeStyle}">${cleanedContent}</div>
                     ${imagesHtml}
