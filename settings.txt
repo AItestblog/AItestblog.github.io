@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://aitestblog.github.io/",
+  "baseUrl": "https://finance-news-burst.github.io",
   "newsTab": "爆爆財經新聞",
   "technicalTab": "技術分析爆報",
   "personalTab": "爆爆品牌故事",
@@ -40,7 +40,7 @@
   "dailyCategories": [
     {
       "day": "周一",
-      "category": "台股爆料",
+      "category": "台股",
       "feeds": [
         "https://www.cnyes.com/rss/news/cat/tw_stock",
         "https://tw.stock.yahoo.com/rss/sitemap.xml",
@@ -54,7 +54,7 @@
     },
     {
       "day": "周二",
-      "category": "幣圈爆報",
+      "category": "幣圈",
       "feeds": [
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
@@ -68,7 +68,7 @@
     },
     {
       "day": "周三",
-      "category": "美股爆點",
+      "category": "美股",
       "feeds": [
         "https://www.marketwatch.com/rss/topstories",
         "https://www.cnbc.com/id/100003114/device/rss/rss.html",
@@ -82,7 +82,7 @@
     },
     {
       "day": "周四",
-      "category": "ETF爆報",
+      "category": "ETF",
       "feeds": [
         "https://www.etftrends.com/feed/",
         "https://seekingalpha.com/tag/etf.rss",
@@ -96,7 +96,7 @@
     },
     {
       "day": "周五",
-      "category": "黃金爆點",
+      "category": "黃金",
       "feeds": [
         "https://www.kitco.com/news/category/mining/rss",
         "https://www.kitco.com/rss/gold-live.xml",
@@ -110,7 +110,7 @@
     },
     {
       "day": "周六",
-      "category": "外匯爆報",
+      "category": "外匯",
       "feeds": [
         "https://www.forexlive.com/feed/",
         "https://www.dailyfx.com/feeds/market-news",
@@ -124,7 +124,7 @@
     },
     {
       "day": "周日",
-      "category": "商品市場爆料",
+      "category": "商品市場",
       "feeds": [
         "https://www.cmegroup.com/rss/market-news.rss",
         "https://www.barchart.com/commodities/rss",
