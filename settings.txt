@@ -121,15 +121,11 @@
     },
     {
       "day": "周六",
-      "category": "外匯",
+      "category": "幣圈",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://www.forexlive.com/feed/",
-        "https://www.dailyfx.com/feeds/market-news",
-        "https://www.fxstreet.com/rss",
-        "https://www.investing.com/rss/forex.rss",
-        "https://www.babypips.com/news/rss"
+        "https://decrypt.co/feed",
+        "https://cointelegraph.com/rss",
+        "https://news.bitcoin.com/feed/"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -137,21 +133,15 @@
     },
     {
       "day": "周日",
-      "category": "商品市場",
+      "category": "美股",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://www.cmegroup.com/rss/market-news.rss",
-        "https://www.barchart.com/commodities/rss",
-        "https://www.investing.com/rss/commodities.rss",
-        "https://www.reuters.com/arc/outboundfeeds/rss/commodities/",
-        "https://www.bloomberg.com/feed/podcast/commodities.xml"
+        "https://www.marketwatch.com/rss/topstories",
+        "https://www.cnbc.com/id/100003114/device/rss/rss.html"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
       "wordCount": "2000"
-    }
-  ],
+    },
   "scheduleConfig": {
     "time": "08:00",
     "count": 1

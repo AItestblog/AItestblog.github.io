@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -196,39 +235,65 @@
             color: #4A4A4A;
             margin-bottom: 10px;
         }
+        .settings-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background: #E5E7EB;
+            color: #4A4A4A;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .tab-button.active {
+            background: #2563EB;
+            color: white;
+        }
+        .tab-button:hover {
+            background: #D1D5DB;
+        }
+        .tab-content {
+            display: none;
+            width: 100%;
+        }
+        .tab-content.active {
+            display: block;
+        }
         .settings-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
             width: 100%;
         }
-        .accordion-header {
-            background: #E5E7EB;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .daily-settings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            width: 100%;
         }
-        .accordion-header:hover {
-            background: #D1D5DB;
-        }
-        .accordion-content {
-            display: none;
-            padding: 15px;
+        .daily-settings-card {
+            background: #F9FAFB;
             border: 1px solid #D1D5DB;
-            border-top: none;
-            border-radius: 0 0 6px 6px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .accordion-content.active {
-            display: block;
+        .daily-settings-card h3 {
+            font-size: 1.25rem;
+            color: #4A4A4A;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         .hint {
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             color: #6B7280;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .image-preview {
             max-width: 200px;
@@ -271,6 +336,17 @@
             }
             .settings-grid {
                 grid-template-columns: 1fr;
+            }
+            .settings-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            .tab-button {
+                width: 100%;
+                text-align: center;
+            }
+            .daily-settings-card {
+                padding: 15px;
             }
         }
     </style>
@@ -351,142 +427,321 @@
                         <div id="wiki-items"></div>
                         <button id="save-wiki-btn" class="save-btn">保存百科內容</button>
                     </div>
-                    <div id="auto-post-settings" class="accordion-content">
-                        <div class="settings-grid">
-                            <div class="input-group">
-                                <label for="post-time">每天發文時間</label>
-                                <input type="time" id="post-time" placeholder="輸入每天發文時間">
-                                <p class="hint">例如：09:00</p>
-                            </div>
-                            <div class="input-group">
-                                <label for="post-count">每天發文數量</label>
-                                <input type="number" id="post-count" min="1" max="10" placeholder="輸入每天發文數量">
-                                <p class="hint">最多 10 篇</p>
+                    <div id="settings-container" class="settings-container hidden">
+                        <div class="settings-tabs">
+                            <button class="tab-button active" data-target="seo-settings">SEO 設定</button>
+                            <button class="tab-button" data-target="basic-settings">基礎設定</button>
+                            <button class="tab-button" data-target="brand-settings">品牌介紹頁內容</button>
+                            <button class="tab-button" data-target="auto-post-settings">自動發文設定</button>
+                        </div>
+                        <div id="seo-settings" class="tab-content active">
+                            <h2 class="text-xl font-semibold mb-4">SEO 設定</h2>
+                            <div class="settings-grid">
+                                <div class="input-group">
+                                    <label for="seo-title">SEO 標題</label>
+                                    <input type="text" id="seo-title" placeholder="輸入 SEO 標題">
+                                    <p class="hint">例如：財經洞察與投資策略 - 財富學苑</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-description">SEO 描述</label>
+                                    <textarea id="seo-description" placeholder="輸入 SEO 描述" maxlength="160"></textarea>
+                                    <p class="hint">建議 160 字以內，當前字數：<span id="seo-description-count">0</span>/160</p>
+                                    <p id="seo-description-error" class="error">SEO 描述不得超過 160 字！</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-keywords">SEO 關鍵字</label>
+                                    <input type="text" id="seo-keywords" placeholder="輸入 SEO 關鍵字">
+                                    <p class="hint">以逗號分隔，例如：財經,投資,市場分析</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-author">作者</label>
+                                    <input type="text" id="seo-author" placeholder="輸入作者">
+                                    <p class="hint">例如：財富學苑</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-publisher">發布者</label>
+                                    <input type="text" id="seo-publisher" placeholder="輸入發布者">
+                                    <p class="hint">例如：財經導師</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-publisher-url">發布者網址</label>
+                                    <input type="text" id="seo-publisher-url" placeholder="輸入發布者網址">
+                                    <p class="hint">例如：https://www.youtube.com/@FinanceMentor</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="seo-publisher-email">發布者電子郵件</label>
+                                    <input type="text" id="seo-publisher-email" placeholder="輸入發布者電子郵件">
+                                    <p class="hint">例如：contact@financeacademy.com</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="weekly-settings">
-                            ${['周一', '周二', '周三', '周四', '周五', '周六', '周日'].map((day, index) => `
-                                <div class="accordion-header" data-target="day-${index}">
-                                    <span>${day}</span>
-                                    <span class="accordion-icon">▼</span>
+                        <div id="basic-settings" class="tab-content">
+                            <h2 class="text-xl font-semibold mb-4">基礎設定</h2>
+                            <div class="settings-grid">
+                                <div class="input-group">
+                                    <label for="news-tab">新聞頁標籤</label>
+                                    <input type="text" id="news-tab" placeholder="輸入新聞頁標籤">
+                                    <p class="hint">例如：財經快訊</p>
                                 </div>
-                                <div id="day-${index}" class="accordion-content">
+                                <div class="input-group">
+                                    <label for="technical-tab">技術分析頁標籤</label>
+                                    <input type="text" id="technical-tab" placeholder="輸入技術分析頁標籤">
+                                    <p class="hint">例如：市場技術分析</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="personal-tab">品牌頁標籤</label>
+                                    <input type="text" id="personal-tab" placeholder="輸入品牌頁標籤">
+                                    <p class="hint">例如：關於我們</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="brand-settings" class="tab-content">
+                            <h2 class="text-xl font-semibold mb-4">品牌介紹頁內容</h2>
+                            <div class="settings-grid">
+                                <div class="input-group">
+                                    <label for="personal-image">個人照片或品牌 LOGO</label>
+                                    <input type="file" id="personal-image" accept="image/*">
+                                    <img id="image-preview" class="image-preview hidden" src="" alt="圖片預覽">
+                                    <p class="hint">建議尺寸 200x200 像素</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="personal-content">品牌介紹內容</label>
+                                    <textarea id="personal-content" placeholder="輸入品牌介紹內容"></textarea>
+                                    <p class="hint">支援 HTML 格式</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="auto-post-settings" class="tab-content">
+                            <h2 class="text-xl font-semibold mb-4">自動發文設定</h2>
+                            <div class="settings-grid">
+                                <div class="input-group">
+                                    <label for="post-time">每天發文時間</label>
+                                    <input type="time" id="post-time" placeholder="輸入每天發文時間">
+                                    <p class="hint">例如：09:00</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="post-count">每天發文數量</label>
+                                    <input type="number" id="post-count" min="1" max="10" placeholder="輸入每天發文數量">
+                                    <p class="hint">最多 10 篇</p>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-semibold mt-6 mb-4">每日發文設定</h3>
+                            <div class="daily-settings-grid">
+                                <!-- 周一 -->
+                                <div class="daily-settings-card">
+                                    <h3>周一</h3>
                                     <div class="settings-grid">
                                         <div class="input-group">
-                                            <label for="day-${index}-category">主題</label>
-                                            <input type="text" id="day-${index}-category" placeholder="輸入主題">
+                                            <label for="day-0-category">主題</label>
+                                            <input type="text" id="day-0-category" placeholder="輸入主題">
                                             <p class="hint">例如：加密貨幣</p>
                                         </div>
                                         <div class="input-group">
-                                            <label for="day-${index}-feeds">新聞來源</label>
-                                            <input type="text" id="day-${index}-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <label for="day-0-feeds">新聞來源</label>
+                                            <input type="text" id="day-0-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
                                         </div>
                                         <div class="input-group">
-                                            <label for="day-${index}-image-count">圖片數量</label>
-                                            <input type="number" id="day-${index}-image-count" min="1" placeholder="輸入圖片數量">
+                                            <label for="day-0-image-count">圖片數量</label>
+                                            <input type="number" id="day-0-image-count" min="1" placeholder="輸入圖片數量">
                                             <p class="hint">例如：3</p>
                                         </div>
                                         <div class="input-group">
-                                            <label for="day-${index}-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-${index}-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <label for="day-0-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-0-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
                                             <p class="hint">例如：財經圖表，簡約風格</p>
                                         </div>
                                         <div class="input-group">
-                                            <label for="day-${index}-word-count">文章字數</label>
-                                            <input type="text" id="day-${index}-word-count" placeholder="輸入文章字數範圍">
+                                            <label for="day-0-word-count">文章字數</label>
+                                            <input type="text" id="day-0-word-count" placeholder="輸入文章字數範圍">
                                             <p class="hint">例如：1000-1500</p>
                                         </div>
                                     </div>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div id="settings-container" class="settings-container hidden">
-                        <div class="accordion">
-                            <div class="accordion-header" data-target="seo-settings">
-                                <span>SEO 設定</span>
-                                <span class="accordion-icon">▼</span>
-                            </div>
-                            <div id="seo-settings" class="accordion-content">
-                                <div class="settings-grid">
-                                    <div class="input-group">
-                                        <label for="seo-title">SEO 標題</label>
-                                        <input type="text" id="seo-title" placeholder="輸入 SEO 標題">
-                                        <p class="hint">例如：財經洞察與投資策略 - 財富學苑</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-description">SEO 描述</label>
-                                        <textarea id="seo-description" placeholder="輸入 SEO 描述" maxlength="160"></textarea>
-                                        <p class="hint">建議 160 字以內，當前字數：<span id="seo-description-count">0</span>/160</p>
-                                        <p id="seo-description-error" class="error">SEO 描述不得超過 160 字！</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-keywords">SEO 關鍵字</label>
-                                        <input type="text" id="seo-keywords" placeholder="輸入 SEO 關鍵字">
-                                        <p class="hint">以逗號分隔，例如：財經,投資,市場分析</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-author">作者</label>
-                                        <input type="text" id="seo-author" placeholder="輸入作者">
-                                        <p class="hint">例如：財富學苑</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-publisher">發布者</label>
-                                        <input type="text" id="seo-publisher" placeholder="輸入發布者">
-                                        <p class="hint">例如：財經導師</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-publisher-url">發布者網址</label>
-                                        <input type="text" id="seo-publisher-url" placeholder="輸入發布者網址">
-                                        <p class="hint">例如：https://www.youtube.com/@FinanceMentor</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="seo-publisher-email">發布者電子郵件</label>
-                                        <input type="text" id="seo-publisher-email" placeholder="輸入發布者電子郵件">
-                                        <p class="hint">例如：contact@financeacademy.com</p>
+                                <!-- 周二 -->
+                                <div class="daily-settings-card">
+                                    <h3>周二</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-1-category">主題</label>
+                                            <input type="text" id="day-1-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-1-feeds">新聞來源</label>
+                                            <input type="text" id="day-1-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-1-image-count">圖片數量</label>
+                                            <input type="number" id="day-1-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-1-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-1-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-1-word-count">文章字數</label>
+                                            <input type="text" id="day-1-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-header" data-target="basic-settings">
-                                <span>基礎設定</span>
-                                <span class="accordion-icon">▼</span>
-                            </div>
-                            <div id="basic-settings" class="accordion-content">
-                                <div class="settings-grid">
-                                    <div class="input-group">
-                                        <label for="news-tab">新聞頁標籤</label>
-                                        <input type="text" id="news-tab" placeholder="輸入新聞頁標籤">
-                                        <p class="hint">例如：財經快訊</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="technical-tab">技術分析頁標籤</label>
-                                        <input type="text" id="technical-tab" placeholder="輸入技術分析頁標籤">
-                                        <p class="hint">例如：市場技術分析</p>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="personal-tab">品牌頁標籤</label>
-                                        <input type="text" id="personal-tab" placeholder="輸入品牌頁標籤">
-                                        <p class="hint">例如：關於我們</p>
+                                <!-- 周三 -->
+                                <div class="daily-settings-card">
+                                    <h3>周三</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-2-category">主題</label>
+                                            <input type="text" id="day-2-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-2-feeds">新聞來源</label>
+                                            <input type="text" id="day-2-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-2-image-count">圖片數量</label>
+                                            <input type="number" id="day-2-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-2-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-2-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-2-word-count">文章字數</label>
+                                            <input type="text" id="day-2-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-header" data-target="brand-settings">
-                                <span>品牌介紹頁內容</span>
-                                <span class="accordion-icon">▼</span>
-                            </div>
-                            <div id="brand-settings" class="accordion-content">
-                                <div class="settings-grid">
-                                    <div class="input-group">
-                                        <label for="personal-image">個人照片或品牌 LOGO</label>
-                                        <input type="file" id="personal-image" accept="image/*">
-                                        <img id="image-preview" class="image-preview hidden" src="" alt="圖片預覽">
-                                        <p class="hint">建議尺寸 200x200 像素</p>
+                                <!-- 周四 -->
+                                <div class="daily-settings-card">
+                                    <h3>周四</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-3-category">主題</label>
+                                            <input type="text" id="day-3-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-3-feeds">新聞來源</label>
+                                            <input type="text" id="day-3-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-3-image-count">圖片數量</label>
+                                            <input type="number" id="day-3-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-3-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-3-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-3-word-count">文章字數</label>
+                                            <input type="text" id="day-3-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
                                     </div>
-                                    <div class="input-group">
-                                        <label for="personal-content">品牌介紹內容</label>
-                                        <textarea id="personal-content" placeholder="輸入品牌介紹內容"></textarea>
-                                        <p class="hint">支援 HTML 格式</p>
+                                </div>
+                                <!-- 周五 -->
+                                <div class="daily-settings-card">
+                                    <h3>周五</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-4-category">主題</label>
+                                            <input type="text" id="day-4-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-4-feeds">新聞來源</label>
+                                            <input type="text" id="day-4-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-4-image-count">圖片數量</label>
+                                            <input type="number" id="day-4-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-4-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-4-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-4-word-count">文章字數</label>
+                                            <input type="text" id="day-4-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 周六 -->
+                                <div class="daily-settings-card">
+                                    <h3>周六</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-5-category">主題</label>
+                                            <input type="text" id="day-5-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-5-feeds">新聞來源</label>
+                                            <input type="text" id="day-5-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-5-image-count">圖片數量</label>
+                                            <input type="number" id="day-5-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-5-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-5-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-5-word-count">文章字數</label>
+                                            <input type="text" id="day-5-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 周日 -->
+                                <div class="daily-settings-card">
+                                    <h3>周日</h3>
+                                    <div class="settings-grid">
+                                        <div class="input-group">
+                                            <label for="day-6-category">主題</label>
+                                            <input type="text" id="day-6-category" placeholder="輸入主題">
+                                            <p class="hint">例如：加密貨幣</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-6-feeds">新聞來源</label>
+                                            <input type="text" id="day-6-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
+                                            <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-6-image-count">圖片數量</label>
+                                            <input type="number" id="day-6-image-count" min="1" placeholder="輸入圖片數量">
+                                            <p class="hint">例如：3</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-6-ai-prompt">AI 提示詞彙</label>
+                                            <textarea id="day-6-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
+                                            <p class="hint">例如：財經圖表，簡約風格</p>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="day-6-word-count">文章字數</label>
+                                            <input type="text" id="day-6-word-count" placeholder="輸入文章字數範圍">
+                                            <p class="hint">例如：1000-1500</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -503,7 +758,7 @@
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
         function filledCell(cell) {
-          return cell !== '' && cell != null;
+            return cell !== '' && cell != null;
         }
         function loadFileData(filename) {
             if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
@@ -523,7 +778,7 @@
                     csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                     return csv;
                 } catch (e) {
-                    console.error(e);
+                    console.error('載入檔案失敗:', e);
                     return "";
                 }
             }
@@ -578,13 +833,57 @@
             const personalContentInput = document.getElementById('personal-content');
             const postTimeInput = document.getElementById('post-time');
             const postCountInput = document.getElementById('post-count');
-            const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'].map((day, index) => ({
-                category: document.getElementById(`day-${index}-category`),
-                feeds: document.getElementById(`day-${index}-feeds`),
-                imageCount: document.getElementById(`day-${index}-image-count`),
-                aiPrompt: document.getElementById(`day-${index}-ai-prompt`),
-                wordCount: document.getElementById(`day-${index}-word-count`)
-            }));
+            const days = [
+                {
+                    category: document.getElementById('day-0-category'),
+                    feeds: document.getElementById('day-0-feeds'),
+                    imageCount: document.getElementById('day-0-image-count'),
+                    aiPrompt: document.getElementById('day-0-ai-prompt'),
+                    wordCount: document.getElementById('day-0-word-count')
+                },
+                {
+                    category: document.getElementById('day-1-category'),
+                    feeds: document.getElementById('day-1-feeds'),
+                    imageCount: document.getElementById('day-1-image-count'),
+                    aiPrompt: document.getElementById('day-1-ai-prompt'),
+                    wordCount: document.getElementById('day-1-word-count')
+                },
+                {
+                    category: document.getElementById('day-2-category'),
+                    feeds: document.getElementById('day-2-feeds'),
+                    imageCount: document.getElementById('day-2-image-count'),
+                    aiPrompt: document.getElementById('day-2-ai-prompt'),
+                    wordCount: document.getElementById('day-2-word-count')
+                },
+                {
+                    category: document.getElementById('day-3-category'),
+                    feeds: document.getElementById('day-3-feeds'),
+                    imageCount: document.getElementById('day-3-image-count'),
+                    aiPrompt: document.getElementById('day-3-ai-prompt'),
+                    wordCount: document.getElementById('day-3-word-count')
+                },
+                {
+                    category: document.getElementById('day-4-category'),
+                    feeds: document.getElementById('day-4-feeds'),
+                    imageCount: document.getElementById('day-4-image-count'),
+                    aiPrompt: document.getElementById('day-4-ai-prompt'),
+                    wordCount: document.getElementById('day-4-word-count')
+                },
+                {
+                    category: document.getElementById('day-5-category'),
+                    feeds: document.getElementById('day-5-feeds'),
+                    imageCount: document.getElementById('day-5-image-count'),
+                    aiPrompt: document.getElementById('day-5-ai-prompt'),
+                    wordCount: document.getElementById('day-5-word-count')
+                },
+                {
+                    category: document.getElementById('day-6-category'),
+                    feeds: document.getElementById('day-6-feeds'),
+                    imageCount: document.getElementById('day-6-image-count'),
+                    aiPrompt: document.getElementById('day-6-ai-prompt'),
+                    wordCount: document.getElementById('day-6-word-count')
+                }
+            ];
 
             const today = new Date().toISOString().split('T')[0];
             articleDate.value = today;
@@ -604,8 +903,8 @@
             let articles = [];
             let wikiItems = [];
             let settings = {};
-            let baseUrl = 'https://aitestblog.github.io';
-            let apiBaseUrl = 'https://api.github.com/repos/aitestblog/aitestblog.github.io/';
+            const baseUrl = 'https://aitestblog.github.io';
+            const apiBaseUrl = 'https://api.github.com/repos/aitestblog/aitestblog.github.io/';
             let currentArticleIndex = -1;
             let imageCounter = 1;
             let isEditMode = false;
@@ -622,23 +921,22 @@
                 });
             }
 
-            function toggleAccordion(id) {
-                const content = document.getElementById(id);
-                const isActive = content.classList.contains('active');
-                document.querySelectorAll('.accordion-content').forEach(c => {
+            function toggleTab(id) {
+                document.querySelectorAll('.tab-content').forEach(c => {
                     c.classList.remove('active');
-                    c.previousElementSibling.querySelector('.accordion-icon').textContent = '▼';
                 });
-                if (!isActive) {
-                    content.classList.add('active');
-                    content.previousElementSibling.querySelector('.accordion-icon').textContent = '▲';
-                }
+                document.querySelectorAll('.tab-button').forEach(b => {
+                    b.classList.remove('active');
+                });
+                const content = document.getElementById(id);
+                content.classList.add('active');
+                document.querySelector(`.tab-button[data-target="${id}"]`).classList.add('active');
             }
 
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const targetId = header.getAttribute('data-target');
-                    toggleAccordion(targetId);
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    toggleTab(targetId);
                 });
             });
 
@@ -664,31 +962,35 @@
                         return;
                     }
 
+                    console.log('正在驗證 PAT:', pat.substring(0, 4) + '...'); // 僅顯示前4字元
                     const userResponse = await fetch('https://api.github.com/user', {
                         headers: {
                             'Authorization': `token ${pat}`,
                             'Accept': 'application/vnd.github.v3+json'
                         }
                     });
+
                     if (!userResponse.ok) {
                         const errorData = await userResponse.json().catch(() => ({}));
-                        throw new Error(`PAT 驗證失敗：${errorData.message || userResponse.statusText}`);
+                        const errorMessage = errorData.message || userResponse.statusText;
+                        throw new Error(`PAT 驗證失敗：${errorMessage} (狀態碼: ${userResponse.status})`);
                     }
 
+                    console.log('PAT 驗證成功，載入設置...');
                     await loadSettings(pat);
+                    await loadArticles(pat);
+                    await loadImageCounter(pat);
+                    await loadWikiItems(pat);
 
                     contentSection.classList.remove('hidden');
                     countdownTimer.classList.remove('hidden');
                     logoutBtn.classList.remove('hidden');
-                    patError.classList.remove('show');
                     patInput.classList.add('disabled');
                     patInput.readOnly = true;
                     patInput.disabled = true;
                     authenticateBtn.classList.add('hidden');
+                    patError.classList.remove('show');
 
-                    await loadArticles(pat);
-                    await loadImageCounter(pat);
-                    await loadWikiItems(pat);
                     updateArticleCount();
 
                     const startTime = Date.now();
@@ -707,15 +1009,16 @@
                     alert('驗證成功，正在載入內容...');
                 } catch (error) {
                     console.error('驗證錯誤:', error.message);
-                    patError.textContent = error.message;
+                    patError.textContent = error.message || '驗證失敗，請檢查 PAT 或網路連線';
                     patError.classList.add('show');
-                    alert(error.message);
+                    alert(patError.textContent);
                 } finally {
                     authenticateBtn.disabled = false;
                 }
             });
 
             logoutBtn.addEventListener('click', () => {
+                console.log('用戶登出');
                 location.reload();
             });
 
@@ -730,7 +1033,7 @@
                 articleImages.value = `${nextImageNumber}.jpg,${nextImageNumber}-1.jpg`;
                 articleFontSize.value = '16px';
                 articleDate.value = today;
-                quill.root.innerHTML = '';
+                quill.setText('');
                 updateArticleCount();
                 editSelectError.classList.remove('show');
                 titleError.classList.remove('show');
@@ -792,7 +1095,7 @@
                     day.aiPrompt.value = settings.dailyCategories?.[index]?.aiPrompt || '';
                     day.wordCount.value = settings.dailyCategories?.[index]?.wordCount || '';
                 });
-                toggleAccordion('seo-settings');
+                toggleTab('seo-settings');
             });
 
             editSelect.addEventListener('change', () => {
@@ -828,8 +1131,82 @@
                 }
             });
 
+            saveBtn.addEventListener('click', async () => {
+                const pat = patInput.value.trim();
+                const title = articleTitle.value.trim();
+                const images = articleImages.value.trim();
+                const fontSize = articleFontSize.value.trim();
+                const date = articleDate.value;
+                const content = quill.root.innerHTML;
+                let valid = true;
+                if (isEditMode && currentArticleIndex < 0) {
+                    editSelectError.classList.add('show');
+                    valid = false;
+                }
+                if (!title) {
+                    titleError.classList.add('show');
+                    valid = false;
+                } else {
+                    titleError.classList.remove('show');
+                }
+                if (!images) {
+                    imagesError.classList.add('show');
+                    valid = false;
+                } else {
+                    imagesError.classList.remove('show');
+                }
+                if (!fontSize.match(/^\d+px$/)) {
+                    fontsizeError.classList.add('show');
+                    valid = false;
+                } else {
+                    fontsizeError.classList.remove('show');
+                }
+                if (!date) {
+                    dateError.classList.add('show');
+                    valid = false;
+                } else {
+                    dateError.classList.remove('show');
+                }
+                if (!content || content === '<p><br></p>') {
+                    contentError.classList.add('show');
+                    valid = false;
+                } else {
+                    contentError.classList.remove('show');
+                }
+                if (valid) {
+                    try {
+                        saveBtn.disabled = true;
+                        await saveArticle(pat, title, images, fontSize, date, content, isEditMode, currentArticleIndex);
+                        alert(isEditMode ? '文章已更新！' : '文章已新增！');
+                        await loadArticles(pat);
+                        updateArticleCount();
+                        articleTitle.value = '';
+                        articleImages.value = '';
+                        articleFontSize.value = '';
+                        articleDate.value = '';
+                        quill.setText('');
+                        currentArticleIndex = -1;
+                        editSelect.value = '';
+                    } catch (error) {
+                        alert('儲存失敗：' + error.message);
+                    } finally {
+                        saveBtn.disabled = false;
+                    }
+                }
+            });
+
+            addWikiBtn.addEventListener('click', addWikiItem);
+
+            saveWikiBtn.addEventListener('click', saveWikiSettings);
+
+            saveSettingsBtn.addEventListener('click', async () => {
+                const pat = patInput.value.trim();
+                await saveSettings(pat);
+            });
+
             async function loadArticles(pat) {
                 try {
+                    console.log('載入文章列表...');
                     const response = await fetch(`${apiBaseUrl}contents/content.txt`, {
                         headers: {
                             'Authorization': `token ${pat}`,
@@ -853,7 +1230,7 @@
                         articles = [];
                         editSelect.innerHTML = '<option value="">無文章可編輯</option>';
                     } else {
-                        throw new Error('無法載入文章列表');
+                        throw new Error(`載入文章失敗，狀態碼: ${response.status}`);
                     }
                 } catch (error) {
                     console.error('載入文章失敗:', error);
@@ -913,6 +1290,7 @@
 
             async function loadImageCounter(pat) {
                 try {
+                    console.log('載入圖片計數器...');
                     const response = await fetch(`${apiBaseUrl}contents/img/content`, {
                         headers: {
                             'Authorization': `token ${pat}`,
@@ -939,7 +1317,7 @@
                     } else if (response.status === 404) {
                         imageCounter = 1;
                     } else {
-                        throw new Error('無法載入圖片清單');
+                        throw new Error(`載入圖片清單失敗，狀態碼: ${response.status}`);
                     }
                 } catch (error) {
                     console.error('載入圖片清單失敗:', error);
@@ -1047,6 +1425,7 @@
 
             async function loadWikiItems(pat) {
                 try {
+                    console.log('載入百科項目...');
                     const response = await fetch(`${apiBaseUrl}contents/tech-wiki.txt`, {
                         headers: {
                             'Authorization': `token ${pat}`,
@@ -1063,7 +1442,7 @@
                         wikiItems = [];
                         renderWikiItems();
                     } else {
-                        throw new Error('無法載入百科內容');
+                        throw new Error(`載入百科內容失敗，狀態碼: ${response.status}`);
                     }
                 } catch (error) {
                     console.error('載入 tech-wiki.txt 失敗:', error);
@@ -1157,6 +1536,7 @@
                 const pat = patInput.value.trim();
                 let sha = null;
                 try {
+                    console.log('載入 tech-wiki.txt 以獲取 SHA...');
                     const response = await fetch(`${apiBaseUrl}contents/tech-wiki.txt`, {
                         headers: {
                             'Authorization': `token ${pat}`,
@@ -1175,6 +1555,7 @@
 
                 const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(wikiItems, null, 2))));
                 try {
+                    console.log('保存 tech-wiki.txt...');
                     const response = await fetch(`${apiBaseUrl}contents/tech-wiki.txt`, {
                         method: 'PUT',
                         headers: {
@@ -1203,6 +1584,7 @@
 
             async function loadSettings(pat) {
                 try {
+                    console.log('載入 settings.txt...');
                     const response = await fetch(`${apiBaseUrl}contents/settings.txt`, {
                         headers: {
                             'Authorization': `token ${pat}`,
@@ -1214,13 +1596,47 @@
                         const rawContent = atob(data.content);
                         settings = JSON.parse(decodeURIComponent(escape(rawContent))) || {};
                     } else if (response.status === 404) {
-                        settings = {};
+                        settings = {
+                            seo: {},
+                            newsTab: '',
+                            technicalTab: '',
+                            personalTab: '',
+                            personalImage: '',
+                            personalContent: '',
+                            scheduleConfig: { time: '08:00', count: 1 },
+                            dailyCategories: [
+                                { day: '周一', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周二', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周三', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周四', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周五', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周六', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                                { day: '周日', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' }
+                            ]
+                        };
                     } else {
-                        throw new Error('無法載入設定檔');
+                        throw new Error(`載入設定檔失敗，狀態碼: ${response.status}`);
                     }
                 } catch (error) {
                     console.error('載入 settings.txt 失敗:', error);
-                    settings = {};
+                    settings = {
+                        seo: {},
+                        newsTab: '',
+                        technicalTab: '',
+                        personalTab: '',
+                        personalImage: '',
+                        personalContent: '',
+                        scheduleConfig: { time: '08:00', count: 1 },
+                        dailyCategories: [
+                            { day: '周一', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周二', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周三', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周四', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周五', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周六', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
+                            { day: '周日', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' }
+                        ]
+                    };
                 }
             }
 
@@ -1229,6 +1645,7 @@
                     saveSettingsBtn.disabled = true;
                     let sha = null;
                     try {
+                        console.log('載入 settings.txt 以獲取 SHA...');
                         const response = await fetch(`${apiBaseUrl}contents/settings.txt`, {
                             headers: {
                                 'Authorization': `token ${pat}`,
@@ -1244,41 +1661,59 @@
                             throw error;
                         }
                     }
-
-                    if (seoDescriptionInput?.value.length > 160) {
-                        seoDescriptionError.classList.add('show');
-                        alert('SEO 描述不得超過 160 字！');
-                        return;
-                    }
-
                     settings.seo = {
-                        title: seoTitleInput?.value?.trim() || '',
-                        description: seoDescriptionInput?.value?.trim() || '',
-                        keywords: seoKeywordsInput?.value?.trim() || '',
-                        author: seoAuthorInput?.value?.trim() || '',
-                        publisherName: seoPublisherInput?.value?.trim() || '',
-                        publisherUrl: seoPublisherUrlInput?.value?.trim() || '',
-                        publisherEmail: seoPublisherEmailInput?.value?.trim() || ''
+                        title: seoTitleInput.value.trim(),
+                        description: seoDescriptionInput.value.trim(),
+                        keywords: seoKeywordsInput.value.trim(),
+                        author: seoAuthorInput.value.trim(),
+                        publisherName: seoPublisherInput.value.trim(),
+                        publisherUrl: seoPublisherUrlInput.value.trim(),
+                        publisherEmail: seoPublisherEmailInput.value.trim()
                     };
-                    settings.newsTab = newsTabInput?.value?.trim() || '';
-                    settings.technicalTab = technicalTabInput?.value?.trim() || '';
-                    settings.personalTab = personalTabInput?.value?.trim() || '';
-                    settings.personalImage = imagePreview.src.includes('data:image/') ? 'img/brand-logo.jpg' : settings.personalImage || '';
-                    settings.personalContent = personalContentInput?.value?.trim() || '';
+                    settings.newsTab = newsTabInput.value.trim();
+                    settings.technicalTab = technicalTabInput.value.trim();
+                    settings.personalTab = personalTabInput.value.trim();
+                    settings.personalContent = personalContentInput.value.trim();
                     settings.scheduleConfig = {
-                        time: postTimeInput?.value?.trim() || '08:00',
-                        count: parseInt(postCountInput?.value) || 1
+                        time: postTimeInput.value.trim(),
+                        count: parseInt(postCountInput.value) || 1
                     };
                     settings.dailyCategories = days.map((day, index) => ({
                         day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][index],
-                        category: day.category?.value?.trim() || '',
-                        feeds: day.feeds?.value?.trim().split(',').map(f => f.trim()).filter(f => f) || [],
-                        imageCount: parseInt(day.imageCount?.value) || 1,
-                        aiPrompt: day.aiPrompt?.value?.trim() || '',
-                        wordCount: day.wordCount?.value?.trim() || ''
+                        category: day.category.value.trim(),
+                        feeds: day.feeds.value.split(',').map(f => f.trim()).filter(f => f),
+                        imageCount: parseInt(day.imageCount.value) || 1,
+                        aiPrompt: day.aiPrompt.value.trim(),
+                        wordCount: day.wordCount.value.trim()
                     }));
-
+                    if (personalImageInput.files[0]) {
+                        const file = personalImageInput.files[0];
+                        const base64Data = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve(reader.result.split(',')[1]);
+                            reader.readAsDataURL(file);
+                        });
+                        const filename = 'personal.jpg';
+                        const imageResponse = await fetch(`${apiBaseUrl}contents/img/${filename}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${pat}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                message: `Upload personal image: ${filename}`,
+                                content: base64Data
+                            })
+                        });
+                        if (imageResponse.ok) {
+                            settings.personalImage = `${baseUrl}/img/${filename}`;
+                        } else {
+                            throw new Error('上傳個人圖片失敗');
+                        }
+                    }
                     const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(settings, null, 2))));
+                    console.log('保存 settings.txt...');
                     const response = await fetch(`${apiBaseUrl}contents/settings.txt`, {
                         method: 'PUT',
                         headers: {
@@ -1292,118 +1727,19 @@
                             sha
                         })
                     });
-
-                    if (!response.ok) {
+                    if (response.ok) {
+                        alert('部落格設定已保存！');
+                    } else {
                         const errorData = await response.json().catch(() => ({}));
-                        throw new Error(errorData.message || '保存部落格設定失敗');
+                        throw new Error(errorData.message || '保存設定失敗');
                     }
-
-                    if (imagePreview.src.includes('data:image/') && personalImageInput.files[0]) {
-                        const file = personalImageInput.files[0];
-                        const reader = new FileReader();
-                        await new Promise((resolve) => {
-                            reader.onload = async () => {
-                                const base64Data = reader.result.split(',')[1];
-                                await fetch(`${apiBaseUrl}contents/img/brand-logo.jpg`, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Authorization': `token ${pat}`,
-                                        'Accept': 'application/vnd.github.v3+json',
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        message: 'Upload brand logo',
-                                        content: base64Data
-                                    })
-                                });
-                                resolve();
-                            };
-                            reader.readAsDataURL(file);
-                        });
-                    }
-
-                    alert('部落格設定已保存！');
                 } catch (error) {
-                    console.error('保存 settings.txt 失敗:', error);
-                    alert(`保存部落格設定失敗：${error.message}`);
+                    console.error('保存設定失敗:', error);
+                    alert('保存設定失敗，請檢查網路連線或 PAT 權限。');
                 } finally {
                     saveSettingsBtn.disabled = false;
                 }
             }
-
-            saveBtn.addEventListener('click', async () => {
-                try {
-                    saveBtn.disabled = true;
-                    const pat = patInput.value.trim();
-                    const title = articleTitle.value.trim();
-                    const images = articleImages.value.trim();
-                    const fontSize = articleFontSize.value.trim();
-                    const date = articleDate.value.trim();
-                    const content = quill.root.innerHTML.trim();
-
-                    if (isEditMode && parseInt(editSelect.value) < 0) {
-                        editSelectError.classList.add('show');
-                        alert('請選擇一篇文章！');
-                        return;
-                    }
-                    if (!title) {
-                        titleError.classList.add('show');
-                        alert('請輸入文章標題！');
-                        return;
-                    }
-                    if (!images) {
-                        imagesError.classList.add('show');
-                        alert('請輸入至少一張圖片名稱！');
-                        return;
-                    }
-                    if (!fontSize.match(/^\d+px$/)) {
-                        fontsizeError.classList.add('show');
-                        alert('字體大小格式錯誤，請輸入如 16px 的格式！');
-                        return;
-                    }
-                    if (!date) {
-                        dateError.classList.add('show');
-                        alert('請選擇發布日期！');
-                        return;
-                    }
-                    if (!content || content === '<p><br></p>') {
-                        contentError.classList.add('show');
-                        alert('請輸入文章內容！');
-                        return;
-                    }
-
-                    await saveArticle(pat, title, images, fontSize, date, content, isEditMode, parseInt(editSelect.value));
-                    alert(isEditMode ? '文章已成功更新！' : '文章已成功儲存！');
-                    articleTitle.value = '';
-                    articleImages.value = '';
-                    articleFontSize.value = '';
-                    articleDate.value = today;
-                    quill.setText('');
-                    editSelect.value = '';
-                    currentArticleIndex = -1;
-                    await loadArticles(pat);
-                    updateArticleCount();
-                    editorContainer.classList.add('hidden');
-                } catch (error) {
-                    alert(`${isEditMode ? '更新' : '儲存'}文章失敗：${error.message}`);
-                } finally {
-                    saveBtn.disabled = false;
-                    editSelectError.classList.remove('show');
-                    titleError.classList.remove('show');
-                    imagesError.classList.remove('show');
-                    fontsizeError.classList.remove('show');
-                    dateError.classList.remove('show');
-                    contentError.classList.remove('show');
-                }
-            });
-
-            addWikiBtn.addEventListener('click', () => {
-                addWikiItem();
-            });
-
-            saveWikiBtn.addEventListener('click', saveWikiSettings);
-            saveSettingsBtn.addEventListener('click', async () => await saveSettings(patInput.value.trim()));
         });
     </script>
-</body>
 </html>
