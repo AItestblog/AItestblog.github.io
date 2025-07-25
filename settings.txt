@@ -1,4 +1,5 @@
- "baseUrl": "https://aitestblog.github.io/",
+{
+  "baseUrl": "https://aitestblog.github.io/",
   "newsTab": "爆爆財經新聞",
   "technicalTab": "技術分析爆報",
   "personalTab": "爆爆品牌故事",
@@ -10,13 +11,15 @@
     "publisherName": "財經新聞爆爆報",
     "publisherUrl": "https://www.youtube.com/@financeburst",
     "publisherEmail": ""
+  },
   "contentConfig": {
     "maxArticlesPerFeed": 5,
     "wordCountMin": 1200,
     "wordCountMax": 2000,
     "fontSize": "16px",
     "imagePath": "img/content/",
-    "initialImageId": 1
+    "initialImageId": 1,
+    "useFallbackIfEmpty": true
   },
   "technicalSeo": {
     "title": "技術分析爆報 - 財經新聞爆爆報",
@@ -29,15 +32,17 @@
     "publisherName": "財經新聞爆爆報",
     "publisherUrl": "https://www.youtube.com/@financeburst",
     "publisherEmail": "contact@financeburst.com"
+  },
   "prompts": {
+    "personExtraction": "從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}\n",
     "titleTranslation": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動：{raw_title}",
-    "articleSummary": "請根據以下新聞標題與簡介，撰寫一篇適合部落格發佈的中文文章，內容充實自然，避免 AI 痕跡，文長請控制在 {word_count_min} 到 {word_count_max} 字。標題：{title} 簡介：{summary}",
-    "personExtraction": "請從下列文章中找出最關鍵的人物名稱（如川普、馬斯克、巴菲特等），如果沒有人物請回覆「無」：{text}"
+    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲，語氣自然易讀，可補充背景與分析觀點。用 HTML 結構（<h2>, <p>, <ol>, <li>, <strong>）組織，包含引言、分析、結論，最後加上：'<p><strong>注意</strong>：本文僅提供分析和資訊，不構成投資建議。投資者應根據自身風險偏好和市場條件進行決策。</p>'。\n\n新聞標題：{title}\n新聞摘要：{summary}\n\n請開始撰寫："
   },
   "imageConfig": {
     "model": "dall-e-3",
     "size": "1024x1024",
-    "quality": "standard"
+    "quality": "standard",
+    "n": 1
   },
   "personalSeo": {
     "title": "爆爆品牌介紹 - 財經新聞爆爆報",
@@ -49,9 +54,10 @@
     "ogUrl": "https://finance-news-burst.github.io/personal.html",
     "publisherName": "財經新聞爆爆報",
     "publisherUrl": "https://www.youtube.com/@financeburst"
+  },
   "imagePrompts": {
-    "withPerson": "請以黑色剪影方式呈現 {person_name}，背景為財經市場氛圍、簡潔高質感，風格類似電影海報。",
-    "withoutPerson": "請以金融市場為主題，根據下列新聞概念製作一張風格如電影海報的圖片，整體簡潔高質感：{prompt_text}"
+    "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報",
+    "withoutPerson": "與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心：{prompt_text}"
   },
   "personalImage": "/img/burst-logo.jpg",
   "personalContent": "<h3>關於我們</h3><p>財經新聞爆爆報致力於提供最即時的財經爆料與專業分析，幫助投資者捕捉市場脈動。我們的使命是透過爆速更新與深度洞察，讓您在財經世界中領先一步。</p><p>我們的品牌專注於財經新聞爆報、技術分析教學和投資工具，涵蓋台股、美股、加密貨幣等熱門領域。加入我們，一起爆料財富機會！</p>",
@@ -60,11 +66,8 @@
       "day": "周一",
       "category": "台股",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://money.udn.com/rssfeed/lists/10038",
-        "https://www.businesstoday.com.tw/rss",
-        "https://www.moneydj.com/rss/news.xml"
+        "https://news.cnyes.com/rss",
+        "https://tw.stock.yahoo.com/rss/index"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -72,16 +75,11 @@
     },
     {
       "day": "周二",
-      "category": "台股",
       "category": "幣圈",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
-        "https://news.bitcoin.com/feed/",
-        "https://www.theblock.co/rss",
-        "https://www.coindesk.com/arc/outboundfeeds/rss/"
+        "https://news.bitcoin.com/feed/"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -89,16 +87,10 @@
     },
     {
       "day": "周三",
-      "category": "台股",
       "category": "美股",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
         "https://www.marketwatch.com/rss/topstories",
-        "https://www.cnbc.com/id/100003114/device/rss/rss.html",
-        "https://www.bloomberg.com/feed/podcast/markets.xml",
-        "https://www.nasdaq.com/feed/rssoutbound",
-        "https://www.wsj.com/xml/rss/3_7085.xml"
+        "https://www.cnbc.com/id/100003114/device/rss/rss.html"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -106,16 +98,11 @@
     },
     {
       "day": "周四",
-      "category": "台股",
-      "category": "ETF",
+      "category": "幣圈",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://www.etftrends.com/feed/",
-        "https://seekingalpha.com/tag/etf.rss",
-        "https://www.etf.com/sections/news/rss",
-        "https://www.morningstar.com/feeds/news.rss",
-        "https://www.investopedia.com/feedbuilder/rssfeed"
+        "https://decrypt.co/feed",
+        "https://cointelegraph.com/rss",
+        "https://news.bitcoin.com/feed/"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -123,16 +110,10 @@
     },
     {
       "day": "周五",
-      "category": "台股",
-      "category": "黃金",
+      "category": "ETF",
       "feeds": [
-        "https://www.cnyes.com/rss/news/cat/tw_stock",
-        "https://tw.stock.yahoo.com/rss/sitemap.xml",
-        "https://www.kitco.com/news/category/mining/rss",
-        "https://www.kitco.com/rss/gold-live.xml",
-        "https://www.gold.org/rss",
-        "https://www.metal.com/rss/gold",
-        "https://www.bullionvault.com/rss.xml"
+        "https://www.etftrends.com/feed/",
+        "https://seekingalpha.com/tag/etf.rss"
       ],
       "imageCount": 1,
       "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
@@ -140,7 +121,6 @@
     },
     {
       "day": "周六",
-      "category": "台股",
       "category": "外匯",
       "feeds": [
         "https://www.cnyes.com/rss/news/cat/tw_stock",
@@ -157,7 +137,6 @@
     },
     {
       "day": "周日",
-      "category": "台股",
       "category": "商品市場",
       "feeds": [
         "https://www.cnyes.com/rss/news/cat/tw_stock",
@@ -173,33 +152,8 @@
       "wordCount": "2000"
     }
   ],
-  "prompts": {
-    "personExtraction": "從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}\n",
-    "titleTranslation": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動：{raw_title}",
-    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲，語氣自然易讀，可補充背景與分析觀點。用 HTML 結構（<h2>, <p>, <ol>, <li>, <strong>）組織，包含引言、分析、結論，最後加上：'<p><strong>注意</strong>：本文僅提供分析和資訊，不構成投資建議。投資者應根據自身風險偏好和市場條件進行決策。</p>'。\n\n新聞標題：{title}\n新聞摘要：{summary}\n\n請開始撰寫："
-  },
-  "imagePrompts": {
-    "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報",
-    "withoutPerson": "與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心：{prompt_text}"
-  },
-  "imageConfig": {
-    "model": "dall-e-3",
-    "size": "1024x1024",
-    "quality": "standard",
-    "n": 1
-  },
-  "contentConfig": {
-    "imagePath": "img/content/",
-    "fontSize": "16px",
-    "wordCountMin": 1200,
-    "wordCountMax": 2000,
-    "initialImageId": 12,
-    "maxArticlesPerFeed": 5,
-    "useFallbackIfEmpty": true
-  },
   "scheduleConfig": {
     "time": "08:00",
     "count": 1
   }
-  ]
 }
