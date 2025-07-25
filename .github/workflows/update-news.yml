@@ -20,20 +20,16 @@ jobs:
 
   build:
     needs: load-settings
-    runs-on: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.runner || 'ubuntu-latest' }}
+    runs-on: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.runner }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set timezone to Asia/Taipei
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: "Asia/Taipei"
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.pythonVersion || '3.9' }}
+          python-version: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.pythonVersion }}
       - name: 安裝依賴套件
-        run: pip install openai requests feedparser pytz
+        run: pip install openai requests feedparser
       - name: 執行每日新聞生成腳本
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -42,9 +38,12 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
+          # 檢查並提交未提交的變更
           git add content.txt last_image_id.txt img/content/ || true
-          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage || 'Update news'}} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
+          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
+          # 執行 pull --rebase
           git pull origin main --rebase || echo "Pull failed, continuing with local changes"
+          # 再次添加最終變更並提交
           git add content.txt last_image_id.txt img/content/
-          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage || 'Update news'}} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
