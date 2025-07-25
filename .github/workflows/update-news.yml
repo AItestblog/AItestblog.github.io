@@ -6,6 +6,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  load-settings:
+    runs-on: ubuntu-latest
+    outputs:
+      settings: ${{ steps.load-settings.outputs.settings }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Load settings
+        id: load-settings
+        run: |
+          SETTINGS=$(jq -c . settings.txt | base64)
+          echo "settings=$SETTINGS" >> $GITHUB_OUTPUT
+
   build:
     needs: load-settings
     runs-on: ${{ fromJson(needs.load-settings.outputs.settings | base64 -d).scheduleConfig.runner || 'ubuntu-latest' }}
