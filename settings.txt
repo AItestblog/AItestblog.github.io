@@ -59,7 +59,7 @@
     "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報，簡約風格不要有太多元素",
     "withoutPerson": "與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心，簡約風格不要有太多元素：{prompt_text}"
   },
-  "personalImage": "https://aitestblog.github.io/img/personal.jpg",
+  "personalImage": "https://aitestblog.github.io/img/burst-logo.jpg",
   "personalContent": "<h3>關於我們</h3><p>財經新聞爆爆報致力於提供最即時的財經爆料與專業分析，幫助投資者捕捉市場脈動。我們的使命是透過爆速更新與深度洞察，讓您在財經世界中領先一步。</p><p>我們的品牌專注於財經新聞爆報、技術分析教學和投資工具，涵蓋台股、美股、加密貨幣等熱門領域。加入我們，一起爆料財富機會！</p>",
   "dailyCategories": [
     {
