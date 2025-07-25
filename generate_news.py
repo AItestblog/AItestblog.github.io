@@ -1,4 +1,3 @@
-# generate_news.py
 import os
 import openai
 import feedparser
