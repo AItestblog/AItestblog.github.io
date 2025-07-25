@@ -475,6 +475,12 @@
                                     <textarea id="personal-content" placeholder="輸入品牌介紹內容"></textarea>
                                     <p class="hint">支援 HTML 格式</p>
                                 </div>
+                                <div class="input-group">
+                                    <label for="banner-image">橫幅圖片</label>
+                                    <input type="file" id="banner-image" accept="image/*">
+                                    <img id="banner-preview" class="image-preview hidden" src="" alt="橫幅預覽">
+                                    <p class="hint">建議尺寸 1200x300 像素，檔案將上傳為 img/banner.jpg</p>
+                                </div>
                             </div>
                         </div>
                         <div id="auto-post-settings" class="tab-content">
@@ -722,6 +728,8 @@
             const personalImageInput = document.getElementById('personal-image');
             const imagePreview = document.getElementById('image-preview');
             const personalContentInput = document.getElementById('personal-content');
+            const bannerImageInput = document.getElementById('banner-image');
+            const bannerPreview = document.getElementById('banner-preview');
             const postTimeInput = document.getElementById('post-time');
             const postCountInput = document.getElementById('post-count');
             const articleSummary = document.getElementById('article-summary');
@@ -976,6 +984,8 @@
                 personalTabInput.value = settings.personalTab || '';
                 imagePreview.src = settings.personalImage || '';
                 imagePreview.classList.toggle('hidden', !settings.personalImage);
+                bannerPreview.src = settings.bannerImage || '';
+                bannerPreview.classList.toggle('hidden', !settings.bannerImage);
                 personalContentInput.value = settings.personalContent || '';
                 postTimeInput.value = settings.scheduleConfig?.time || '08:00';
                 postCountInput.value = settings.scheduleConfig?.count || 1;
@@ -1019,6 +1029,18 @@
                     reader.onload = () => {
                         imagePreview.src = reader.result;
                         imagePreview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            bannerImageInput.addEventListener('change', () => {
+                const file = bannerImageInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        bannerPreview.src = reader.result;
+                        bannerPreview.classList.remove('hidden');
                     };
                     reader.readAsDataURL(file);
                 }
@@ -1596,6 +1618,52 @@
                         } else {
                             const errorData = await imageResponse.json().catch(() => ({}));
                             throw new Error(errorData.message || '上傳個人圖片失敗');
+                        }
+                    }
+                    if (bannerImageInput.files[0]) {
+                        const file = bannerImageInput.files[0];
+                        const base64Data = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve(reader.result.split(',')[1]);
+                            reader.readAsDataURL(file);
+                        });
+                        const filename = 'banner.jpg';
+                        let bannerSha = null;
+                        try {
+                            console.log(`檢查現有橫幅圖片 ${filename} 以獲取 SHA...`);
+                            const bannerCheckResponse = await fetch(`${apiBaseUrl}contents/img/${filename}`, {
+                                headers: {
+                                    'Authorization': `token ${pat}`,
+                                    'Accept': 'application/vnd.github.v3+json'
+                                }
+                            });
+                            if (bannerCheckResponse.ok) {
+                                const bannerData = await bannerCheckResponse.json();
+                                bannerSha = bannerData.sha;
+                            }
+                        } catch (error) {
+                            if (!error.message.includes('404')) {
+                                throw error;
+                            }
+                        }
+                        const bannerResponse = await fetch(`${apiBaseUrl}contents/img/${filename}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${pat}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                message: `Upload banner image: ${filename}`,
+                                content: base64Data,
+                                sha: bannerSha
+                            })
+                        });
+                        if (bannerResponse.ok) {
+                            settings.bannerImage = `${baseUrl}/img/${filename}`;
+                        } else {
+                            const errorData = await bannerResponse.json().catch(() => ({}));
+                            throw new Error(errorData.message || '上傳橫幅圖片失敗');
                         }
                     }
                     const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(settings, null, 2))));
