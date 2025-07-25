@@ -1,8 +1,8 @@
 {
   "baseUrl": "https://aitestblog.github.io/",
-  "newsTab": "爆爆財經新聞",
-  "technicalTab": "技術分析爆報",
-  "personalTab": "爆爆品牌故事",
+  "newsTab": "財經新聞爆爆報",
+  "technicalTab": "技術分析專欄",
+  "personalTab": "爆爆報的部落格",
   "seo": {
     "title": "財經新聞爆爆報 - 最即時的財經爆料與分析平台",
     "description": "提供最即時的財經新聞爆料、市場分析與投資洞察，來自財經新聞爆爆報，助您掌握財富脈動。",
