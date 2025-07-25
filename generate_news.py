@@ -5,6 +5,7 @@ import requests
 import random
 from datetime import datetime
 import json
+import pytz  # 新增 pytz 模組
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -13,18 +14,20 @@ def load_settings():
         return json.load(f)
 
 def get_today_category(settings):
-    weekday = datetime.utcnow().weekday()
+    # 使用台灣時間 (Asia/Taipei)
+    taipei_tz = pytz.timezone('Asia/Taipei')
+    weekday = datetime.now(taipei_tz).weekday()
     daily = settings.get("dailyCategories", [])
     return daily[weekday].get("category", "") if len(daily) > weekday else ""
 
 def fetch_random_article(settings):
     articles = []
-    weekday = datetime.utcnow().weekday()
+    taipei_tz = pytz.timezone('Asia/Taipei')
+    weekday = datetime.now(taipei_tz).weekday()
     daily = settings.get("dailyCategories", [])
     feeds = daily[weekday].get("feeds", []) if len(daily) > weekday else []
     max_articles = settings.get("contentConfig", {}).get("maxArticlesPerFeed", 5)
     
-    # 添加 User-Agent 以避免被網站擋住
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
@@ -35,7 +38,7 @@ def fetch_random_article(settings):
             for entry in feed.entries[:max_articles]:
                 title = entry.get("title", "").strip()
                 if not title:
-                    continue  # 跳過沒有標題的項目
+                    continue
                 articles.append({
                     "title": title,
                     "summary": entry.get("summary", "").strip(),
@@ -121,7 +124,8 @@ def main():
     with open(img_path, "wb") as f:
         f.write(image_bytes)
 
-    today = datetime.now().strftime('%Y-%m-%d')
+    taipei_tz = pytz.timezone('Asia/Taipei')
+    today = datetime.now(taipei_tz).strftime('%Y-%m-%d')
     block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
     old = ""
     if os.path.exists("content.txt"):
