@@ -2,7 +2,7 @@ name: 每日自動更新新聞與圖片
 
 on:
   schedule:
-    - cron: '0 0 * * 1-6'  # 每週一到週六，台灣時間早上 8 點（UTC 0 點）
+    - cron: '0 0 * * 1-6'  # 每週一到週六，台灣早上 8 點（UTC 0 點）
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: 讀取 settings.txt 為 JSON 字串
+      - name: 讀取 settings.txt 為 JSON 字串（提供給下方 Python 用）
         id: load
         run: |
           settings=$(cat settings.txt | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()))")
@@ -22,7 +22,7 @@ jobs:
 
   build:
     needs: load-settings
-    runs-on: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.pythonVersion }}
+          python-version: 3.10
 
       - name: 安裝依賴套件
         run: pip install openai requests feedparser
@@ -45,16 +45,12 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          # 第一次嘗試提交
           git add content.txt last_image_id.txt img/content/ || true
-          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
+          git commit -m "每日自動更新新聞與圖片 $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
 
-          # pull 以防有衝突
           git pull origin main --rebase || echo "Pull failed, continuing with local changes"
 
-          # 再次提交
           git add content.txt last_image_id.txt img/content/
-          git commit -m "${{ fromJson(needs.load-settings.outputs.settings).scheduleConfig.commitMessage }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git commit -m "每日自動更新新聞與圖片 $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
 
-          # 推送
           git push
