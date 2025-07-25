@@ -1,0 +1,816 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3440199491716602" crossorigin="anonymous"></script>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q32FFR42XT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q32FFR42XT');
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_APP_ID', // 請替換為您的 Facebook App ID
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <title></title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, 'Noto Sans TC', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f9fc;
+            color: #333333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background-image: url('/img/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        @media screen and (max-width: 600px) {
+            .header {
+                height: 80px;
+                padding: 10px;
+                background-size: contain;
+            }
+        }
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            .header {
+                height: 100px;
+                padding: 15px;
+            }
+        }
+        .nav-tabs {
+            display: flex;
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            text-decoration: none;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .nav-tab:hover {
+            background-color: #1e40af;
+        }
+        .nav-tab.active {
+            background-color: #1d4ed8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .carousel-item {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+        }
+        .carousel-item.active {
+            display: block;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .carousel-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background-color: rgba(0,0,0,0.7);
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+        .carousel-button.prev {
+            left: 10px;
+        }
+        .carousel-button.next {
+            right: 10px;
+        }
+        .articles {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .article-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        .article-card h2 {
+            font-size: 24px;
+            color: #2563eb;
+            margin: 0 0 10px;
+        }
+        .article-card p {
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .article-card .article-date {
+            display: block;
+            font-size: 16px;
+            color: #666;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        .article-content {
+            display: none;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        .article-content.active {
+            display: block;
+        }
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+        }
+        .article-share {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .article-share a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .article-share a:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.1);
+        }
+        .article-share img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
+        .article-comments {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .article-comments h3 {
+            font-size: 18px;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .facebook-comments {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .facebook-comments h2 {
+            font-size: 20px;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .page-button {
+            width: 40px;
+            height: 40px;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-button:hover {
+            background-color: #1e40af;
+        }
+        .page-button.active {
+            background-color: #1d4ed8;
+        }
+        .page-button.disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666666;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #3b82f6;
+        }
+        .share-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .share-button {
+            display: inline-block;
+            transition: opacity 0.2s;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .share-button:hover {
+            opacity: 0.8;
+            background-color: #e0e0e0;
+        }
+        .share-button img {
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+        }
+        @media screen and (max-width: 768px) {
+            .carousel {
+                height: 200px;
+            }
+            .carousel-title {
+                font-size: 20px;
+                padding: 8px 10px;
+            }
+            .share-buttons {
+                bottom: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner -->
+        <div class="header"></div>
+
+        <!-- 導航選單 -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab active" id="nav-news"></a>
+            <a href="technical.html" class="nav-tab" id="nav-technical"></a>
+            <a href="personal.html" class="nav-tab" id="nav-personal"></a>
+        </div>
+
+        <!-- 輪播框 -->
+        <div class="carousel" id="carousel"></div>
+
+        <!-- 文章列表 -->
+        <div class="articles" id="articles"></div>
+
+        <!-- 分頁 -->
+        <div class="pagination" id="pagination"></div>
+
+        <!-- 全站 Facebook 留言板 -->
+        <div class="facebook-comments">
+            <h2>留言板</h2>
+            <div class="fb-comments" data-href="" data-width="100%" data-numposts="5"></div>
+        </div>
+
+        <!-- 頁腳 -->
+        <footer>
+            <p>© 2025 <a href="" target="_blank"></a>。保留所有權利。</p>
+        </footer>
+
+        <!-- 浮動分享按鈕 -->
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-button facebook" title="分享到 Facebook">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+            </a>
+            <a href="https://x.com/intent/tweet?url=" target="_blank" class="share-button x" title="分享到 X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+            </a>
+            <a href="https://www.instagram.com/?url=" target="_blank" class="share-button instagram" title="分享到 Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+            </a>
+            <a href="https://line.me/R/msg/text/?股市企業研究院%0D%0A" target="_blank" class="share-button line" title="分享到 Line">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+            </a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+
+    <script>
+        let settings = {};
+
+        async function loadSettings() {
+            try {
+                const response = await fetch('settings.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    settings = JSON.parse(text);
+                    updateSeo();
+                    updateNavTabs();
+                    updateFooter();
+                    updateFacebookComments();
+                    updateShareButtons();
+                } else {
+                    console.error('載入 settings.txt 失敗，使用空白值');
+                    // 設定為空值
+                    updateSeo();
+                    updateNavTabs();
+                    updateFooter();
+                    updateFacebookComments();
+                    updateShareButtons();
+                }
+            } catch (error) {
+                console.error('載入 settings.txt 失敗:', error);
+                // 設定為空值
+                updateSeo();
+                updateNavTabs();
+                updateFooter();
+                updateFacebookComments();
+                updateShareButtons();
+            }
+            loadContent();
+        }
+
+        function updateSeo() {
+            document.querySelector('meta[name="description"]').content = settings.seo?.description || '';
+            document.querySelector('meta[name="keywords"]').content = settings.seo?.keywords || '';
+            document.querySelector('meta[name="author"]').content = settings.seo?.author || '';
+            document.title = settings.seo?.title || '';
+            document.querySelector('meta[property="og:title"]').content = settings.seo?.ogTitle || '';
+            document.querySelector('meta[property="og:description"]').content = settings.seo?.ogDescription || '';
+            document.querySelector('meta[property="og:url"]').content = settings.seo?.ogUrl || '';
+            document.querySelector('script[type="application/ld+json"]').innerHTML = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Blog",
+                "name": settings.seo?.title || '',
+                "url": settings.seo?.ogUrl || '',
+                "description": settings.seo?.description || '',
+                "publisher": {
+                    "@type": "Organization",
+                    "name": settings.seo?.publisherName || '',
+                    "url": settings.seo?.publisherUrl || ''
+                }
+            }, null, 2);
+        }
+
+        function updateNavTabs() {
+            document.getElementById('nav-news').textContent = settings.newsTab || '';
+            document.getElementById('nav-technical').textContent = settings.technicalTab || '';
+            document.getElementById('nav-personal').textContent = settings.personalTab || '';
+        }
+
+        function updateFooter() {
+            const footerLink = document.querySelector('footer a');
+            footerLink.textContent = settings.seo?.publisherName || '';
+            footerLink.href = settings.seo?.publisherUrl || '';
+            document.querySelector('footer p').innerHTML = `© 2025 <a href="${settings.seo?.publisherUrl || ''}" target="_blank">${settings.seo?.publisherName || ''}</a>。保留所有權利。`;
+        }
+
+        function updateFacebookComments() {
+            document.querySelector('.facebook-comments .fb-comments').setAttribute('data-href', settings.baseUrl || '');
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse();
+            }
+        }
+
+        function updateShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-buttons a');
+            shareButtons[0].href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl || '')}`;
+            shareButtons[1].href = `https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl || '')}`;
+            shareButtons[2].href = `https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl || '')}`;
+            shareButtons[3].href = `https://line.me/R/msg/text/?${encodeURIComponent((settings.seo?.title || '') + '\n' + (settings.baseUrl || ''))}`;
+        }
+
+        async function loadContent() {
+            try {
+                const response = await fetch('content.txt');
+                if (!response.ok) throw new Error('無法載入 content.txt');
+                const text = await response.text();
+                const articles = parseContent(text);
+                renderCarousel(articles);
+                renderArticles(articles);
+            } catch (error) {
+                console.error('載入 content.txt 失敗:', error);
+                document.getElementById('articles').innerHTML = '<p style="color: red;">無法載入文章，請檢查 content.txt 是否存在。</p>';
+            }
+        }
+
+        function parseContent(text) {
+            const articles = [];
+            const entries = text.split('---').map(entry => entry.trim()).filter(entry => entry);
+            entries.forEach((entry, index) => {
+                const article = { content: '', images: [] };
+                const lines = entry.split('\n');
+                let isContent = false;
+                lines.forEach(line => {
+                    if (line.startsWith('title:') || line.startsWith('images:') || line.startsWith('image:') || line.startsWith('fontSize:') || line.startsWith('date:')) {
+                        const [key, value] = line.split(':').map(s => s.trim());
+                        if (key === 'image') {
+                            article.images = [value];
+                        } else if (key === 'images') {
+                            article.images = value.split(',').map((s, i) => {
+                                if (i === 0) return `${index + 1}.jpg`;
+                                return `${index + 1}-${i}.jpg`;
+                            });
+                        } else {
+                            article[key] = value;
+                        }
+                        isContent = false;
+                    } else if (isContent) {
+                        article.content += '\n' + line;
+                    } else if (line.startsWith('content:')) {
+                        isContent = true;
+                        article.content = line.substring(8).trim();
+                    }
+                });
+                article.content = article.content.trim();
+                if (article.title && article.images.length > 0 && article.date) {
+                    articles.push(article);
+                }
+            });
+            articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            return articles;
+        }
+
+        let currentPage = 0;
+        const articlesPerPage = 10;
+
+        function renderCarousel(articles) {
+            const carousel = document.getElementById('carousel');
+            carousel.innerHTML = '';
+            articles.forEach((article, index) => {
+                const item = document.createElement('div');
+                item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                item.innerHTML = `
+                    <img src="img/content/${article.images[0]}" alt="${article.title}">
+                    <h2 class="carousel-title">${article.title}</h2>
+                `;
+                carousel.appendChild(item);
+            });
+            if (articles.length > 1) {
+                carousel.innerHTML += `
+                    <button class="carousel-button prev" onclick="prevSlide()">❮</button>
+                    <button class="carousel-button next" onclick="nextSlide()">❯</button>
+                `;
+                startCarousel();
+            }
+        }
+
+        function renderArticles(articles) {
+            const articlesDiv = document.getElementById('articles');
+            articlesDiv.innerHTML = '';
+            const start = currentPage * articlesPerPage;
+            const end = Math.min(start + articlesPerPage, articles.length);
+            for (let i = start; i < end; i++) {
+                const article = articles[i];
+                const card = document.createElement('div');
+                card.className = 'article-card';
+                card.onclick = () => showArticle(i, articles);
+                const preview = article.content.replace(/<[^>]+>/g, '').substring(0, 100);
+                card.innerHTML = `
+                    <h2>${article.title}</h2>
+                    <p>${preview}...</p>
+                    <span class="article-date">發布日期：${article.date}</span>
+                `;
+                articlesDiv.appendChild(card);
+
+                // 加強移除標題：全局移除所有匹配的標題（不只開頭）
+                let cleanedContent = article.content;
+                const titleRegex = new RegExp(`<h2>${article.title}</h2>|${article.title}\\n`, 'gi'); // 添加 'g' 旗標，全局替換，'i' 忽略大小寫
+                cleanedContent = cleanedContent.replace(titleRegex, '').trim();
+
+                const content = document.createElement('div');
+                content.className = 'article-content';
+                content.id = `content-${i}`;
+                const fontSizeStyle = article.fontSize ? `font-size: ${article.fontSize};` : '';
+
+                // 檢查 cleanedContent 是否已包含 <img> 標籤，如果有，則不添加 imagesHtml 以避免重複
+                let imagesHtml = '';
+                if (!/<img\s/i.test(cleanedContent)) { // 如果內容中沒有 <img>，才添加
+                    imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
+                } else {
+                    console.log(`Article ${i} content already has images, skipping additional imagesHtml.`);
+                }
+
+                content.innerHTML = `
+                    <div style="${fontSizeStyle}">${cleanedContent}</div>
+                    ${imagesHtml}
+                    <div class="article-share">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Facebook">
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/facebook.svg" alt="Facebook Share" width="32" height="32">
+                        </a>
+                        <a href="https://x.com/intent/tweet?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 X">
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/x.svg" alt="X Share" width="32" height="32">
+                        </a>
+                        <a href="https://www.instagram.com/?url=${encodeURIComponent(settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Instagram">
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/instagram.svg" alt="Instagram Share" width="32" height="32">
+                        </a>
+                        <a href="https://line.me/R/msg/text/?${encodeURIComponent(article.title + '\n' + settings.baseUrl + '#article-' + i)}" target="_blank" title="分享到 Line">
+                            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/10.0.0/line.svg" alt="Line Share" width="32" height="32">
+                        </a>
+                    </div>
+                    <div class="article-comments">
+                        <h3>文章留言</h3>
+                        <div class="fb-comments" data-href="${settings.baseUrl + '#article-' + i}" data-width="100%" data-numposts="5"></div>
+                    </div>
+                `;
+                articlesDiv.appendChild(content);
+            }
+            renderPagination(articles);
+            // 重新解析動態生成的 Facebook 留言板
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse();
+            }
+        }
+
+        function renderPagination(articles) {
+            const pagination = document.getElementById('pagination');
+            const totalArticles = articles.length;
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
+            pagination.innerHTML = '';
+
+            const firstButton = document.createElement('button');
+            firstButton.className = `page-button ${currentPage === 0 ? 'disabled' : ''}`;
+            firstButton.innerText = '«';
+            firstButton.onclick = () => {
+                if (currentPage > 0) {
+                    currentPage = 0;
+                    renderArticles(articles);
+                }
+            };
+            pagination.appendChild(firstButton);
+
+            const prevButton = document.createElement('button');
+            prevButton.className = `page-button ${currentPage === 0 ? 'disabled' : ''}`;
+            prevButton.innerText = '<';
+            prevButton.onclick = () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    renderArticles(articles);
+                }
+            };
+            pagination.appendChild(prevButton);
+
+            const displayPages = Math.min(totalPages, 5);
+            let startPage = Math.max(0, currentPage - Math.floor(displayPages / 2));
+            let endPage = Math.min(startPage + displayPages, totalPages);
+            if (endPage - startPage < displayPages) {
+                startPage = Math.max(0, endPage - displayPages);
+            }
+
+            for (let i = startPage; i < endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.className = `page-button ${i === currentPage ? 'active' : ''}`;
+                pageButton.innerText = i + 1;
+                pageButton.onclick = () => {
+                    currentPage = i;
+                    renderArticles(articles);
+                };
+                pagination.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.className = `page-button ${currentPage === totalPages - 1 ? 'disabled' : ''}`;
+            nextButton.innerText = '>';
+            nextButton.onclick = () => {
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    renderArticles(articles);
+                }
+            };
+            pagination.appendChild(nextButton);
+
+            const lastButton = document.createElement('button');
+            lastButton.className = `page-button ${currentPage === totalPages - 1 ? 'disabled' : ''}`;
+            lastButton.innerText = '»';
+            lastButton.onclick = () => {
+                if (currentPage < totalPages - 1) {
+                    currentPage = totalPages - 1;
+                    renderArticles(articles);
+                }
+            };
+            pagination.appendChild(lastButton);
+        }
+
+        function showArticle(index, articles) {
+            document.querySelectorAll('.article-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`content-${index}`).classList.add('active');
+            window.scrollTo({ top: document.getElementById(`content-${index}`).offsetTop, behavior: 'smooth' });
+            document.title = (articles[index].title || '') + " - " + (settings.seo?.title || '');
+            history.replaceState(null, "", "#article-" + index);
+            // 重新解析單篇文章的 Facebook 留言板
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse(document.getElementById(`content-${index}`));
+            }
+        }
+
+        let currentSlide = 0;
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-item');
+            if (index >= slides.length) currentSlide = 0;
+            if (index < 0) currentSlide = slides.length - 1;
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function startCarousel() {
+            setInterval(nextSlide, 5000);
+        }
+
+        loadSettings();
+    </script>
+</body>
+</html>
