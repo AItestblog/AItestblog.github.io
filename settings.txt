@@ -1,43 +1,16 @@
 {
-  "baseSettings": {
-    "baseUrl": "https://aitestblog.github.io/",
-    "newsTab": "爆爆財經新聞",
-    "technicalTab": "技術分析爆報",
-    "personalTab": "爆爆品牌故事"
-  },
-  "seoSettings": {
-    "main": {
-      "title": "財經新聞爆爆報 - 最即時的財經爆料與分析平台",
-      "description": "提供最即時的財經新聞爆料、市場分析與投資洞察，來自財經新聞爆爆報，助您掌握財富脈動。",
-      "keywords": "財經新聞,投資爆料,股票分析,理財爆報,財經新聞爆爆報",
-      "author": "財經新聞爆爆報",
-      "publisherName": "財經新聞爆爆報",
-      "publisherUrl": "https://www.youtube.com/@financeburst",
-      "publisherEmail": ""
-    },
-    "technical": {
-      "title": "技術分析爆報 - 財經新聞爆爆報",
-      "description": "深入爆料股票與加密貨幣的技術分析，掌握市場爆點與交易策略，來自財經新聞爆爆報。",
-      "keywords": "技術分析爆報, 財經新聞爆爆報, 投資爆料",
-      "author": "財經新聞爆爆報",
-      "ogTitle": "技術分析爆報 - 財經新聞爆爆報",
-      "ogDescription": "深入爆料股票與加密貨幣的技術分析，掌握市場爆點與交易策略，來自財經新聞爆爆報。",
-      "ogUrl": "https://finance-news-burst.github.io/technical.html",
-      "publisherName": "財經新聞爆爆報",
-      "publisherUrl": "https://www.youtube.com/@financeburst",
-      "publisherEmail": "contact@financeburst.com"
-    },
-    "personal": {
-      "title": "爆爆品牌介紹 - 財經新聞爆爆報",
-      "description": "了解財經新聞爆爆報的品牌故事與爆料使命，來自財經新聞爆爆報。",
-      "keywords": "品牌介紹, 財經新聞爆爆報, 財經爆料",
-      "author": "財經新聞爆爆報",
-      "ogTitle": "爆爆品牌介紹 - 財經新聞爆爆報",
-      "ogDescription": "了解財經新聞爆爆報的品牌故事與爆料使命，來自財經新聞爆爆報。",
-      "ogUrl": "https://finance-news-burst.github.io/personal.html",
-      "publisherName": "財經新聞爆爆報",
-      "publisherUrl": "https://www.youtube.com/@financeburst"
-    }
+  "baseUrl": "https://aitestblog.github.io/",
+  "newsTab": "爆爆財經新聞",
+  "technicalTab": "技術分析爆報",
+  "personalTab": "爆爆品牌故事",
+  "seo": {
+    "title": "財經新聞爆爆報 - 最即時的財經爆料與分析平台",
+    "description": "提供最即時的財經新聞爆料、市場分析與投資洞察，來自財經新聞爆爆報，助您掌握財富脈動。",
+    "keywords": "財經新聞,投資爆料,股票分析,理財爆報,財經新聞爆爆報",
+    "author": "財經新聞爆爆報",
+    "publisherName": "財經新聞爆爆報",
+    "publisherUrl": "https://www.youtube.com/@financeburst",
+    "publisherEmail": ""
   },
   "contentConfig": {
     "maxArticlesPerFeed": 5,
@@ -48,10 +21,22 @@
     "initialImageId": 1,
     "useFallbackIfEmpty": true
   },
+  "technicalSeo": {
+    "title": "技術分析爆報 - 財經新聞爆爆報",
+    "description": "深入爆料股票與加密貨幣的技術分析，掌握市場爆點與交易策略，來自財經新聞爆爆報。",
+    "keywords": "技術分析爆報, 財經新聞爆爆報, 投資爆料",
+    "author": "財經新聞爆爆報",
+    "ogTitle": "技術分析爆報 - 財經新聞爆爆報",
+    "ogDescription": "深入爆料股票與加密貨幣的技術分析，掌握市場爆點與交易策略，來自財經新聞爆爆報。",
+    "ogUrl": "https://finance-news-burst.github.io/technical.html",
+    "publisherName": "財經新聞爆爆報",
+    "publisherUrl": "https://www.youtube.com/@financeburst",
+    "publisherEmail": "contact@financeburst.com"
+  },
   "prompts": {
     "personExtraction": "從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}\n",
     "titleTranslation": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動：{raw_title}",
-    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲..."
+    "articleSummary": "你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲，語氣自然易讀，可補充背景與分析觀點。用 HTML 結構（<h2>, <p>, <ol>, <li>, <strong>）組織，包含引言、分析、結論，最後加上：'<p><strong>注意</strong>：本文僅提供分析和資訊，不構成投資建議。投資者應根據自身風險偏好和市場條件進行決策。</p>'。\n\n新聞標題：{title}\n新聞摘要：{summary}\n\n請開始撰寫："
   },
   "imageConfig": {
     "model": "dall-e-3",
@@ -59,14 +44,23 @@
     "quality": "standard",
     "n": 1
   },
+  "personalSeo": {
+    "title": "爆爆品牌介紹 - 財經新聞爆爆報",
+    "description": "了解財經新聞爆爆報的品牌故事與爆料使命，來自財經新聞爆爆報。",
+    "keywords": "品牌介紹, 財經新聞爆爆報, 財經爆料",
+    "author": "財經新聞爆爆報",
+    "ogTitle": "爆爆品牌介紹 - 財經新聞爆爆報",
+    "ogDescription": "了解財經新聞爆爆報的品牌故事與爆料使命，來自財經新聞爆爆報。",
+    "ogUrl": "https://finance-news-burst.github.io/personal.html",
+    "publisherName": "財經新聞爆爆報",
+    "publisherUrl": "https://www.youtube.com/@financeburst"
+  },
   "imagePrompts": {
     "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報",
     "withoutPerson": "與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心：{prompt_text}"
   },
-  "personal": {
-    "personalImage": "/img/burst-logo.jpg",
-    "personalContent": "<h3>關於我們</h3><p>財經新聞爆爆報致力於提供最即時的財經爆料與專業分析，幫助投資者捕捉市場脈動。我們的使命是透過爆速更新與深度洞察，讓您在財經世界中領先一步。</p><p>我們的品牌專注於財經新聞爆報、技術分析教學和投資工具，涵蓋台股、美股、加密貨幣等熱門領域。加入我們，一起爆料財富機會！</p>"
-  },
+  "personalImage": "/img/burst-logo.jpg",
+  "personalContent": "<h3>關於我們</h3><p>財經新聞爆爆報致力於提供最即時的財經爆料與專業分析，幫助投資者捕捉市場脈動。我們的使命是透過爆速更新與深度洞察，讓您在財經世界中領先一步。</p><p>我們的品牌專注於財經新聞爆報、技術分析教學和投資工具，涵蓋台股、美股、加密貨幣等熱門領域。加入我們，一起爆料財富機會！</p>",
   "dailyCategories": [
     {
       "day": "周一",
@@ -75,7 +69,9 @@
         "https://news.cnyes.com/rss",
         "https://tw.stock.yahoo.com/rss/index"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周二",
@@ -85,7 +81,9 @@
         "https://cointelegraph.com/rss",
         "https://news.bitcoin.com/feed/"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周三",
@@ -94,7 +92,9 @@
         "https://www.marketwatch.com/rss/topstories",
         "https://www.cnbc.com/id/100003114/device/rss/rss.html"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周四",
@@ -104,7 +104,9 @@
         "https://cointelegraph.com/rss",
         "https://news.bitcoin.com/feed/"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周五",
@@ -113,7 +115,9 @@
         "https://www.etftrends.com/feed/",
         "https://seekingalpha.com/tag/etf.rss"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周六",
@@ -127,7 +131,9 @@
         "https://www.investing.com/rss/forex.rss",
         "https://www.babypips.com/news/rss"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     },
     {
       "day": "周日",
@@ -141,7 +147,9 @@
         "https://www.reuters.com/arc/outboundfeeds/rss/commodities/",
         "https://www.bloomberg.com/feed/podcast/commodities.xml"
       ],
-      "imageCount": 1
+      "imageCount": 1,
+      "aiPrompt": "請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動",
+      "wordCount": "2000"
     }
   ],
   "scheduleConfig": {
