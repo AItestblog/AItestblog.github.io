@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://finance-news-burst.github.io",
+  "baseUrl": "https://aitestblog.github.io/",
   "newsTab": "爆爆財經新聞",
   "technicalTab": "技術分析爆報",
   "personalTab": "爆爆品牌故事",
