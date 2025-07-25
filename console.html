@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -365,6 +326,11 @@
                     <input type="password" id="pat" placeholder="輸入您的 PAT">
                     <p id="pat-error" class="error">請輸入有效的 PAT！</p>
                 </div>
+                <div class="input-group">
+                    <label for="base-url">GitHub Pages URL</label>
+                    <input type="text" id="base-url" placeholder="輸入您的 GitHub Pages URL，例如 https://aitestblog.github.io">
+                    <p id="base-url-error" class="error">請輸入有效的 URL！</p>
+                </div>
                 <button id="authenticate-btn" class="authenticate-btn">驗證</button>
                 <button id="logout-btn" class="logout-btn hidden">登出</button>
             </div>
@@ -525,6 +491,34 @@
                                     <p class="hint">最多 10 篇</p>
                                 </div>
                             </div>
+                            <h3 class="text-lg font-semibold mt-6 mb-4">提示詞設定</h3>
+                            <div class="settings-grid">
+                                <div class="input-group">
+                                    <label for="article-summary">文章生成提示詞 (prompts.articleSummary)</label>
+                                    <textarea id="article-summary" placeholder="輸入文章生成提示詞"></textarea>
+                                    <p class="hint">例如：你是一位財經新聞編輯，請根據以下新聞標題與摘要，撰寫一篇全新、自然、有條理、{word_count_min}～{word_count_max}字的中文財經新聞。避免抄襲...</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="title-translation">標題翻譯提示詞 (prompts.titleTranslation)</label>
+                                    <textarea id="title-translation" placeholder="輸入標題翻譯提示詞"></textarea>
+                                    <p class="hint">例如：請將以下英文新聞標題翻譯成吸引人的中文標題，適合財經新聞，保持原意但更生動：{raw_title}</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="person-extraction">人物提取提示詞 (prompts.personExtraction)</label>
+                                    <textarea id="person-extraction" placeholder="輸入人物提取提示詞"></textarea>
+                                    <p class="hint">例如：從以下新聞標題與摘要中找出與財經相關的重要人物名稱（例如：川普、巴菲特、習近平、岸田文雄等），僅回傳一個最重要的人名，若無則回傳「無」：\n---\n{text}\n</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="image-with-person">有人物圖片提示 (imagePrompts.withPerson)</label>
+                                    <textarea id="image-with-person" placeholder="輸入有人物圖片提示"></textarea>
+                                    <p class="hint">例如：{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="image-without-person">無人物圖片提示 (imagePrompts.withoutPerson)</label>
+                                    <textarea id="image-without-person" placeholder="輸入無人物圖片提示"></textarea>
+                                    <p class="hint">例如：與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心：{prompt_text}</p>
+                                </div>
+                            </div>
                             <h3 class="text-lg font-semibold mt-6 mb-4">每日發文設定</h3>
                             <div class="daily-settings-grid">
                                 <!-- 周一 -->
@@ -540,21 +534,6 @@
                                             <label for="day-0-feeds">新聞來源</label>
                                             <input type="text" id="day-0-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-0-image-count">圖片數量</label>
-                                            <input type="number" id="day-0-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-0-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-0-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-0-word-count">文章字數</label>
-                                            <input type="text" id="day-0-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -572,21 +551,6 @@
                                             <input type="text" id="day-1-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
                                         </div>
-                                        <div class="input-group">
-                                            <label for="day-1-image-count">圖片數量</label>
-                                            <input type="number" id="day-1-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-1-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-1-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-1-word-count">文章字數</label>
-                                            <input type="text" id="day-1-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- 周三 -->
@@ -602,21 +566,6 @@
                                             <label for="day-2-feeds">新聞來源</label>
                                             <input type="text" id="day-2-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-2-image-count">圖片數量</label>
-                                            <input type="number" id="day-2-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-2-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-2-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-2-word-count">文章字數</label>
-                                            <input type="text" id="day-2-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -634,21 +583,6 @@
                                             <input type="text" id="day-3-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
                                         </div>
-                                        <div class="input-group">
-                                            <label for="day-3-image-count">圖片數量</label>
-                                            <input type="number" id="day-3-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-3-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-3-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-3-word-count">文章字數</label>
-                                            <input type="text" id="day-3-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- 周五 -->
@@ -664,21 +598,6 @@
                                             <label for="day-4-feeds">新聞來源</label>
                                             <input type="text" id="day-4-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-4-image-count">圖片數量</label>
-                                            <input type="number" id="day-4-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-4-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-4-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-4-word-count">文章字數</label>
-                                            <input type="text" id="day-4-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -696,21 +615,6 @@
                                             <input type="text" id="day-5-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
                                         </div>
-                                        <div class="input-group">
-                                            <label for="day-5-image-count">圖片數量</label>
-                                            <input type="number" id="day-5-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-5-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-5-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-5-word-count">文章字數</label>
-                                            <input type="text" id="day-5-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- 周日 -->
@@ -726,21 +630,6 @@
                                             <label for="day-6-feeds">新聞來源</label>
                                             <input type="text" id="day-6-feeds" placeholder="輸入最多 5 個新聞來源，用逗號分隔">
                                             <p class="hint">例如：https://news.example.com/feed,https://finance.example.org/rss</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-6-image-count">圖片數量</label>
-                                            <input type="number" id="day-6-image-count" min="1" placeholder="輸入圖片數量">
-                                            <p class="hint">例如：3</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-6-ai-prompt">AI 提示詞彙</label>
-                                            <textarea id="day-6-ai-prompt" placeholder="輸入 AI 提示詞彙"></textarea>
-                                            <p class="hint">例如：財經圖表，簡約風格</p>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="day-6-word-count">文章字數</label>
-                                            <input type="text" id="day-6-word-count" placeholder="輸入文章字數範圍">
-                                            <p class="hint">例如：1000-1500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -787,11 +676,13 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const patInput = document.getElementById('pat');
+            const baseUrlInput = document.getElementById('base-url');
             const authenticateBtn = document.getElementById('authenticate-btn');
             const logoutBtn = document.getElementById('logout-btn');
             const contentSection = document.getElementById('contentSection');
             const countdownTimer = document.getElementById('countdown-timer');
             const patError = document.getElementById('pat-error');
+            const baseUrlError = document.getElementById('base-url-error');
             const addArticleBtn = document.getElementById('add-article-btn');
             const editArticleBtn = document.getElementById('edit-article-btn');
             const wikiSettingsBtn = document.getElementById('wiki-settings-btn');
@@ -833,55 +724,39 @@
             const personalContentInput = document.getElementById('personal-content');
             const postTimeInput = document.getElementById('post-time');
             const postCountInput = document.getElementById('post-count');
+            const articleSummary = document.getElementById('article-summary');
+            const titleTranslation = document.getElementById('title-translation');
+            const personExtraction = document.getElementById('person-extraction');
+            const imageWithPerson = document.getElementById('image-with-person');
+            const imageWithoutPerson = document.getElementById('image-without-person');
             const days = [
                 {
                     category: document.getElementById('day-0-category'),
-                    feeds: document.getElementById('day-0-feeds'),
-                    imageCount: document.getElementById('day-0-image-count'),
-                    aiPrompt: document.getElementById('day-0-ai-prompt'),
-                    wordCount: document.getElementById('day-0-word-count')
+                    feeds: document.getElementById('day-0-feeds')
                 },
                 {
                     category: document.getElementById('day-1-category'),
-                    feeds: document.getElementById('day-1-feeds'),
-                    imageCount: document.getElementById('day-1-image-count'),
-                    aiPrompt: document.getElementById('day-1-ai-prompt'),
-                    wordCount: document.getElementById('day-1-word-count')
+                    feeds: document.getElementById('day-1-feeds')
                 },
                 {
                     category: document.getElementById('day-2-category'),
-                    feeds: document.getElementById('day-2-feeds'),
-                    imageCount: document.getElementById('day-2-image-count'),
-                    aiPrompt: document.getElementById('day-2-ai-prompt'),
-                    wordCount: document.getElementById('day-2-word-count')
+                    feeds: document.getElementById('day-2-feeds')
                 },
                 {
                     category: document.getElementById('day-3-category'),
-                    feeds: document.getElementById('day-3-feeds'),
-                    imageCount: document.getElementById('day-3-image-count'),
-                    aiPrompt: document.getElementById('day-3-ai-prompt'),
-                    wordCount: document.getElementById('day-3-word-count')
+                    feeds: document.getElementById('day-3-feeds')
                 },
                 {
                     category: document.getElementById('day-4-category'),
-                    feeds: document.getElementById('day-4-feeds'),
-                    imageCount: document.getElementById('day-4-image-count'),
-                    aiPrompt: document.getElementById('day-4-ai-prompt'),
-                    wordCount: document.getElementById('day-4-word-count')
+                    feeds: document.getElementById('day-4-feeds')
                 },
                 {
                     category: document.getElementById('day-5-category'),
-                    feeds: document.getElementById('day-5-feeds'),
-                    imageCount: document.getElementById('day-5-image-count'),
-                    aiPrompt: document.getElementById('day-5-ai-prompt'),
-                    wordCount: document.getElementById('day-5-word-count')
+                    feeds: document.getElementById('day-5-feeds')
                 },
                 {
                     category: document.getElementById('day-6-category'),
-                    feeds: document.getElementById('day-6-feeds'),
-                    imageCount: document.getElementById('day-6-image-count'),
-                    aiPrompt: document.getElementById('day-6-ai-prompt'),
-                    wordCount: document.getElementById('day-6-word-count')
+                    feeds: document.getElementById('day-6-feeds')
                 }
             ];
 
@@ -903,8 +778,8 @@
             let articles = [];
             let wikiItems = [];
             let settings = {};
-            const baseUrl = 'https://aitestblog.github.io';
-            const apiBaseUrl = 'https://api.github.com/repos/aitestblog/aitestblog.github.io/';
+            let baseUrl;
+            let apiBaseUrl;
             let currentArticleIndex = -1;
             let imageCounter = 1;
             let isEditMode = false;
@@ -954,6 +829,7 @@
                 try {
                     authenticateBtn.disabled = true;
                     const pat = patInput.value.trim();
+                    const baseUrlValue = baseUrlInput.value.trim();
 
                     if (!pat) {
                         patError.textContent = '請輸入有效的 PAT！';
@@ -961,6 +837,17 @@
                         alert('請輸入有效的 PAT！');
                         return;
                     }
+
+                    if (!baseUrlValue.match(/^https:\/\/[a-z0-9-]+.github.io$/i)) {
+                        baseUrlError.textContent = '請輸入有效的 GitHub Pages URL，例如 https://username.github.io';
+                        baseUrlError.classList.add('show');
+                        alert(baseUrlError.textContent);
+                        return;
+                    }
+
+                    const username = baseUrlValue.replace('https://', '').replace('.github.io', '');
+                    baseUrl = baseUrlValue;
+                    apiBaseUrl = `https://api.github.com/repos/${username}/${username}.github.io/`;
 
                     console.log('正在驗證 PAT:', pat.substring(0, 4) + '...'); // 僅顯示前4字元
                     const userResponse = await fetch('https://api.github.com/user', {
@@ -988,8 +875,12 @@
                     patInput.classList.add('disabled');
                     patInput.readOnly = true;
                     patInput.disabled = true;
+                    baseUrlInput.classList.add('disabled');
+                    baseUrlInput.readOnly = true;
+                    baseUrlInput.disabled = true;
                     authenticateBtn.classList.add('hidden');
                     patError.classList.remove('show');
+                    baseUrlError.classList.remove('show');
 
                     updateArticleCount();
 
@@ -1088,12 +979,14 @@
                 personalContentInput.value = settings.personalContent || '';
                 postTimeInput.value = settings.scheduleConfig?.time || '08:00';
                 postCountInput.value = settings.scheduleConfig?.count || 1;
+                articleSummary.value = settings.prompts?.articleSummary || '';
+                titleTranslation.value = settings.prompts?.titleTranslation || '';
+                personExtraction.value = settings.prompts?.personExtraction || '';
+                imageWithPerson.value = settings.imagePrompts?.withPerson || '';
+                imageWithoutPerson.value = settings.imagePrompts?.withoutPerson || '';
                 days.forEach((day, index) => {
                     day.category.value = settings.dailyCategories?.[index]?.category || '';
                     day.feeds.value = settings.dailyCategories?.[index]?.feeds?.join(',') || '';
-                    day.imageCount.value = settings.dailyCategories?.[index]?.imageCount || '';
-                    day.aiPrompt.value = settings.dailyCategories?.[index]?.aiPrompt || '';
-                    day.wordCount.value = settings.dailyCategories?.[index]?.wordCount || '';
                 });
                 toggleTab('seo-settings');
             });
@@ -1596,47 +1489,13 @@
                         const rawContent = atob(data.content);
                         settings = JSON.parse(decodeURIComponent(escape(rawContent))) || {};
                     } else if (response.status === 404) {
-                        settings = {
-                            seo: {},
-                            newsTab: '',
-                            technicalTab: '',
-                            personalTab: '',
-                            personalImage: '',
-                            personalContent: '',
-                            scheduleConfig: { time: '08:00', count: 1 },
-                            dailyCategories: [
-                                { day: '周一', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周二', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周三', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周四', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周五', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周六', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                                { day: '周日', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' }
-                            ]
-                        };
+                        settings = {};
                     } else {
                         throw new Error(`載入設定檔失敗，狀態碼: ${response.status}`);
                     }
                 } catch (error) {
                     console.error('載入 settings.txt 失敗:', error);
-                    settings = {
-                        seo: {},
-                        newsTab: '',
-                        technicalTab: '',
-                        personalTab: '',
-                        personalImage: '',
-                        personalContent: '',
-                        scheduleConfig: { time: '08:00', count: 1 },
-                        dailyCategories: [
-                            { day: '周一', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周二', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周三', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周四', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周五', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周六', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' },
-                            { day: '周日', category: '', feeds: [], imageCount: '', aiPrompt: '', wordCount: '' }
-                        ]
-                    };
+                    settings = {};
                 }
             }
 
@@ -1678,13 +1537,19 @@
                         time: postTimeInput.value.trim(),
                         count: parseInt(postCountInput.value) || 1
                     };
+                    settings.prompts = {
+                        articleSummary: articleSummary.value.trim(),
+                        titleTranslation: titleTranslation.value.trim(),
+                        personExtraction: personExtraction.value.trim()
+                    };
+                    settings.imagePrompts = {
+                        withPerson: imageWithPerson.value.trim(),
+                        withoutPerson: imageWithoutPerson.value.trim()
+                    };
                     settings.dailyCategories = days.map((day, index) => ({
                         day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][index],
                         category: day.category.value.trim(),
-                        feeds: day.feeds.value.split(',').map(f => f.trim()).filter(f => f),
-                        imageCount: parseInt(day.imageCount.value) || 1,
-                        aiPrompt: day.aiPrompt.value.trim(),
-                        wordCount: day.wordCount.value.trim()
+                        feeds: day.feeds.value.split(',').map(f => f.trim()).filter(f => f)
                     }));
                     if (personalImageInput.files[0]) {
                         const file = personalImageInput.files[0];
@@ -1742,4 +1607,5 @@
             }
         });
     </script>
+</body>
 </html>
