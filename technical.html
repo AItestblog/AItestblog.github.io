@@ -191,7 +191,7 @@
             padding: 10px;
             border-radius: 4px;
             overflow-x: auto;
-            white-space: pre-wrap; /* 確保預格式化文本換行 */
+            white-space: pre-wrap;
         }
         .accordion-content ul {
             margin-left: 20px;
@@ -199,6 +199,10 @@
         }
         .accordion-content ul li {
             margin-bottom: 5px;
+        }
+        .accordion-content h3 {
+            margin-top: 10px;
+            color: #2563eb;
         }
         .facebook-comments {
             width: 100%;
@@ -459,12 +463,14 @@
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item';
                 accordionItem.id = item.id;
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'accordion-content';
+                contentDiv.classList.add(index === 0 ? 'active' : '');
+                contentDiv.innerHTML = item.content; // 確保作為 HTML 渲染
                 accordionItem.innerHTML = `
                     <div class="accordion-header" onclick="toggleAccordion('${item.id}')">${item.title}</div>
-                    <div class="accordion-content ${index === 0 ? 'active' : ''}">
-                        ${item.content}
-                    </div>
                 `;
+                accordionItem.appendChild(contentDiv);
                 accordionContainer.appendChild(accordionItem);
             });
 
