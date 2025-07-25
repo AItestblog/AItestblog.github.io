@@ -121,9 +121,8 @@
       ]
     }
   ],
-"scheduleConfig": {
-  "time": "08:00",
-  "count": 1,
-  "cron": "0 0 * * *"
-}
+  "scheduleConfig": {
+    "time": "08:00",
+    "count": 1
+  }
 }
