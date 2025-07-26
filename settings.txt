@@ -15,7 +15,7 @@
   "contentConfig": {
     "maxArticlesPerFeed": 5,
     "wordCountMin": 5006666,
-    "wordCountMax": 3500,
+    "wordCountMax": 300,
     "fontSize": "16px",
     "imagePath": "img/content/",
     "initialImageId": 1,
