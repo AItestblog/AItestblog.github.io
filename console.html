@@ -502,13 +502,13 @@
                                 </div>
                                 <div class="input-group">
                                     <label for="word-count-min">文章字數下限</label>
-                                    <input type="number" id="word-count-min" min="500" max="1000" step="50" placeholder="輸入文章字數下限">
-                                    <p class="hint">最低 500 字</p>
+                                    <input type="number" id="word-count-min" min="500" max="2500" step="50" placeholder="輸入文章字數下限">
+                                    <p class="hint">最低 500 字 ~ 2500 字</p>
                                 </div>
                                 <div class="input-group">
                                     <label for="word-count-max">文章字數上限</label>
-                                    <input type="number" id="word-count-max" min="1001" max="3500" step="100" placeholder="輸入文章字數上限">
-                                    <p class="hint">最多 3500 字</p>
+                                    <input type="number" id="word-count-max" min="501" max="3500" step="100" placeholder="輸入文章字數上限">
+                                    <p class="hint">最多 501 字 ~ 3500 字</p>
                                 </div>
                             </div>
                             <h3 class="text-lg font-semibold mt-6 mb-4">提示詞設定</h3>
@@ -836,10 +836,10 @@ wordCountMinInput.addEventListener('blur', () => {
 
     if (isNaN(min) || min < 500) {
         wordCountMinInput.value = 500;
-    } else if (min > 1000) {
-        wordCountMinInput.value = 1000;
+    } else if (min > 2500) {
+        wordCountMinInput.value = 2500;
     } else if (!isNaN(max) && min >= max) {
-        wordCountMinInput.value = Math.min(max - 1, 1000);
+        wordCountMinInput.value = Math.min(max - 1, 2500);
     }
 });
 
@@ -847,16 +847,14 @@ wordCountMaxInput.addEventListener('blur', () => {
     let max = parseInt(wordCountMaxInput.value);
     let min = parseInt(wordCountMinInput.value);
 
-    if (isNaN(max) || max < 1001) {
-        wordCountMaxInput.value = 1001;
+    if (isNaN(max) || max < 501) {
+        wordCountMaxInput.value = 501;
     } else if (max > 3500) {
         wordCountMaxInput.value = 3500;
     } else if (!isNaN(min) && max <= min) {
-        wordCountMaxInput.value = Math.max(min + 1, 1001);
+        wordCountMaxInput.value = Math.max(min + 1, 501);
     }
 });
-
-
 
 
             function toggleTab(id) {

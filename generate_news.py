@@ -24,11 +24,11 @@ def fetch_all_unique_articles(settings):
     daily = settings.get("dailyCategories", [])
     feeds = daily[weekday].get("feeds", []) if len(daily) > weekday else []
     max_articles = settings.get("contentConfig", {}).get("maxArticlesPerFeed", 5)
-    
+
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
-    
+
     for url in feeds:
         try:
             feed = feedparser.parse(url, request_headers=headers)
@@ -44,7 +44,7 @@ def fetch_all_unique_articles(settings):
                 })
         except Exception as e:
             print(f"⚠️ 抓取 {url} 時發生錯誤: {e}")
-    
+
     if articles:
         print(f"✅ 抓到 {len(articles)} 則有效新聞")
         return articles
@@ -75,7 +75,7 @@ def generate_chinese_title(raw_title, settings):
         return res.choices[0].message.content.strip()
     except Exception as e:
         print(f"⚠️ 生成中文標題時發生錯誤: {e}")
-        return raw_title  # 回退到原始標題
+        return raw_title
 
 def summarize_with_gpt(news, img_name, settings, word_count_min, word_count_max):
     prompt = settings.get("prompts", {}).get("articleSummary", "").format(
@@ -121,7 +121,6 @@ def generate_image(prompt_text, person_name, settings):
             return requests.get(res.data[0].url).content
         except Exception as fallback_e:
             print(f"⚠️ 後備提示詞生成圖片也失敗: {fallback_e}")
-            # 返回預設圖片或跳過圖片生成
             return None
     except Exception as e:
         print(f"⚠️ 生成圖片時發生其他錯誤: {e}")
@@ -142,25 +141,32 @@ def main():
     settings = load_settings()
     category = get_today_category(settings)
     print(f"▶️ 今日分類：{category}")
-    
-    # 限制文章數量最多5篇
+
     count = min(settings.get("scheduleConfig", {}).get("count", 1), 5)
-    # 限制字數範圍：下限 500~1000，上限 1001~3500
-    word_count_min = max(min(settings.get("contentConfig", {}).get("wordCountMin", 1200), 1000), 500)
-    word_count_max = max(min(settings.get("contentConfig", {}).get("wordCountMax", 2000), 3500), 1001)
+
+    # ⚠️ 字數邏輯調整（符合 500~2500 / 501~3500，min < max）
+    raw_min = settings.get("contentConfig", {}).get("wordCountMin", 1200)
+    raw_max = settings.get("contentConfig", {}).get("wordCountMax", 2000)
+
+    word_count_min = min(max(raw_min, 500), 2500)
+    word_count_max = min(max(raw_max, 501), 3500)
+
     if word_count_min >= word_count_max:
-        word_count_min = word_count_max - 1
-    
+        if word_count_min < 2500:
+            word_count_max = min(word_count_min + 1, 3500)
+        else:
+            word_count_min = max(word_count_max - 1, 500)
+
     old = ""
     if os.path.exists("content.txt"):
         with open("content.txt", "r", encoding="utf-8") as f:
             old = f.read()
-    
-    new_blocks = ""  # 收集所有新文章的 block
+
+    new_blocks = ""
     all_articles = fetch_all_unique_articles(settings)
     num_to_generate = min(len(all_articles), count)
     random.shuffle(all_articles)
-    
+
     for news in all_articles[:num_to_generate]:
         img_id = get_next_image_id(settings)
         img_name = f"{img_id}.jpg"
@@ -182,7 +188,7 @@ def main():
         block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
         new_blocks += block
         print(f"✅ 產出完成（{len(new_blocks.split('---')) - 1} 篇）：{img_path} | 人物判斷：{person or '無'}")
-    
+
     with open("content.txt", "w", encoding="utf-8") as f:
         f.write(new_blocks + old)
 
