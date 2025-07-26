@@ -14,8 +14,8 @@
   },
   "contentConfig": {
     "maxArticlesPerFeed": 5,
-    "wordCountMin": 500,
-    "wordCountMax": 1001,
+    "wordCountMin": 1200,
+    "wordCountMax": 2000,
     "fontSize": "16px",
     "imagePath": "img/content/",
     "initialImageId": 1,
@@ -56,10 +56,10 @@
     "publisherUrl": "https://www.youtube.com/@financeburst"
   },
   "imagePrompts": {
-    "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，模擬高質感財經電影海報，簡約風格不要有太多元素",
-    "withoutPerson": "與下列主題相關的專業財經插圖，現代風格、有張力、有設計感、以新聞重點為中心，簡約風格不要有太多元素：{prompt_text}"
+    "withPerson": "{person_name} 的剪影，黑色高對比風格，背景具戲劇張力，融合與新聞主題相關的象徵性場景（例如：股市暴跌曲線、美元符號、虛擬貨幣圖騰、金條或地圖等），整體呈現高質感的財經電影海報風格，畫面需引導觀眾理解剪影人物與主題關聯",
+    "withoutPerson": "與下列主題相關的專業財經插圖：{prompt_text}。圖像應具備現代風格、明確設計感與情境象徵（如交易所、金融圖表、數據螢幕、央行建築等），整體畫面需營造新聞主題張力，讓讀者能迅速感知內容重點"
   },
-  "personalImage": "https://aitestblog.github.io/img/burst-logo.jpg",
+  "personalImage": "/img/burst-logo.jpg",
   "personalContent": "<h3>關於我們</h3><p>財經新聞爆爆報致力於提供最即時的財經爆料與專業分析，幫助投資者捕捉市場脈動。我們的使命是透過爆速更新與深度洞察，讓您在財經世界中領先一步。</p><p>我們的品牌專注於財經新聞爆報、技術分析教學和投資工具，涵蓋台股、美股、加密貨幣等熱門領域。加入我們，一起爆料財富機會！</p>",
   "dailyCategories": [
     {
@@ -109,7 +109,7 @@
       "category": "外匯",
       "feeds": [
         "https://www.forexlive.com/feed/",
-        "https://www.forexlive.com/feed/"
+        "https://www.dailyfx.com/feeds/forex-market-news"
       ]
     },
     {
@@ -122,7 +122,7 @@
     }
   ],
   "scheduleConfig": {
-    "count": 5
-  },
-  "bannerImage": "https://aitestblog.github.io/img/banner.jpg"
+    "time": "08:00",
+    "count": 1
+  }
 }
