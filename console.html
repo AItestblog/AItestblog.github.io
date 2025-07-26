@@ -265,6 +265,12 @@
         .hidden {
             display: none;
         }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
         @media (max-width: 768px) {
             .container {
                 margin: 20px;
@@ -386,7 +392,10 @@
                             <div id="editor"></div>
                             <p id="content-error" class="error">請輸入文章內容！</p>
                         </div>
-                        <button id="save-btn" class="save-btn">儲存</button>
+                        <div class="button-group">
+                            <button id="save-btn" class="save-btn">儲存</button>
+                            <button id="delete-article-btn" class="delete-btn hidden">刪除</button>
+                        </div>
                     </div>
                     <div id="wiki-container" class="wiki-container hidden">
                         <button id="add-wiki-btn" class="action-button">新增百科項目</button>
@@ -396,8 +405,8 @@
                     <div id="settings-container" class="settings-container hidden">
                         <div class="settings-tabs">
                             <button class="tab-button active" data-target="seo-settings">SEO 設定</button>
-                            <button class="tab-button" data-target="basic-settings">基礎設定</button>
-                            <button class="tab-button" data-target="brand-settings">品牌介紹頁內容</button>
+                            <button class="tab-button" data-target="basic-settings">導航按鈕設定</button>
+                            <button class="tab-button" data-target="brand-settings">部落格介紹設定</button>
                             <button class="tab-button" data-target="auto-post-settings">自動發文設定</button>
                         </div>
                         <div id="seo-settings" class="tab-content active">
@@ -442,7 +451,7 @@
                             </div>
                         </div>
                         <div id="basic-settings" class="tab-content">
-                            <h2 class="text-xl font-semibold mb-4">基礎設定</h2>
+                            <h2 class="text-xl font-semibold mb-4">導航按鈕設定</h2>
                             <div class="settings-grid">
                                 <div class="input-group">
                                     <label for="news-tab">新聞頁標籤</label>
@@ -462,7 +471,7 @@
                             </div>
                         </div>
                         <div id="brand-settings" class="tab-content">
-                            <h2 class="text-xl font-semibold mb-4">品牌介紹頁內容</h2>
+                            <h2 class="text-xl font-semibold mb-4">部落格介紹設定</h2>
                             <div class="settings-grid">
                                 <div class="input-group">
                                     <label for="personal-image">個人照片或品牌 LOGO</label>
@@ -487,14 +496,19 @@
                             <h2 class="text-xl font-semibold mb-4">自動發文設定</h2>
                             <div class="settings-grid">
                                 <div class="input-group">
-                                    <label for="post-time">每天發文時間</label>
-                                    <input type="time" id="post-time" placeholder="輸入每天發文時間">
-                                    <p class="hint">例如：09:00</p>
+                                    <label for="post-count">每天發文數量</label>
+                                    <input type="number" id="post-count" min="1" max="5" placeholder="輸入每天發文數量">
+                                    <p class="hint">最多 5 篇</p>
                                 </div>
                                 <div class="input-group">
-                                    <label for="post-count">每天發文數量</label>
-                                    <input type="number" id="post-count" min="1" max="10" placeholder="輸入每天發文數量">
-                                    <p class="hint">最多 10 篇</p>
+                                    <label for="word-count-min">文章字數下限</label>
+                                    <input type="number" id="word-count-min" min="500" max="1000" step="50" placeholder="輸入文章字數下限">
+                                    <p class="hint">最低 500 字</p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="word-count-max">文章字數上限</label>
+                                    <input type="number" id="word-count-max" min="1001" max="3500" step="100" placeholder="輸入文章字數上限">
+                                    <p class="hint">最多 3500 字</p>
                                 </div>
                             </div>
                             <h3 class="text-lg font-semibold mt-6 mb-4">提示詞設定</h3>
@@ -710,6 +724,7 @@
             const dateError = document.getElementById('date-error');
             const contentError = document.getElementById('content-error');
             const saveBtn = document.getElementById('save-btn');
+            const deleteArticleBtn = document.getElementById('delete-article-btn');
             const addWikiBtn = document.getElementById('add-wiki-btn');
             const saveWikiBtn = document.getElementById('save-wiki-btn');
             const saveSettingsBtn = document.getElementById('save-settings-btn');
@@ -730,8 +745,9 @@
             const personalContentInput = document.getElementById('personal-content');
             const bannerImageInput = document.getElementById('banner-image');
             const bannerPreview = document.getElementById('banner-preview');
-            const postTimeInput = document.getElementById('post-time');
             const postCountInput = document.getElementById('post-count');
+            const wordCountMinInput = document.getElementById('word-count-min');
+            const wordCountMaxInput = document.getElementById('word-count-max');
             const articleSummary = document.getElementById('article-summary');
             const titleTranslation = document.getElementById('title-translation');
             const personExtraction = document.getElementById('person-extraction');
@@ -803,6 +819,45 @@
                     }
                 });
             }
+
+            postCountInput.addEventListener('input', () => {
+                let value = parseInt(postCountInput.value);
+                if (value > 5) {
+                    postCountInput.value = 5;
+                } else if (value < 1 || isNaN(value)) {
+                    postCountInput.value = 1;
+                }
+            });
+
+// 當輸入完畢、離開輸入框時才檢查
+wordCountMinInput.addEventListener('blur', () => {
+    let min = parseInt(wordCountMinInput.value);
+    let max = parseInt(wordCountMaxInput.value);
+
+    if (isNaN(min) || min < 500) {
+        wordCountMinInput.value = 500;
+    } else if (min > 1000) {
+        wordCountMinInput.value = 1000;
+    } else if (!isNaN(max) && min >= max) {
+        wordCountMinInput.value = Math.min(max - 1, 1000);
+    }
+});
+
+wordCountMaxInput.addEventListener('blur', () => {
+    let max = parseInt(wordCountMaxInput.value);
+    let min = parseInt(wordCountMinInput.value);
+
+    if (isNaN(max) || max < 1001) {
+        wordCountMaxInput.value = 1001;
+    } else if (max > 3500) {
+        wordCountMaxInput.value = 3500;
+    } else if (!isNaN(min) && max <= min) {
+        wordCountMaxInput.value = Math.max(min + 1, 1001);
+    }
+});
+
+
+
 
             function toggleTab(id) {
                 document.querySelectorAll('.tab-content').forEach(c => {
@@ -926,6 +981,7 @@
                 hideAllContainers();
                 editorContainer.classList.remove('hidden');
                 editSelectGroup.classList.add('hidden');
+                deleteArticleBtn.classList.add('hidden');
                 const articleCount = articles.length;
                 const nextImageNumber = articleCount === 0 ? 1 : articleCount + 1;
                 articleTitle.value = '';
@@ -947,6 +1003,7 @@
                 hideAllContainers();
                 editorContainer.classList.remove('hidden');
                 editSelectGroup.classList.remove('hidden');
+                deleteArticleBtn.classList.remove('hidden');
                 editSelect.value = '';
                 articleTitle.value = '';
                 articleImages.value = '';
@@ -987,8 +1044,9 @@
                 bannerPreview.src = settings.bannerImage || '';
                 bannerPreview.classList.toggle('hidden', !settings.bannerImage);
                 personalContentInput.value = settings.personalContent || '';
-                postTimeInput.value = settings.scheduleConfig?.time || '08:00';
-                postCountInput.value = settings.scheduleConfig?.count || 1;
+                postCountInput.value = Math.min(settings.scheduleConfig?.count || 1, 5);
+                wordCountMinInput.value = Math.max(settings.contentConfig?.wordCountMin || 1200, 500);
+                wordCountMaxInput.value = Math.min(settings.contentConfig?.wordCountMax || 2000, 3500);
                 articleSummary.value = settings.prompts?.articleSummary || '';
                 titleTranslation.value = settings.prompts?.titleTranslation || '';
                 personExtraction.value = settings.prompts?.personExtraction || '';
@@ -1106,6 +1164,33 @@
                         alert('儲存失敗：' + error.message);
                     } finally {
                         saveBtn.disabled = false;
+                    }
+                }
+            });
+
+            deleteArticleBtn.addEventListener('click', async () => {
+                if (!isEditMode || currentArticleIndex < 0) {
+                    alert('請先選擇一篇文章！');
+                    return;
+                }
+                if (confirm('確認要刪除這篇文章嗎？')) {
+                    try {
+                        deleteArticleBtn.disabled = true;
+                        await deleteArticle(patInput.value.trim(), currentArticleIndex);
+                        alert('刪除完成');
+                        await loadArticles(patInput.value.trim());
+                        updateArticleCount();
+                        articleTitle.value = '';
+                        articleImages.value = '';
+                        articleFontSize.value = '';
+                        articleDate.value = '';
+                        quill.setText('');
+                        currentArticleIndex = -1;
+                        editSelect.value = '';
+                    } catch (error) {
+                        alert('刪除失敗：' + error.message);
+                    } finally {
+                        deleteArticleBtn.disabled = false;
                     }
                 }
             });
@@ -1338,6 +1423,54 @@
                 }
             }
 
+            async function deleteArticle(pat, index) {
+                try {
+                    let existingContent = '';
+                    let sha = null;
+                    const response = await fetch(`${apiBaseUrl}contents/content.txt`, {
+                        headers: {
+                            'Authorization': `token ${pat}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        existingContent = atob(data.content);
+                        existingContent = decodeURIComponent(escape(existingContent));
+                        sha = data.sha;
+                    }
+
+                    articles.splice(index, 1);
+                    let newContent = '';
+                    articles.forEach((article) => {
+                        newContent += `title:${article.title}\nimages:${article.images.join(',')}\nfontSize:${article.fontSize}\ndate:${article.date}\ncontent:${article.content}\n\n---\n`;
+                    });
+
+                    const base64Content = btoa(unescape(encodeURIComponent(newContent)));
+                    const updateResponse = await fetch(`${apiBaseUrl}contents/content.txt`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${pat}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Delete article at index: ${index}`,
+                            content: base64Content,
+                            sha
+                        })
+                    });
+
+                    if (!updateResponse.ok) {
+                        const errorData = await updateResponse.json().catch(() => ({}));
+                        throw new Error(errorData.message || '刪除文章失敗');
+                    }
+                } catch (error) {
+                    console.error('刪除文章失敗:', error);
+                    throw error;
+                }
+            }
+
             async function loadWikiItems(pat) {
                 try {
                     console.log('載入百科項目...');
@@ -1419,10 +1552,13 @@
                     });
                 });
 
-                document.querySelectorAll('.delete-btn').forEach(button => {
+                document.querySelectorAll('#wiki-items .delete-btn').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const index = parseInt(e.target.dataset.index);
-                        deleteWikiItem(index);
+                        if (confirm('確認要刪除這個百科項目嗎？')) {
+                            deleteWikiItem(index);
+                            alert('刪除完成');
+                        }
                     });
                 });
             }
@@ -1444,7 +1580,6 @@
             function deleteWikiItem(index) {
                 wikiItems.splice(index, 1);
                 renderWikiItems();
-                alert('百科項目已刪除！');
             }
 
             async function saveWikiSettings() {
@@ -1556,8 +1691,12 @@
                     settings.personalTab = personalTabInput.value.trim();
                     settings.personalContent = personalContentInput.value.trim();
                     settings.scheduleConfig = {
-                        time: postTimeInput.value.trim(),
-                        count: parseInt(postCountInput.value) || 1
+                        count: Math.min(parseInt(postCountInput.value) || 1, 5)
+                    };
+                    settings.contentConfig = {
+                        ...settings.contentConfig,
+                        wordCountMin: Math.max(parseInt(wordCountMinInput.value) || 1200, 500),
+                        wordCountMax: Math.min(parseInt(wordCountMaxInput.value) || 2000, 3500)
                     };
                     settings.prompts = {
                         articleSummary: articleSummary.value.trim(),
