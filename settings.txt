@@ -14,7 +14,7 @@
   },
   "contentConfig": {
     "maxArticlesPerFeed": 5,
-    "wordCountMin": 30,
+    "wordCountMin": 500,
     "wordCountMax": 20,
     "fontSize": "16px",
     "imagePath": "img/content/",
@@ -122,7 +122,7 @@
     }
   ],
   "scheduleConfig": {
-    "count": 7
+    "count": 5
   },
   "bannerImage": "https://aitestblog.github.io/img/banner.jpg"
 }
