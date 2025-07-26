@@ -23,19 +23,18 @@ def fetch_random_article(settings):
     daily = settings.get("dailyCategories", [])
     feeds = daily[weekday].get("feeds", []) if len(daily) > weekday else []
     max_articles = settings.get("contentConfig", {}).get("maxArticlesPerFeed", 5)
-    
-    # 添加 User-Agent 以避免被網站擋住
+
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0'
     }
-    
+
     for url in feeds:
         try:
             feed = feedparser.parse(url, request_headers=headers)
             for entry in feed.entries[:max_articles]:
                 title = entry.get("title", "").strip()
                 if not title:
-                    continue  # 跳過沒有標題的項目
+                    continue
                 articles.append({
                     "title": title,
                     "summary": entry.get("summary", "").strip(),
@@ -43,17 +42,8 @@ def fetch_random_article(settings):
                 })
         except Exception as e:
             print(f"⚠️ Error fetching {url}: {e}")
-    
-    if articles:
-        print(f"✅ 抓到 {len(articles)} 則有效新聞")
-        return random.choice(articles)
-    else:
-        print("⚠️ 找不到有效新聞，使用預設新聞替代")
-        return {
-            "title": "Global markets show mixed trends amid Fed uncertainty",
-            "summary": "Stocks in Asia gained slightly while U.S. markets await direction from upcoming earnings and Federal Reserve decisions.",
-            "link": "https://example.com/fallback"
-        }
+
+    return random.choice(articles) if articles else None
 
 def extract_person_name(text, settings):
     prompt = settings.get("prompts", {}).get("personExtraction", "").format(text=text)
@@ -71,8 +61,8 @@ def generate_chinese_title(raw_title, settings):
 def summarize_with_gpt(news, img_name, settings):
     prompt = settings.get("prompts", {}).get("articleSummary", "").format(
         title=news["title"], summary=news["summary"],
-        word_count_min=settings.get("contentConfig", {}).get("wordCountMin", 1200),
-        word_count_max=settings.get("contentConfig", {}).get("wordCountMax", 2000)
+        word_count_min=settings['contentConfig']['wordCountMin'],
+        word_count_max=settings['contentConfig']['wordCountMax']
     )
     res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": prompt}], temperature=0.7, max_tokens=4096)
     article = res.choices[0].message.content.strip().lstrip("```html").rstrip("```")
@@ -107,14 +97,36 @@ def main():
     settings = load_settings()
     category = get_today_category(settings)
     print(f"▶️ 今日分類：{category}")
-    count = settings.get("scheduleConfig", {}).get("count", 1)  # 讀取 count，預設 1
+
+    # 強制限制文章數最多為 5
+    raw_count = settings.get("scheduleConfig", {}).get("count", 1)
+    count = max(1, min(5, int(raw_count)))
+
+    # 限制字數範圍
+    word_count_min = settings.get("contentConfig", {}).get("wordCountMin", 1200)
+    word_count_max = settings.get("contentConfig", {}).get("wordCountMax", 2000)
+    word_count_min = max(500, min(1000, int(word_count_min)))
+    word_count_max = max(1001, min(3500, int(word_count_max)))
+    if word_count_min >= word_count_max:
+        word_count_max = word_count_min + 1
+    settings['contentConfig']['wordCountMin'] = word_count_min
+    settings['contentConfig']['wordCountMax'] = word_count_max
+
     old = ""
     if os.path.exists("content.txt"):
         with open("content.txt", "r", encoding="utf-8") as f:
             old = f.read()
-    new_blocks = ""  # 收集所有新文章的 block
-    for _ in range(count):  # 根據 count 循環生成
+
+    new_blocks = ""
+    used_titles = set()
+    generated = 0
+
+    while generated < count:
         news = fetch_random_article(settings)
+        if not news or news["title"] in used_titles:
+            continue
+        used_titles.add(news["title"])
+
         img_id = get_next_image_id(settings)
         img_name = f"{img_id}.jpg"
         img_alt = f"{img_id}-1.jpg"
@@ -130,11 +142,12 @@ def main():
 
         today = datetime.now().strftime('%Y-%m-%d')
         block = f"title: {title}\nimages: {img_name},{img_alt}\nfontSize: {settings.get('contentConfig', {}).get('fontSize', '16px')}\ndate: {today}\ncontent: {article}<p>原始連結：<a href=\"{news['link']}\">點此查看</a></p>\n\n---\n"
-        new_blocks += block  # 累積新文章
-        print(f"✅ 產出完成（第 {_+1} 篇）：{img_path} | 人物判斷：{person or '無'}")
-    
+        new_blocks += block
+        print(f"✅ 產出完成（第 {generated + 1} 篇）：{img_path} | 人物判斷：{person or '無'}")
+        generated += 1
+
     with open("content.txt", "w", encoding="utf-8") as f:
-        f.write(new_blocks + old)  # 一次寫入所有新文章 + 舊內容
+        f.write(new_blocks + old)
 
 if __name__ == "__main__":
     main()
