@@ -132,11 +132,11 @@
       "day": "周日",
       "category": "房地產",
       "feeds": [
-        "https://www.housingwire.com/feed/",
-        "https://www.inman.com/feed/",
-        "https://therealdeal.com/feed/",
-        "https://www.realtor.com/news/feed/",
-        "https://www.zillow.com/blog/feed/"
+        "https://housingwire.com/feed/",
+        "https://redfin.com/blog/feed",
+        "https://retipster.com/feed",
+        "https://realtor.com/news/feed",
+        "https://www.connectcre.com/feed"
       ]
     }
   ],
