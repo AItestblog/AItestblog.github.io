@@ -1,6 +1,5 @@
 import os
 import openai
-import feedparser
 import requests
 import random
 from datetime import datetime
@@ -29,10 +28,33 @@ def fetch_all_unique_articles(settings):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
 
+    # HTML 提取提示詞（hardcode，提取最新文章，不限新聞）
+    extraction_prompt = """
+    From the following HTML content of a website, extract up to {max_articles} recent articles, posts, or content items.
+    For each, provide: title (the headline), summary (a short description or excerpt, 50-200 words), link (the full URL).
+    Output in JSON format as a list of objects: [{"title": "...", "summary": "...", "link": "..."}, ...]
+    Focus on the main content section, ignore ads or sidebars. If no articles found, return empty list.
+    HTML: {html}
+    """
+
     for url in feeds:
         try:
-            feed = feedparser.parse(url, request_headers=headers)
-            for entry in feed.entries[:max_articles]:
+            # 用 requests 抓 HTML
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            html = response.text
+
+            # 用 GPT 提取文章
+            prompt = extraction_prompt.format(max_articles=max_articles, html=html[:20000])  # 限制長度避免 token 超限
+            res = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.2
+            )
+            extracted_json = res.choices[0].message.content.strip()
+            extracted_articles = json.loads(extracted_json)
+
+            for entry in extracted_articles:
                 title = entry.get("title", "").strip()
                 if not title or title in seen_titles:
                     continue
@@ -43,13 +65,13 @@ def fetch_all_unique_articles(settings):
                     "link": entry.get("link", "").strip()
                 })
         except Exception as e:
-            print(f"⚠️ 抓取 {url} 時發生錯誤: {e}")
+            print(f"⚠️ 抓取或提取 {url} 時發生錯誤: {e}")
 
     if articles:
-        print(f"✅ 抓到 {len(articles)} 則有效新聞")
+        print(f"✅ 抓到 {len(articles)} 則有效內容（文章/新聞）")
         return articles
     else:
-        print("⚠️ 找不到有效新聞，使用預設新聞替代")
+        print("⚠️ 找不到有效內容，使用預設替代")
         return [{
             "title": "Global markets show mixed trends amid Fed uncertainty",
             "summary": "Stocks in Asia gained slightly while U.S. markets await direction from upcoming earnings and Federal Reserve decisions.",
@@ -142,7 +164,7 @@ def main():
     category = get_today_category(settings)
     print(f"▶️ 今日分類：{category}")
 
-    count = min(settings.get("scheduleConfig", {}).get("count", 1), 5)
+    count = settings.get("scheduleConfig", {}).get("count", 1)  # 直接使用 settings 中的 count，無上限
 
     # ⚠️ 字數邏輯調整（符合 500~2500 / 501~3500，min < max）
     raw_min = settings.get("contentConfig", {}).get("wordCountMin", 1200)
@@ -164,8 +186,13 @@ def main():
 
     new_blocks = ""
     all_articles = fetch_all_unique_articles(settings)
-    num_to_generate = min(len(all_articles), count)
+    num_to_generate = count  # 直接用 count
     random.shuffle(all_articles)
+
+    # 如果文章少於 count，重複使用 fallback 來補足
+    if len(all_articles) < count:
+        fallback = fetch_all_unique_articles(settings)[-1]  # 用 fallback
+        all_articles.extend([fallback] * (count - len(all_articles)))
 
     for news in all_articles[:num_to_generate]:
         img_id = get_next_image_id(settings)
