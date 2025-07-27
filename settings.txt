@@ -130,13 +130,13 @@
     },
     {
       "day": "周日",
-      "category": "黃金",
+      "category": "房地產",
       "feeds": [
-        "https://www.kitco.com/news/category/mining/rss",
-        "https://www.kitco.com/rss/gold-live.xml",
-        "https://www.fxstreet.com/news/commodities/gold/rss",
-        "https://www.investing.com/rss/commodities_Gold.rss",
-        "https://goldprice.org/gold-price-rss-feed.xml"
+        "housingwire.com",
+        "realtor.com",
+        "inman.com",
+        "therealdeal.com",
+        "propertyreporter.co.uk"
       ]
     }
   ],
