@@ -130,13 +130,13 @@
     },
     {
       "day": "周日",
-      "category": "房地產",
+      "category": "幣圈",
       "feeds": [
-        "https://housingwire.com/feed/",
-        "https://redfin.com/blog/feed",
-        "https://retipster.com/feed",
-        "https://realtor.com/news/feed",
-        "https://www.connectcre.com/feed"
+        "https://decrypt.co/feed",
+        "https://cointelegraph.com/rss",
+        "https://news.bitcoin.com/feed/",
+        "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "https://www.newsbtc.com/feed/"
       ]
     }
   ],
