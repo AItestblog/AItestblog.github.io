@@ -132,11 +132,11 @@
       "day": "周日",
       "category": "房地產",
       "feeds": [
-        "housingwire.com",
-        "realtor.com",
-        "inman.com",
-        "therealdeal.com",
-        "propertyreporter.co.uk"
+        "https://www.housingwire.com/feed/",
+        "https://www.inman.com/feed/",
+        "https://therealdeal.com/feed/",
+        "https://www.realtor.com/news/feed/",
+        "https://www.zillow.com/blog/feed/"
       ]
     }
   ],
