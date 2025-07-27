@@ -14,8 +14,8 @@
   },
   "contentConfig": {
     "maxArticlesPerFeed": 5,
-    "wordCountMin": 2500,
-    "wordCountMax": 2600,
+    "wordCountMin": 1200,
+    "wordCountMax": 2000,
     "fontSize": "16px",
     "imagePath": "img/content/",
     "initialImageId": 1,
@@ -67,7 +67,10 @@
       "category": "台股",
       "feeds": [
         "https://news.cnyes.com/rss",
-        "https://tw.stock.yahoo.com/rss/index"
+        "https://tw.stock.yahoo.com/rss/index",
+        "https://www.taiwannews.com.tw/rss/economy.xml",
+        "https://focustaiwan.tw/rss/business.xml",
+        "https://www.bnext.com.tw/rss"
       ]
     },
     {
@@ -76,7 +79,9 @@
       "feeds": [
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
-        "https://news.bitcoin.com/feed/"
+        "https://news.bitcoin.com/feed/",
+        "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "https://www.newsbtc.com/feed/"
       ]
     },
     {
@@ -84,7 +89,10 @@
       "category": "美股",
       "feeds": [
         "https://www.marketwatch.com/rss/topstories",
-        "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+        "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+        "https://www.nasdaq.com/feed/rssoutbound?category=US+Markets",
+        "https://seekingalpha.com/market-news.xml",
+        "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
       ]
     },
     {
@@ -93,7 +101,9 @@
       "feeds": [
         "https://decrypt.co/feed",
         "https://cointelegraph.com/rss",
-        "https://news.bitcoin.com/feed/"
+        "https://news.bitcoin.com/feed/",
+        "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "https://www.newsbtc.com/feed/"
       ]
     },
     {
@@ -101,7 +111,10 @@
       "category": "ETF",
       "feeds": [
         "https://www.etftrends.com/feed/",
-        "https://seekingalpha.com/tag/etf.rss"
+        "https://seekingalpha.com/tag/etf.rss",
+        "https://www.etf.com/rss",
+        "https://www.etfdb.com/feed/",
+        "https://www.cnbc.com/id/10001147/device/rss/rss.html"
       ]
     },
     {
@@ -109,7 +122,10 @@
       "category": "外匯",
       "feeds": [
         "https://www.forexlive.com/feed/",
-        "https://www.dailyfx.com/feeds/forex-market-news"
+        "https://www.dailyfx.com/feeds/market-news",
+        "https://www.fxstreet.com/rss",
+        "https://www.investing.com/rss/news_25.rss",
+        "https://www.babypips.com/news/rss"
       ]
     },
     {
@@ -117,12 +133,15 @@
       "category": "黃金",
       "feeds": [
         "https://www.kitco.com/news/category/mining/rss",
-        "https://www.kitco.com/rss/gold-live.xml"
+        "https://www.kitco.com/rss/gold-live.xml",
+        "https://www.fxstreet.com/news/commodities/gold/rss",
+        "https://www.investing.com/rss/commodities_Gold.rss",
+        "https://goldprice.org/gold-price-rss-feed.xml"
       ]
     }
   ],
   "scheduleConfig": {
-    "count": 2
-  },
-  "bannerImage": "https://aitestblog.github.io/img/banner.jpg"
+    "time": "08:00",
+    "count": 1
+  }
 }
