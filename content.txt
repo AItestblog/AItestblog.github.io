@@ -1,3 +1,10 @@
+title: Bitcoin miner MARA to acquire majority stake in Exaion in AI, HPC play
+images: 53.jpg,53-1.jpg
+fontSize: 16px
+date: 2025-08-12
+content: <p>無法生成文章內容: Bitcoin miner MARA to acquire majority stake in Exaion in AI, HPC play</p><p>原始連結：<a href="https://cointelegraph.com/news/bitcoin-miners-acquires-majority-stake-iai-firm-exaion?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: 全球市場走勢紛雜，美聯儲政策成謎團引波動
 images: 52.jpg,52-1.jpg
 fontSize: 16px
