@@ -1,3 +1,10 @@
+title: Lumentum targets $600M quarterly revenue by June 2026 amid accelerating AI-driven demand
+images: 54.jpg,54-1.jpg
+fontSize: 16px
+date: 2025-08-13
+content: <p>無法生成文章內容: Lumentum targets $600M quarterly revenue by June 2026 amid accelerating AI-driven demand</p><p>原始連結：<a href="https://seekingalpha.com/news/4484377-lumentum-targets-600m-quarterly-revenue-by-june-2026-amid-accelerating-ai-driven-demand?source=generic_rss">點此查看</a></p>
+
+---
 title: Bitcoin miner MARA to acquire majority stake in Exaion in AI, HPC play
 images: 53.jpg,53-1.jpg
 fontSize: 16px
