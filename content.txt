@@ -1,3 +1,10 @@
+title: Trump Jr.-tied firm raises $50M for crypto, mining as Bitcoin peaks
+images: 55.jpg,55-1.jpg
+fontSize: 16px
+date: 2025-08-14
+content: <p>無法生成文章內容: Trump Jr.-tied firm raises $50M for crypto, mining as Bitcoin peaks</p><p>原始連結：<a href="https://cointelegraph.com/news/trump-jr-tied-firm-raises-50m-crypto-buys-mining-rigs?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Lumentum targets $600M quarterly revenue by June 2026 amid accelerating AI-driven demand
 images: 54.jpg,54-1.jpg
 fontSize: 16px
