@@ -1,3 +1,10 @@
+title: OpenAI staff looking to sell $6 billion in stock to SoftBank, others, source says
+images: 57.jpg,57-1.jpg
+fontSize: 16px
+date: 2025-08-16
+content: <p>無法生成文章內容: OpenAI staff looking to sell $6 billion in stock to SoftBank, others, source says</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/openai-staffers-to-sell-6-billion-in-stock-to-softbank-other-investors-bloomberg-news-reports-4196296">點此查看</a></p>
+
+---
 title: Developed Market Crash, Emerging Market Rally?
 images: 56.jpg,56-1.jpg
 fontSize: 16px
