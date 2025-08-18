@@ -1,3 +1,10 @@
+title: Global markets show mixed trends amid Fed uncertainty
+images: 59.jpg,59-1.jpg
+fontSize: 16px
+date: 2025-08-18
+content: <p>無法生成文章內容: Global markets show mixed trends amid Fed uncertainty</p><p>原始連結：<a href="https://example.com/fallback">點此查看</a></p>
+
+---
 title: XRP Price Could Be Headed To New All-Time Highs Due To These Factors
 images: 58.jpg,58-1.jpg
 fontSize: 16px
