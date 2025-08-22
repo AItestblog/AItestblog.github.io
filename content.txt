@@ -1,3 +1,10 @@
+title: Spirit Airlines is on shakier ground after avoiding hard decisions in bankruptcy
+images: 63.jpg,63-1.jpg
+fontSize: 16px
+date: 2025-08-22
+content: <p>無法生成文章內容: Spirit Airlines is on shakier ground after avoiding hard decisions in bankruptcy</p><p>原始連結：<a href="https://www.cnbc.com/2025/08/21/spirit-airlines-lessors-bankruptcy.html">點此查看</a></p>
+
+---
 title: Ethereum Captures Investor Frenzy, Overtakes Bitcoin With Nearly $3-B Surge
 images: 62.jpg,62-1.jpg
 fontSize: 16px
