@@ -1,3 +1,10 @@
+title: Starbucks expects non-binding bids for China business within two weeks, sources say
+images: 64.jpg,64-1.jpg
+fontSize: 16px
+date: 2025-08-23
+content: <p>無法生成文章內容: Starbucks expects non-binding bids for China business within two weeks, sources say</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/starbucks-expects-nonbinding-bids-for-china-business-within-two-weeks-sources-say-4206031">點此查看</a></p>
+
+---
 title: Spirit Airlines is on shakier ground after avoiding hard decisions in bankruptcy
 images: 63.jpg,63-1.jpg
 fontSize: 16px
