@@ -1,3 +1,10 @@
+title: Global markets show mixed trends amid Fed uncertainty
+images: 66.jpg,66-1.jpg
+fontSize: 16px
+date: 2025-08-25
+content: <p>無法生成文章內容: Global markets show mixed trends amid Fed uncertainty</p><p>原始連結：<a href="https://example.com/fallback">點此查看</a></p>
+
+---
 title: Robert Kiyosaki Exposes Brutal Truth Behind Sudden Wealth and Collapse
 images: 65.jpg,65-1.jpg
 fontSize: 16px
