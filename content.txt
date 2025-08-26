@@ -1,3 +1,10 @@
+title: More Pain Ahead? Bitcoin and Ethereum Charts Show Mixed Signals: Analysis
+images: 67.jpg,67-1.jpg
+fontSize: 16px
+date: 2025-08-26
+content: <p>無法生成文章內容: More Pain Ahead? Bitcoin and Ethereum Charts Show Mixed Signals: Analysis</p><p>原始連結：<a href="https://decrypt.co/336772/bitcoin-ethereum-price-analysis-pain-ahead">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 66.jpg,66-1.jpg
 fontSize: 16px
