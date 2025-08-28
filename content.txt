@@ -1,3 +1,10 @@
+title: USDC Gains Ground in Banking as Circle Teams up With Finastra for Global Transfers
+images: 69.jpg,69-1.jpg
+fontSize: 16px
+date: 2025-08-28
+content: <p>無法生成文章內容: USDC Gains Ground in Banking as Circle Teams up With Finastra for Global Transfers</p><p>原始連結：<a href="https://news.bitcoin.com/usdc-gains-ground-in-banking-as-circle-teams-up-with-finastra-for-global-transfers/">點此查看</a></p>
+
+---
 title: Daqo New Energy outlines $100M share repurchase and forecasts 110,000–130,000 MT 2025 production amid regulatory shifts
 images: 68.jpg,68-1.jpg
 fontSize: 16px
