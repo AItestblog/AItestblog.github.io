@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3440199491716602" crossorigin="anonymous"></script>
@@ -84,6 +45,38 @@
     <script type="application/ld+json"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
     <style>
         body {
             font-family: Arial, 'Noto Sans TC', sans-serif;
@@ -444,39 +437,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                try {
-                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                    var firstSheetName = workbook.SheetNames[0];
-                    var worksheet = workbook.Sheets[firstSheetName];
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                    var filteredData = jsonData.filter(row => row.some(filledCell));
-                    var headerRowIndex = filteredData.findIndex((row, index) =>
-                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                    );
-                    if (headerRowIndex === -1 || headerRowIndex > 25) {
-                        headerRowIndex = 0;
-                    }
-                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                    return csv;
-                } catch (e) {
-                    console.error(e);
-                    return "";
-                }
-            }
-            return gk_fileData[filename] || "";
-        }
-    </script>
-
     <script>
         let settings = {};
 
@@ -493,7 +453,6 @@
                     updateShareButtons();
                 } else {
                     console.error('載入 settings.txt 失敗，使用空白值');
-                    // 設定為空值
                     updateSeo();
                     updateNavTabs();
                     updateFooter();
@@ -502,7 +461,6 @@
                 }
             } catch (error) {
                 console.error('載入 settings.txt 失敗:', error);
-                // 設定為空值
                 updateSeo();
                 updateNavTabs();
                 updateFooter();
@@ -589,10 +547,7 @@
                         if (key === 'image') {
                             article.images = [value];
                         } else if (key === 'images') {
-                            article.images = value.split(',').map((s, i) => {
-                                if (i === 0) return `${index + 1}.jpg`;
-                                return `${index + 1}-${i}.jpg`;
-                            });
+                            article.images = value.split(',').map(s => s.trim());
                         } else {
                             article[key] = value;
                         }
@@ -619,7 +574,9 @@
         function renderCarousel(articles) {
             const carousel = document.getElementById('carousel');
             carousel.innerHTML = '';
-            articles.forEach((article, index) => {
+            // 選取最新的 10 篇有圖片的文章
+            const carouselArticles = articles.filter(article => article.images.length > 0).slice(0, 10);
+            carouselArticles.forEach((article, index) => {
                 const item = document.createElement('div');
                 item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
                 item.innerHTML = `
@@ -628,7 +585,7 @@
                 `;
                 carousel.appendChild(item);
             });
-            if (articles.length > 1) {
+            if (carouselArticles.length > 1) {
                 carousel.innerHTML += `
                     <button class="carousel-button prev" onclick="prevSlide()">❮</button>
                     <button class="carousel-button next" onclick="nextSlide()">❯</button>
@@ -655,9 +612,8 @@
                 `;
                 articlesDiv.appendChild(card);
 
-                // 加強移除標題：全局移除所有匹配的標題（不只開頭）
                 let cleanedContent = article.content;
-                const titleRegex = new RegExp(`<h2>${article.title}</h2>|${article.title}\\n`, 'gi'); // 添加 'g' 旗標，全局替換，'i' 忽略大小寫
+                const titleRegex = new RegExp(`<h2>${article.title}</h2>|${article.title}\\n`, 'gi');
                 cleanedContent = cleanedContent.replace(titleRegex, '').trim();
 
                 const content = document.createElement('div');
@@ -665,9 +621,8 @@
                 content.id = `content-${i}`;
                 const fontSizeStyle = article.fontSize ? `font-size: ${article.fontSize};` : '';
 
-                // 檢查 cleanedContent 是否已包含 <img> 標籤，如果有，則不添加 imagesHtml 以避免重複
                 let imagesHtml = '';
-                if (!/<img\s/i.test(cleanedContent)) { // 如果內容中沒有 <img>，才添加
+                if (!/<img\s/i.test(cleanedContent)) {
                     imagesHtml = article.images.map(img => `<img src="img/content/${img}" alt="${article.title}">`).join('');
                 } else {
                     console.log(`Article ${i} content already has images, skipping additional imagesHtml.`);
@@ -698,7 +653,6 @@
                 articlesDiv.appendChild(content);
             }
             renderPagination(articles);
-            // 重新解析動態生成的 Facebook 留言板
             if (typeof FB !== 'undefined') {
                 FB.XFBML.parse();
             }
@@ -781,7 +735,6 @@
             window.scrollTo({ top: document.getElementById(`content-${index}`).offsetTop, behavior: 'smooth' });
             document.title = (articles[index].title || '') + " - " + (settings.seo?.title || '');
             history.replaceState(null, "", "#article-" + index);
-            // 重新解析單篇文章的 Facebook 留言板
             if (typeof FB !== 'undefined') {
                 FB.XFBML.parse(document.getElementById(`content-${index}`));
             }
