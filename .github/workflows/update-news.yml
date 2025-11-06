@@ -1,0 +1,59 @@
+name: 每日自動更新新聞與圖片
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  load-settings:
+    runs-on: ubuntu-latest
+    outputs:
+      settings: ${{ steps.load-settings.outputs.settings }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Load settings
+        id: load-settings
+        run: |
+          SETTINGS=$(jq -c . settings.txt | base64 -w 0)
+          echo "settings=$SETTINGS" >> $GITHUB_OUTPUT
+
+  build:
+    needs: load-settings
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Decode settings
+        id: decode-settings
+        run: |
+          echo "${{ needs.load-settings.outputs.settings }}" | base64 -d > decoded_settings.json
+          COMMIT_MESSAGE=$(jq -r '.scheduleConfig.commitMessage // "Update news"' decoded_settings.json)
+          echo "commit_message=$COMMIT_MESSAGE" >> $GITHUB_OUTPUT
+      - name: Set timezone to Asia/Taipei
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Taipei"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: 安裝依賴套件
+        run: pip install openai requests feedparser pytz
+      - name: 執行每日新聞生成腳本
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python3 generate_news.py
+      - name: Commit 並推送更新內容
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add content.txt last_image_id.txt img/content/ || true
+          git commit -m "${{ steps.decode-settings.outputs.commit_message }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit before pull"
+          git pull origin main --rebase || echo "Pull failed, continuing with local changes"
+          git add content.txt last_image_id.txt img/content/
+          git commit -m "${{ steps.decode-settings.outputs.commit_message }} $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
