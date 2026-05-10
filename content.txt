@@ -1,3 +1,10 @@
+title: Intel Stock Hits All-Time High After Preliminary Chip Deal With Apple
+images: 259.jpg,259-1.jpg
+fontSize: 16px
+date: 2026-05-10
+content: <p>無法生成文章內容: Intel Stock Hits All-Time High After Preliminary Chip Deal With Apple</p><p>原始連結：<a href="https://decrypt.co/367320/intel-all-time-high-chip-deal-apple">點此查看</a></p>
+
+---
 title: 哥倫比亞4月消費者物價指數年增率達5.68%，高於預期的5.63%
 images: 258.jpg,258-1.jpg
 fontSize: 16px
