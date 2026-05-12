@@ -1,3 +1,10 @@
+title: Solana ETF inflows show demand returning as traders eye SOL rally to $120
+images: 261.jpg,261-1.jpg
+fontSize: 16px
+date: 2026-05-12
+content: <p>無法生成文章內容: Solana ETF inflows show demand returning as traders eye SOL rally to $120</p><p>原始連結：<a href="https://cointelegraph.com/markets/solana-etf-inflows-demand-returns-as-traders-eye-120?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 260.jpg,260-1.jpg
 fontSize: 16px
