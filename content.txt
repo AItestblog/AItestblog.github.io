@@ -1,3 +1,10 @@
+title: Price predictions 5/25: SPX, DXY, BTC, ETH, XRP, BNB, SOL, DOGE, HYPE, ZEC
+images: 275.jpg,275-1.jpg
+fontSize: 16px
+date: 2026-05-26
+content: <p>無法生成文章內容: Price predictions 5/25: SPX, DXY, BTC, ETH, XRP, BNB, SOL, DOGE, HYPE, ZEC</p><p>原始連結：<a href="https://cointelegraph.com/markets/price-predictions-525-spx-dxy-btc-eth-xrp-bnb-sol-doge-hype-zec?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 274.jpg,274-1.jpg
 fontSize: 16px
