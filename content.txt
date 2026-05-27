@@ -1,3 +1,10 @@
+title: Box forecasts FY 2027 revenue of about $1.28B while targeting about 28% operating margin
+images: 276.jpg,276-1.jpg
+fontSize: 16px
+date: 2026-05-27
+content: <p>無法生成文章內容: Box forecasts FY 2027 revenue of about $1.28B while targeting about 28% operating margin</p><p>原始連結：<a href="https://seekingalpha.com/news/4597196-box-forecasts-fy-2027-revenue-of-about-1_28b-while-targeting-about-28-percent-operating?source=generic_rss">點此查看</a></p>
+
+---
 title: Price predictions 5/25: SPX, DXY, BTC, ETH, XRP, BNB, SOL, DOGE, HYPE, ZEC
 images: 275.jpg,275-1.jpg
 fontSize: 16px
