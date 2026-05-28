@@ -1,3 +1,10 @@
+title: Orca, Streamex roll out secondary trading infrastructure for tokenized securities
+images: 277.jpg,277-1.jpg
+fontSize: 16px
+date: 2026-05-28
+content: <p>無法生成文章內容: Orca, Streamex roll out secondary trading infrastructure for tokenized securities</p><p>原始連結：<a href="https://cointelegraph.com/news/orca-and-streamex-launch-secondary-trading-infrastructure-for-tokenized-securities?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Box forecasts FY 2027 revenue of about $1.28B while targeting about 28% operating margin
 images: 276.jpg,276-1.jpg
 fontSize: 16px
