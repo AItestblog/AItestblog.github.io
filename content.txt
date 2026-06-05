@@ -1,3 +1,10 @@
+title: Lululemon cuts annual outlook, citing 'negative' media commentary and disappointing product launches
+images: 285.jpg,285-1.jpg
+fontSize: 16px
+date: 2026-06-05
+content: <p>無法生成文章內容: Lululemon cuts annual outlook, citing 'negative' media commentary and disappointing product launches</p><p>原始連結：<a href="https://www.cnbc.com/2026/06/04/lululemon-lulu-earnings-q1-2026.html">點此查看</a></p>
+
+---
 title: AI Lawyers Are Already Better Than Law Professors at Reasoning—Say Law Professors
 images: 284.jpg,284-1.jpg
 fontSize: 16px
