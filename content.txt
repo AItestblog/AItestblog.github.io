@@ -1,3 +1,10 @@
+title: Super Micro stock plunges as $7 billion equity raise overshadows booming backlog
+images: 290.jpg,290-1.jpg
+fontSize: 16px
+date: 2026-06-10
+content: <p>無法生成文章內容: Super Micro stock plunges as $7 billion equity raise overshadows booming backlog</p><p>原始連結：<a href="https://www.marketwatch.com/story/super-micro-stock-plunges-as-7-billion-equity-raise-overshadows-booming-backlog-c5df2fc8?mod=mw_rss_topstories">點此查看</a></p>
+
+---
 title: Bitcoin Crash To $30,000? China Mining Giant Says Strategy Can Survive
 images: 289.jpg,289-1.jpg
 fontSize: 16px
