@@ -1,3 +1,10 @@
+title: Crypto Hackers Drain Over $36M From Protocols Using Unverified Contracts
+images: 291.jpg,291-1.jpg
+fontSize: 16px
+date: 2026-06-11
+content: <p>無法生成文章內容: Crypto Hackers Drain Over $36M From Protocols Using Unverified Contracts</p><p>原始連結：<a href="https://www.newsbtc.com/news/crypto-hackers-drain-over-36m-from-protocols-using-unverified-contracts/">點此查看</a></p>
+
+---
 title: Super Micro stock plunges as $7 billion equity raise overshadows booming backlog
 images: 290.jpg,290-1.jpg
 fontSize: 16px
