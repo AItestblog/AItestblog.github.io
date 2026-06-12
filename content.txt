@@ -1,3 +1,10 @@
+title: Elections advertising spend for 2026 expected to reach record high, outpacing presidential years
+images: 292.jpg,292-1.jpg
+fontSize: 16px
+date: 2026-06-12
+content: <p>無法生成文章內容: Elections advertising spend for 2026 expected to reach record high, outpacing presidential years</p><p>原始連結：<a href="https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html">點此查看</a></p>
+
+---
 title: Crypto Hackers Drain Over $36M From Protocols Using Unverified Contracts
 images: 291.jpg,291-1.jpg
 fontSize: 16px
