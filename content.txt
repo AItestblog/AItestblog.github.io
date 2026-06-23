@@ -1,3 +1,10 @@
+title: Bitcoin’s 19.5% Open Interest Drop Points to Healthier BTC Market
+images: 303.jpg,303-1.jpg
+fontSize: 16px
+date: 2026-06-23
+content: <p>無法生成文章內容: Bitcoin’s 19.5% Open Interest Drop Points to Healthier BTC Market</p><p>原始連結：<a href="https://news.bitcoin.com/bitcoins-19-5-open-interest-drop-points-to-healthier-btc-market/">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 302.jpg,302-1.jpg
 fontSize: 16px
