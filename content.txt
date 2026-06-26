@@ -1,3 +1,10 @@
+title: GM reveals 2027 GMC Sierra pickup with new V-8 engines, redesigned styling
+images: 306.jpg,306-1.jpg
+fontSize: 16px
+date: 2026-06-26
+content: <p>無法生成文章內容: GM reveals 2027 GMC Sierra pickup with new V-8 engines, redesigned styling</p><p>原始連結：<a href="https://www.cnbc.com/2026/06/25/gm-gmc-sierra-pickup.html">點此查看</a></p>
+
+---
 title: Your Hermes Agent Now Has a Pet. It Does Nothing—And That’s the Point
 images: 305.jpg,305-1.jpg
 fontSize: 16px
