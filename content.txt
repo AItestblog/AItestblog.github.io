@@ -1,3 +1,10 @@
+title: investingLive Americas FX news wrap 26 Jun: Greenback ends mixed, still higher for week
+images: 307.jpg,307-1.jpg
+fontSize: 16px
+date: 2026-06-27
+content: <p>無法生成文章內容: investingLive Americas FX news wrap 26 Jun: Greenback ends mixed, still higher for week</p><p>原始連結：<a href="https://investinglive.com/news/investinglive-americas-fx-news-wrap-26-jun-greenback-ends-mixed-still-higher-for-week-20260626/">點此查看</a></p>
+
+---
 title: GM reveals 2027 GMC Sierra pickup with new V-8 engines, redesigned styling
 images: 306.jpg,306-1.jpg
 fontSize: 16px
