@@ -1,3 +1,10 @@
+title: Solana USDC Liquidity Jumps As Circle Mints Another $1 Billion
+images: 312.jpg,312-1.jpg
+fontSize: 16px
+date: 2026-07-02
+content: <p>無法生成文章內容: Solana USDC Liquidity Jumps As Circle Mints Another $1 Billion</p><p>原始連結：<a href="https://www.newsbtc.com/news/solana-usdc-liquidity-jumps-as-circle-mints-another-1-billion/">點此查看</a></p>
+
+---
 title: Pre-Markets Dip into Red, Jobs & Housing Data Today
 images: 311.jpg,311-1.jpg
 fontSize: 16px
