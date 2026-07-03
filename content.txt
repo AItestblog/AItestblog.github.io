@@ -1,3 +1,10 @@
+title: Rivian raises 2026 delivery outlook while Lucid misses Wall Street expectations for second quarter
+images: 313.jpg,313-1.jpg
+fontSize: 16px
+date: 2026-07-03
+content: <p>無法生成文章內容: Rivian raises 2026 delivery outlook while Lucid misses Wall Street expectations for second quarter</p><p>原始連結：<a href="https://www.cnbc.com/2026/07/02/rivian-lucid-q2-deliveries-demand.html">點此查看</a></p>
+
+---
 title: Solana USDC Liquidity Jumps As Circle Mints Another $1 Billion
 images: 312.jpg,312-1.jpg
 fontSize: 16px
