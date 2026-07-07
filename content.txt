@@ -1,3 +1,10 @@
+title: ByteDance and Alibaba to Pull Agent Features as China Cracks Down on Humanlike AI
+images: 317.jpg,317-1.jpg
+fontSize: 16px
+date: 2026-07-07
+content: <p>無法生成文章內容: ByteDance and Alibaba to Pull Agent Features as China Cracks Down on Humanlike AI</p><p>原始連結：<a href="https://decrypt.co/372873/bytedance-alibaba-agent-features-china-cracks-down-humanlike-ai">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 316.jpg,316-1.jpg
 fontSize: 16px
