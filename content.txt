@@ -1,3 +1,10 @@
+title: Bitcoin ETF Inflows Return As Farside Data Shows Institutions Still Buying The Dip
+images: 319.jpg,319-1.jpg
+fontSize: 16px
+date: 2026-07-09
+content: <p>無法生成文章內容: Bitcoin ETF Inflows Return As Farside Data Shows Institutions Still Buying The Dip</p><p>原始連結：<a href="https://www.newsbtc.com/news/bitcoin-etf-inflows-return-as-farside-data-shows-institutions-still-buying-the/">點此查看</a></p>
+
+---
 title: DeepSeek Won't Sink U.S. AI Titans
 images: 318.jpg,318-1.jpg
 fontSize: 16px
