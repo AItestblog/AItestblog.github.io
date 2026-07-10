@@ -1,3 +1,10 @@
+title: Florida's Palm Beach airport renamed for Trump
+images: 320.jpg,320-1.jpg
+fontSize: 16px
+date: 2026-07-10
+content: <p>無法生成文章內容: Florida's Palm Beach airport renamed for Trump</p><p>原始連結：<a href="https://www.cnbc.com/2026/07/09/florida-airport-palm-beach-internationa-donald-j-trump.html">點此查看</a></p>
+
+---
 title: Bitcoin ETF Inflows Return As Farside Data Shows Institutions Still Buying The Dip
 images: 319.jpg,319-1.jpg
 fontSize: 16px
