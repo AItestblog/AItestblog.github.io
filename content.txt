@@ -1,3 +1,10 @@
+title: Global markets show mixed trends amid Fed uncertainty
+images: 323.jpg,323-1.jpg
+fontSize: 16px
+date: 2026-07-13
+content: <p>無法生成文章內容: Global markets show mixed trends amid Fed uncertainty</p><p>原始連結：<a href="https://example.com/fallback">點此查看</a></p>
+
+---
 title: Ripple Swell 2026 Nears With Expanded Event Bringing Together Finance and XRP Ecosystem
 images: 322.jpg,322-1.jpg
 fontSize: 16px
