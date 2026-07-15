@@ -1,3 +1,10 @@
+title: Stock Market News for July 13, 2026
+images: 325.jpg,325-1.jpg
+fontSize: 16px
+date: 2026-07-15
+content: <p>無法生成文章內容: Stock Market News for July 13, 2026</p><p>原始連結：<a href="https://www.nasdaq.com/articles/stock-market-news-july-13-2026">點此查看</a></p>
+
+---
 title: CLARITY Act gains second law enforcement endorsement before Senate push
 images: 324.jpg,324-1.jpg
 fontSize: 16px
