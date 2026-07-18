@@ -1,3 +1,10 @@
+title: Why the winners in AI won't be the AI companies
+images: 328.jpg,328-1.jpg
+fontSize: 16px
+date: 2026-07-18
+content: <p>無法生成文章內容: Why the winners in AI won't be the AI companies</p><p>原始連結：<a href="https://investinglive.com/education/why-the-winners-in-ai-won-t-be-the-ai-companies/">點此查看</a></p>
+
+---
 title: United earnings top estimates but airline expects $6 billion in added fuel costs
 images: 327.jpg,327-1.jpg
 fontSize: 16px
