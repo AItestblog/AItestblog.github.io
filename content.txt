@@ -1,3 +1,10 @@
+title: Aave Picks Chainlink CCIP As Default Standard For Cross-Chain sGHO
+images: 331.jpg,331-1.jpg
+fontSize: 16px
+date: 2026-07-21
+content: <p>無法生成文章內容: Aave Picks Chainlink CCIP As Default Standard For Cross-Chain sGHO</p><p>原始連結：<a href="https://www.newsbtc.com/news/aave-chainlink-ccip-default-cross-chain-sgho/">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 330.jpg,330-1.jpg
 fontSize: 16px
