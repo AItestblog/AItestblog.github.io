@@ -1,3 +1,10 @@
+title: Crypto PAC pours $1M into Michigan Democratic primary race
+images: 333.jpg,333-1.jpg
+fontSize: 16px
+date: 2026-07-23
+content: <p>無法生成文章內容: Crypto PAC pours $1M into Michigan Democratic primary race</p><p>原始連結：<a href="https://cointelegraph.com/news/crypto-pac-michigan-democratic-primary-race?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Stock Market News for July 21, 2026
 images: 332.jpg,332-1.jpg
 fontSize: 16px
