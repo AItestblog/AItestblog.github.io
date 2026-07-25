@@ -1,3 +1,10 @@
+title: Trump says US to launch EU probe over ’illegal’ Google fine
+images: 335.jpg,335-1.jpg
+fontSize: 16px
+date: 2026-07-25
+content: <p>無法生成文章內容: Trump says US to launch EU probe over ’illegal’ Google fine</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/trump-says-us-to-launch-eu-probe-over-illegal-google-fine-4812345">點此查看</a></p>
+
+---
 title: As Honda CR-V leads U.S. sales, automaker teases new American-built pickup truck
 images: 334.jpg,334-1.jpg
 fontSize: 16px
