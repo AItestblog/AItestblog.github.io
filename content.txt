@@ -1,3 +1,10 @@
+title: Claude Opus 5 Outscores Fable 5 on Most Benchmarks—At Half the Price
+images: 336.jpg,336-1.jpg
+fontSize: 16px
+date: 2026-07-26
+content: <p>無法生成文章內容: Claude Opus 5 Outscores Fable 5 on Most Benchmarks—At Half the Price</p><p>原始連結：<a href="https://decrypt.co/374305/claude-opus-5-outscores-fable-5-most-benchmarks-half-price">點此查看</a></p>
+
+---
 title: Trump says US to launch EU probe over ’illegal’ Google fine
 images: 335.jpg,335-1.jpg
 fontSize: 16px
