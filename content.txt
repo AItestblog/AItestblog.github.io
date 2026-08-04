@@ -1,3 +1,10 @@
+title: FalconX cuts 10% of workforce amid prolonged crypto market slump: Report
+images: 345.jpg,345-1.jpg
+fontSize: 16px
+date: 2026-08-04
+content: <p>無法生成文章內容: FalconX cuts 10% of workforce amid prolonged crypto market slump: Report</p><p>原始連結：<a href="https://cointelegraph.com/news/falconx-workforce-reduction-amid-crypto-market-slump-report?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 344.jpg,344-1.jpg
 fontSize: 16px
