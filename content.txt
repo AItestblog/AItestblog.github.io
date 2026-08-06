@@ -1,3 +1,10 @@
+title: Mysten Labs tech chief joins Anthropic to work on AI security
+images: 347.jpg,347-1.jpg
+fontSize: 16px
+date: 2026-08-06
+content: <p>無法生成文章內容: Mysten Labs tech chief joins Anthropic to work on AI security</p><p>原始連結：<a href="https://cointelegraph.com/news/mysten-labs-tech-chief-joins-anthropic-to-work-on-ai-security?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: DeepSeek Won't Sink U.S. AI Titans
 images: 346.jpg,346-1.jpg
 fontSize: 16px
