@@ -1,3 +1,10 @@
+title: New Jersey opens civil rights probe of privately run ICE detention center in Newark
+images: 349.jpg,349-1.jpg
+fontSize: 16px
+date: 2026-08-08
+content: <p>無法生成文章內容: New Jersey opens civil rights probe of privately run ICE detention center in Newark</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/new-jersey-opens-civil-rights-probe-of-privately-run-ice-detention-center-in-newark-4847547">點此查看</a></p>
+
+---
 title: Savers Value Village thrift store launches new AI tool to price items
 images: 348.jpg,348-1.jpg
 fontSize: 16px
