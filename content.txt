@@ -1,3 +1,10 @@
+title: Bitcoin’s Splintered BIP-110 Fork Falls Behind by 18 Blocks
+images: 350.jpg,350-1.jpg
+fontSize: 16px
+date: 2026-08-09
+content: <p>無法生成文章內容: Bitcoin’s Splintered BIP-110 Fork Falls Behind by 18 Blocks</p><p>原始連結：<a href="https://news.bitcoin.com/featured/bitcoins-splintered-bip-110-fork-falls-behind-by-18-blocks/">點此查看</a></p>
+
+---
 title: New Jersey opens civil rights probe of privately run ICE detention center in Newark
 images: 349.jpg,349-1.jpg
 fontSize: 16px
