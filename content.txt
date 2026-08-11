@@ -1,3 +1,10 @@
+title: Bitcoin ATMs Pulled in Australia as Regulators Signal Wider Crackdown
+images: 352.jpg,352-1.jpg
+fontSize: 16px
+date: 2026-08-11
+content: <p>無法生成文章內容: Bitcoin ATMs Pulled in Australia as Regulators Signal Wider Crackdown</p><p>原始連結：<a href="https://decrypt.co/375282/bitcoin-atms-pulled-australia-regulators-crackdown">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 351.jpg,351-1.jpg
 fontSize: 16px
