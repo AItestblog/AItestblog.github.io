@@ -1,3 +1,10 @@
+title: Why Jensen Huang’s $500 billion AI financing plan faces a big risk from China
+images: 355.jpg,355-1.jpg
+fontSize: 16px
+date: 2026-08-14
+content: <p>無法生成文章內容: Why Jensen Huang’s $500 billion AI financing plan faces a big risk from China</p><p>原始連結：<a href="https://www.cnbc.com/2026/08/11/nvidia-ai-funding-jensen-huang-china-risk.html">點此查看</a></p>
+
+---
 title: ASX shareholder plans to sue former directors over failed blockchain project
 images: 354.jpg,354-1.jpg
 fontSize: 16px
