@@ -1,3 +1,10 @@
+title: Prediction Markets Give the Fed 74% Odds of Standing Pat in September
+images: 359.jpg,359-1.jpg
+fontSize: 16px
+date: 2026-08-18
+content: <p>無法生成文章內容: Prediction Markets Give the Fed 74% Odds of Standing Pat in September</p><p>原始連結：<a href="https://decrypt.co/375821/prediction-fed-rate-change-september">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 358.jpg,358-1.jpg
 fontSize: 16px
