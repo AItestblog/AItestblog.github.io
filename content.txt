@@ -1,3 +1,10 @@
+title: Arabica Coffee Prices Hit Record on U.S., Colombia Tariff Spat
+images: 360.jpg,360-1.jpg
+fontSize: 16px
+date: 2026-08-19
+content: <p>無法生成文章內容: Arabica Coffee Prices Hit Record on U.S., Colombia Tariff Spat</p><p>原始連結：<a href="https://www.wsj.com/articles/arabica-coffee-prices-hit-new-high-on-u-s-colombia-tariff-spat-582446fe?mod=rss_markets_main">點此查看</a></p>
+
+---
 title: Prediction Markets Give the Fed 74% Odds of Standing Pat in September
 images: 359.jpg,359-1.jpg
 fontSize: 16px
