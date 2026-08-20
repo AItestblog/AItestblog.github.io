@@ -1,3 +1,10 @@
+title: Bitcoin's Sharpest Rally in Five Months Flips Markets From Bearish to Coin Flip
+images: 361.jpg,361-1.jpg
+fontSize: 16px
+date: 2026-08-20
+content: <p>無法生成文章內容: Bitcoin's Sharpest Rally in Five Months Flips Markets From Bearish to Coin Flip</p><p>原始連結：<a href="https://decrypt.co/376030/bitcoin-rally-flips-markets-bearish-coin-flip">點此查看</a></p>
+
+---
 title: Arabica Coffee Prices Hit Record on U.S., Colombia Tariff Spat
 images: 360.jpg,360-1.jpg
 fontSize: 16px
