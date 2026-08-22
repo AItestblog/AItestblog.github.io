@@ -1,3 +1,10 @@
+title: Mexico stocks higher at close of trade; S&P/BMV IPC up 2.14%
+images: 363.jpg,363-1.jpg
+fontSize: 16px
+date: 2026-08-22
+content: <p>無法生成文章內容: Mexico stocks higher at close of trade; S&P/BMV IPC up 2.14%</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/mexico-stocks-higher-at-close-of-trade-spbmv-ipc-up-214-4872182">點此查看</a></p>
+
+---
 title: Hyundai's new flagship vehicle is a large luxury Genesis EV
 images: 362.jpg,362-1.jpg
 fontSize: 16px
