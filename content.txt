@@ -1,3 +1,10 @@
+title: Hashdex Liquidates DEFI As First US Spot Bitcoin ETF Closure Arrives
+images: 364.jpg,364-1.jpg
+fontSize: 16px
+date: 2026-08-23
+content: <p>無法生成文章內容: Hashdex Liquidates DEFI As First US Spot Bitcoin ETF Closure Arrives</p><p>原始連結：<a href="https://www.newsbtc.com/news/hashdex-liquidates-defi-first-us-spot-bitcoin-etf-closure/">點此查看</a></p>
+
+---
 title: Mexico stocks higher at close of trade; S&P/BMV IPC up 2.14%
 images: 363.jpg,363-1.jpg
 fontSize: 16px
