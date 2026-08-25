@@ -1,3 +1,10 @@
+title: Gemini plans to distribute crypto prediction markets through Apex brokerages
+images: 366.jpg,366-1.jpg
+fontSize: 16px
+date: 2026-08-25
+content: <p>無法生成文章內容: Gemini plans to distribute crypto prediction markets through Apex brokerages</p><p>原始連結：<a href="https://cointelegraph.com/news/gemini-plans-to-distribute-crypto-prediction-markets-through-apex-brokerages?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 365.jpg,365-1.jpg
 fontSize: 16px
