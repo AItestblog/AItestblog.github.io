@@ -1,3 +1,10 @@
+title: QumulusAI outlines 18 MW HPC capacity plan by year-end 2026 as signed contract value reaches $282.5M
+images: 367.jpg,367-1.jpg
+fontSize: 16px
+date: 2026-08-26
+content: <p>無法生成文章內容: QumulusAI outlines 18 MW HPC capacity plan by year-end 2026 as signed contract value reaches $282.5M</p><p>原始連結：<a href="https://seekingalpha.com/news/4636833-qumulusai-outlines-18-mw-hpc-capacity-plan-by-year-end-2026-as-signed-contract-value-reaches?source=generic_rss">點此查看</a></p>
+
+---
 title: Gemini plans to distribute crypto prediction markets through Apex brokerages
 images: 366.jpg,366-1.jpg
 fontSize: 16px
