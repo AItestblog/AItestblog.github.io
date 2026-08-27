@@ -1,3 +1,10 @@
+title: Treasury Proposes Stablecoin Licensing Rules Under GENIUS Act
+images: 368.jpg,368-1.jpg
+fontSize: 16px
+date: 2026-08-27
+content: <p>無法生成文章內容: Treasury Proposes Stablecoin Licensing Rules Under GENIUS Act</p><p>原始連結：<a href="https://www.newsbtc.com/news/treasury-proposes-stablecoin-licensing-rules-under-genius-act/">點此查看</a></p>
+
+---
 title: QumulusAI outlines 18 MW HPC capacity plan by year-end 2026 as signed contract value reaches $282.5M
 images: 367.jpg,367-1.jpg
 fontSize: 16px
