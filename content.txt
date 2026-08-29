@@ -1,3 +1,10 @@
+title: USDCAD runs up to swing high from last week and the 100 day MA
+images: 370.jpg,370-1.jpg
+fontSize: 16px
+date: 2026-08-29
+content: <p>無法生成文章內容: USDCAD runs up to swing high from last week and the 100 day MA</p><p>原始連結：<a href="https://investinglive.com/technical-analysis/usdcad-runs-up-to-swing-high-from-last-week-and-the-100-day-ma/">點此查看</a></p>
+
+---
 title: Gap shares jump 12% after company names new Old Navy CEO to revive struggling brand
 images: 369.jpg,369-1.jpg
 fontSize: 16px
