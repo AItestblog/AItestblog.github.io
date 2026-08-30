@@ -1,3 +1,10 @@
+title: Zcash’s 19x Rally May Have More Room as Grayscale Eyes Bitcoin Share
+images: 371.jpg,371-1.jpg
+fontSize: 16px
+date: 2026-08-30
+content: <p>無法生成文章內容: Zcash’s 19x Rally May Have More Room as Grayscale Eyes Bitcoin Share</p><p>原始連結：<a href="https://news.bitcoin.com/market-updates/zcashs-19x-rally-may-have-more-room-as-grayscale-eyes-bitcoin-share/">點此查看</a></p>
+
+---
 title: USDCAD runs up to swing high from last week and the 100 day MA
 images: 370.jpg,370-1.jpg
 fontSize: 16px
