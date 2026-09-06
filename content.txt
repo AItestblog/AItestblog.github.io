@@ -1,3 +1,10 @@
+title: Surprise nonfarm payrolls print sends Bitcoin back below 80K
+images: 378.jpg,378-1.jpg
+fontSize: 16px
+date: 2026-09-06
+content: <p>無法生成文章內容: Surprise nonfarm payrolls print sends Bitcoin back below 80K</p><p>原始連結：<a href="https://cointelegraph.com/markets/surprise-labor-market-print-sends-bitcoin-back-below-80k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: AI hiring boom could turn into a surprise tailwind for software: Bernstein
 images: 377.jpg,377-1.jpg
 fontSize: 16px
