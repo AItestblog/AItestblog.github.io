@@ -1,3 +1,10 @@
+title: Ethereum Foundation names 2 ‘must ship’ EIPs for Hegotá upgrade
+images: 380.jpg,380-1.jpg
+fontSize: 16px
+date: 2026-09-08
+content: <p>無法生成文章內容: Ethereum Foundation names 2 ‘must ship’ EIPs for Hegotá upgrade</p><p>原始連結：<a href="https://cointelegraph.com/news/ethereum-foundation-names-2-must-ship-eips-for-hegot-upgrade?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 379.jpg,379-1.jpg
 fontSize: 16px
