@@ -1,3 +1,10 @@
+title: Securitize Expands BlackRock BUIDL Collateral Use Across Prime Brokers
+images: 382.jpg,382-1.jpg
+fontSize: 16px
+date: 2026-09-10
+content: <p>無法生成文章內容: Securitize Expands BlackRock BUIDL Collateral Use Across Prime Brokers</p><p>原始連結：<a href="https://www.newsbtc.com/news/securitize-expands-blackrock-buidl-collateral-use-across-prime-brokers/">點此查看</a></p>
+
+---
 title: Stocks Sink in Broad AI Rout Sparked by China's DeepSeek
 images: 381.jpg,381-1.jpg
 fontSize: 16px
