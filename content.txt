@@ -1,3 +1,10 @@
+title: NFL Commissioner Roger Goodell says league could rework TV packages in next media deal
+images: 383.jpg,383-1.jpg
+fontSize: 16px
+date: 2026-09-11
+content: <p>無法生成文章內容: NFL Commissioner Roger Goodell says league could rework TV packages in next media deal</p><p>原始連結：<a href="https://www.cnbc.com/2026/09/10/nfl-roger-goodell-tv-packages-deal.html">點此查看</a></p>
+
+---
 title: Securitize Expands BlackRock BUIDL Collateral Use Across Prime Brokers
 images: 382.jpg,382-1.jpg
 fontSize: 16px
