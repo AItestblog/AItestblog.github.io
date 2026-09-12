@@ -1,3 +1,10 @@
+title: Bitcoin faces heavy resistance at $81.7K as supply wall blocks rally
+images: 384.jpg,384-1.jpg
+fontSize: 16px
+date: 2026-09-12
+content: <p>無法生成文章內容: Bitcoin faces heavy resistance at $81.7K as supply wall blocks rally</p><p>原始連結：<a href="https://www.fxstreet.com/cryptocurrencies/news/bitcoin-faces-heavy-resistance-at-817k-as-supply-wall-blocks-rally-202609120202">點此查看</a></p>
+
+---
 title: NFL Commissioner Roger Goodell says league could rework TV packages in next media deal
 images: 383.jpg,383-1.jpg
 fontSize: 16px
