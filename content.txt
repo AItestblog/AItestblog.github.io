@@ -1,3 +1,10 @@
+title: Farage’s Reform UK gets $97M from two crypto billionaires
+images: 385.jpg,385-1.jpg
+fontSize: 16px
+date: 2026-09-13
+content: <p>無法生成文章內容: Farage’s Reform UK gets $97M from two crypto billionaires</p><p>原始連結：<a href="https://cointelegraph.com/news/farages-reform-uk-gets-biggest-donation-ever-from-crypto-billionaire-reports?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Bitcoin faces heavy resistance at $81.7K as supply wall blocks rally
 images: 384.jpg,384-1.jpg
 fontSize: 16px
