@@ -1,3 +1,10 @@
+title: From Concrete to Compute: Why Clichmont Is Building AI Infrastructure Instead of Renting It
+images: 387.jpg,387-1.jpg
+fontSize: 16px
+date: 2026-09-15
+content: <p>無法生成文章內容: From Concrete to Compute: Why Clichmont Is Building AI Infrastructure Instead of Renting It</p><p>原始連結：<a href="https://www.newsbtc.com/interview/from-concrete-to-compute-why-clichmont-is-building-ai-infrastructure-instead-of-renting-it/">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 386.jpg,386-1.jpg
 fontSize: 16px
