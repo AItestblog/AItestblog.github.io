@@ -1,3 +1,10 @@
+title: Comex Gold, Silver Settle Lower
+images: 388.jpg,388-1.jpg
+fontSize: 16px
+date: 2026-09-16
+content: <p>無法生成文章內容: Comex Gold, Silver Settle Lower</p><p>原始連結：<a href="https://www.wsj.com/articles/gold-edges-lower-feds-rate-decision-in-focus-09dbfceb?mod=rss_markets_main">點此查看</a></p>
+
+---
 title: From Concrete to Compute: Why Clichmont Is Building AI Infrastructure Instead of Renting It
 images: 387.jpg,387-1.jpg
 fontSize: 16px
