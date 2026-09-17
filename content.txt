@@ -1,3 +1,10 @@
+title: Justin Sun Establishes the Justin Sun Prize: “My Wealth Came from Mathematics and Will Return to Mathematics”
+images: 389.jpg,389-1.jpg
+fontSize: 16px
+date: 2026-09-17
+content: <p>無法生成文章內容: Justin Sun Establishes the Justin Sun Prize: “My Wealth Came from Mathematics and Will Return to Mathematics”</p><p>原始連結：<a href="https://www.newsbtc.com/news/justin-sun-establishes-the-justin-sun-prize-my-wealth-came-from-mathematics-and-will-return-to-mathematics/">點此查看</a></p>
+
+---
 title: Comex Gold, Silver Settle Lower
 images: 388.jpg,388-1.jpg
 fontSize: 16px
