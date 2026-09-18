@@ -1,3 +1,10 @@
+title: Charities say gifts by deceased donors are getting held up at financial firms
+images: 390.jpg,390-1.jpg
+fontSize: 16px
+date: 2026-09-18
+content: <p>無法生成文章內容: Charities say gifts by deceased donors are getting held up at financial firms</p><p>原始連結：<a href="https://www.cnbc.com/2026/09/17/charities-ira-gifts-hurdles.html">點此查看</a></p>
+
+---
 title: Justin Sun Establishes the Justin Sun Prize: “My Wealth Came from Mathematics and Will Return to Mathematics”
 images: 389.jpg,389-1.jpg
 fontSize: 16px
