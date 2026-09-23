@@ -1,3 +1,10 @@
+title: Comex Gold, Silver Settle Lower
+images: 395.jpg,395-1.jpg
+fontSize: 16px
+date: 2026-09-23
+content: <p>無法生成文章內容: Comex Gold, Silver Settle Lower</p><p>原始連結：<a href="https://www.wsj.com/articles/gold-edges-lower-feds-rate-decision-in-focus-09dbfceb?mod=rss_markets_main">點此查看</a></p>
+
+---
 title: Crypto PAC to spend $30M opposing Sherrod Brown in Ohio, again
 images: 394.jpg,394-1.jpg
 fontSize: 16px
