@@ -1,3 +1,10 @@
+title: OpenAI Gives Ukraine Access to Daybreak AI Cyber-Defense Tool
+images: 396.jpg,396-1.jpg
+fontSize: 16px
+date: 2026-09-24
+content: <p>無法生成文章內容: OpenAI Gives Ukraine Access to Daybreak AI Cyber-Defense Tool</p><p>原始連結：<a href="https://decrypt.co/379126/openai-ukraine-access-daybreak-ai-cyber-defense-tool">點此查看</a></p>
+
+---
 title: Comex Gold, Silver Settle Lower
 images: 395.jpg,395-1.jpg
 fontSize: 16px
