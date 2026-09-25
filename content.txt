@@ -1,3 +1,10 @@
+title: Lowe's is launching a drone delivery service in partnership with DoorDash, Alphabet
+images: 397.jpg,397-1.jpg
+fontSize: 16px
+date: 2026-09-25
+content: <p>無法生成文章內容: Lowe's is launching a drone delivery service in partnership with DoorDash, Alphabet</p><p>原始連結：<a href="https://www.cnbc.com/2026/09/24/lowes-drones-delivery-doordash-alphabet.html">點此查看</a></p>
+
+---
 title: OpenAI Gives Ukraine Access to Daybreak AI Cyber-Defense Tool
 images: 396.jpg,396-1.jpg
 fontSize: 16px
