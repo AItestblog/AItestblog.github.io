@@ -1,3 +1,10 @@
+title: OG.com seeks CFTC approval for single-stock perpetual futures
+images: 399.jpg,399-1.jpg
+fontSize: 16px
+date: 2026-09-27
+content: <p>無法生成文章內容: OG.com seeks CFTC approval for single-stock perpetual futures</p><p>原始連結：<a href="https://cointelegraph.com/news/og-com-seeks-cftc-approval-single-stock-perpetual-futures?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Chinese Yuan: Consolidation with downside risk toward 6.7330 – UOB
 images: 398.jpg,398-1.jpg
 fontSize: 16px
