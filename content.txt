@@ -1,3 +1,10 @@
+title: Concentrix expects new business revenues to exceed $6b in 2027 while targeting 2.2x net leverage in 2027
+images: 402.jpg,402-1.jpg
+fontSize: 16px
+date: 2026-09-30
+content: <p>無法生成文章內容: Concentrix expects new business revenues to exceed $6b in 2027 while targeting 2.2x net leverage in 2027</p><p>原始連結：<a href="https://seekingalpha.com/news/4648313-concentrix-expects-new-business-revenues-to-exceed-6b-in-2027-while-targeting-2_2x-net?source=generic_rss">點此查看</a></p>
+
+---
 title: Spanish Banking Giant Cecabank Takes Crypto Custody Push to Luxembourg
 images: 401.jpg,401-1.jpg
 fontSize: 16px
