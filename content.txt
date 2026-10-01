@@ -1,3 +1,10 @@
+title: Crypto advocacy group announces picks for US Congress as midterms loom
+images: 403.jpg,403-1.jpg
+fontSize: 16px
+date: 2026-10-01
+content: <p>無法生成文章內容: Crypto advocacy group announces picks for US Congress as midterms loom</p><p>原始連結：<a href="https://cointelegraph.com/news/stand-with-crypto-coinbase-senate-picks-us-midterms?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound">點此查看</a></p>
+
+---
 title: Concentrix expects new business revenues to exceed $6b in 2027 while targeting 2.2x net leverage in 2027
 images: 402.jpg,402-1.jpg
 fontSize: 16px
