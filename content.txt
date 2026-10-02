@@ -1,3 +1,10 @@
+title: Monday, Bloody Monday
+images: 404.jpg,404-1.jpg
+fontSize: 16px
+date: 2026-10-02
+content: <p>無法生成文章內容: Monday, Bloody Monday</p><p>原始連結：<a href="https://seekingalpha.com/article/4263561-monday-bloody-monday?source=feed_tag_abe_defunct_5967">點此查看</a></p>
+
+---
 title: Crypto advocacy group announces picks for US Congress as midterms loom
 images: 403.jpg,403-1.jpg
 fontSize: 16px
