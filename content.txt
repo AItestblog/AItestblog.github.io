@@ -1,3 +1,10 @@
+title: US appeals court blocks Minnesota law barring ’nudified’ photos in XAI lawsuit
+images: 405.jpg,405-1.jpg
+fontSize: 16px
+date: 2026-10-03
+content: <p>無法生成文章內容: US appeals court blocks Minnesota law barring ’nudified’ photos in XAI lawsuit</p><p>原始連結：<a href="https://www.investing.com/news/stock-market-news/us-appeals-court-blocks-minnesotas-ainudification-law-for-now-in-xai-lawsuit-4930434">點此查看</a></p>
+
+---
 title: Monday, Bloody Monday
 images: 404.jpg,404-1.jpg
 fontSize: 16px
