@@ -1,3 +1,10 @@
+title: The S&P 500 is back in record territory as the ‘Magnificent Seven’ ride to the rescue
+images: 409.jpg,409-1.jpg
+fontSize: 16px
+date: 2026-10-07
+content: <p>無法生成文章內容: The S&P 500 is back in record territory as the ‘Magnificent Seven’ ride to the rescue</p><p>原始連結：<a href="https://www.marketwatch.com/story/the-s-p-500-is-back-in-record-territory-as-the-magnificent-seven-ride-to-the-rescue-e062724d?mod=mw_rss_topstories">點此查看</a></p>
+
+---
 title: OKX eyes emerging markets with yield-offering stablecoin savings and payments app
 images: 408.jpg,408-1.jpg
 fontSize: 16px
