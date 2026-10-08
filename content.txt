@@ -1,3 +1,10 @@
+title: Grayscale Adds BitGo To Hyperliquid Staking ETF Custody Setup
+images: 410.jpg,410-1.jpg
+fontSize: 16px
+date: 2026-10-08
+content: <p>無法生成文章內容: Grayscale Adds BitGo To Hyperliquid Staking ETF Custody Setup</p><p>原始連結：<a href="https://www.newsbtc.com/business/grayscale-adds-bitgo-to-hyperliquid-staking-etf-custody-setup/">點此查看</a></p>
+
+---
 title: The S&P 500 is back in record territory as the ‘Magnificent Seven’ ride to the rescue
 images: 409.jpg,409-1.jpg
 fontSize: 16px
