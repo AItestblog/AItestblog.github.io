@@ -1,3 +1,10 @@
+title: investingLive Americas FX news wrap 9 Oct: It’s a Wrap: Stocks rebound despite weak sentiment; Canadian dollar falls on jobs miss
+images: 412.jpg,412-1.jpg
+fontSize: 16px
+date: 2026-10-10
+content: <p>無法生成文章內容: investingLive Americas FX news wrap 9 Oct: It’s a Wrap: Stocks rebound despite weak sentiment; Canadian dollar falls on jobs miss</p><p>原始連結：<a href="https://investinglive.com/news/investinglive-americas-fx-news-wrap-9-oct-it-s-a-wrap-stocks-rebound-despite-weak-sentiment-canadian-dollar-falls-on-jobs-miss/">點此查看</a></p>
+
+---
 title: Monday, Bloody Monday
 images: 411.jpg,411-1.jpg
 fontSize: 16px
