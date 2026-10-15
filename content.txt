@@ -1,3 +1,10 @@
+title: MEXC Brings AI, TradFi and the Future of Trading to Life at TOKEN2049 Singapore
+images: 417.jpg,417-1.jpg
+fontSize: 16px
+date: 2026-10-15
+content: <p>無法生成文章內容: MEXC Brings AI, TradFi and the Future of Trading to Life at TOKEN2049 Singapore</p><p>原始連結：<a href="https://www.newsbtc.com/news/mexc-brings-ai-tradfi-and-the-future-of-trading-to-life-at-token2049-singapore/">點此查看</a></p>
+
+---
 title: Stocks Sink in Broad AI Rout Sparked by China's DeepSeek
 images: 416.jpg,416-1.jpg
 fontSize: 16px
