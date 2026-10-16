@@ -1,3 +1,10 @@
+title: JetBlue’s new domestic first class, BlueFirst, is now on sale
+images: 418.jpg,418-1.jpg
+fontSize: 16px
+date: 2026-10-16
+content: <p>無法生成文章內容: JetBlue’s new domestic first class, BlueFirst, is now on sale</p><p>原始連結：<a href="https://www.cnbc.com/2026/10/15/jetblue-bluefirst-first-class.html">點此查看</a></p>
+
+---
 title: MEXC Brings AI, TradFi and the Future of Trading to Life at TOKEN2049 Singapore
 images: 417.jpg,417-1.jpg
 fontSize: 16px
