@@ -1,3 +1,10 @@
+title: European stocks finish higher, posting weekly gains as U.S. technology shares struggle
+images: 419.jpg,419-1.jpg
+fontSize: 16px
+date: 2026-10-17
+content: <p>無法生成文章內容: European stocks finish higher, posting weekly gains as U.S. technology shares struggle</p><p>原始連結：<a href="https://investinglive.com/stocks/european-stocks-finish-higher-posting-weekly-gains-as-u-s-technology-shares-struggle/">點此查看</a></p>
+
+---
 title: JetBlue’s new domestic first class, BlueFirst, is now on sale
 images: 418.jpg,418-1.jpg
 fontSize: 16px
