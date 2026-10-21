@@ -1,3 +1,10 @@
+title: Bull markets tend to peak with a whimper, not a bang — but a 15% correction for the S&P 500 may be next
+images: 423.jpg,423-1.jpg
+fontSize: 16px
+date: 2026-10-21
+content: <p>無法生成文章內容: Bull markets tend to peak with a whimper, not a bang — but a 15% correction for the S&P 500 may be next</p><p>原始連結：<a href="https://www.marketwatch.com/story/bull-markets-tend-to-peak-with-a-whimper-not-a-bang-but-a-15-correction-for-the-s-p-500-may-be-next-dab40e2c?mod=mw_rss_topstories">點此查看</a></p>
+
+---
 title: Market participants weigh in on SEC’s proposed crypto regulations
 images: 422.jpg,422-1.jpg
 fontSize: 16px
