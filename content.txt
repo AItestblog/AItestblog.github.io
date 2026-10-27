@@ -1,3 +1,10 @@
+title: SEC’s Crypto Custody Proposal Could Change How Funds Hold Digital Assets
+images: 429.jpg,429-1.jpg
+fontSize: 16px
+date: 2026-10-27
+content: <p>無法生成文章內容: SEC’s Crypto Custody Proposal Could Change How Funds Hold Digital Assets</p><p>原始連結：<a href="https://www.newsbtc.com/regulation/sec-s-crypto-custody-proposal-could-change-how-funds-hold-digital-assets/">點此查看</a></p>
+
+---
 title: Global markets show mixed trends amid Fed uncertainty
 images: 428.jpg,428-1.jpg
 fontSize: 16px
