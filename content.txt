@@ -1,3 +1,10 @@
+title: Starbucks sales miss expectations, but its U.S. turnaround is gaining steam
+images: 432.jpg,432-1.jpg
+fontSize: 16px
+date: 2026-10-30
+content: <p>無法生成文章內容: Starbucks sales miss expectations, but its U.S. turnaround is gaining steam</p><p>原始連結：<a href="https://www.cnbc.com/2026/10/29/starbucks-sbux-q4-2026-earnings.html">點此查看</a></p>
+
+---
 title: Ripple Roars Toward $900M Milestone as XRP Gains Wall Street Access
 images: 431.jpg,431-1.jpg
 fontSize: 16px
