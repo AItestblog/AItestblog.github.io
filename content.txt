@@ -1,3 +1,10 @@
+title: Marc Lore's Wonder confidentially files for IPO
+images: 439.jpg,439-1.jpg
+fontSize: 16px
+date: 2026-11-06
+content: <p>無法生成文章內容: Marc Lore's Wonder confidentially files for IPO</p><p>原始連結：<a href="https://www.cnbc.com/2026/11/05/wonder-confidential-ipo-filing.html">點此查看</a></p>
+
+---
 title: MEXC Expands Stock Futures Coverage to Six Global Markets in Q3 as 0808 Stock Season Trading Volume Tops $50B
 images: 438.jpg,438-1.jpg
 fontSize: 16px
